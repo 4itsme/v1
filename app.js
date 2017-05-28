@@ -93,6 +93,8 @@ require.config({
 
 	initializeVueComponents(Vue);
 
+	initializeVueComponents2(Vue);
+
 	vm = initializeVM();
 
 	vm._ = _;
@@ -642,5 +644,69 @@ require.config({
 		    }
 		  }
 		})
+	}
+
+	function initializeVueComponents2(Vue){
+		// register
+		Vue.component('q-sura', {
+		  template: '<span>S: \
+		  						<select v-model="sura" @change="onChange">\
+		        				<option v-for="s in 114" :value="s">{{s}}</option>\
+		      				</select>\
+		             </span>',
+		  data: function(){
+		  	//return{ isura: this.sura };
+		  },
+		  methods: {
+		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {sura: $event.target.value });}
+		  },
+		  props: ['sura'],
+		})
+
+
+		Vue.component('q-ayah', {
+		  template: '<span>A: \
+		  						<select v-model="ayah" @change="onChange">\
+		        				<option v-for="a in ayahsCount" :value="a">{{a}}</option>\
+		      				</select>\
+		             </span>',
+		  data: function(){
+		  },
+		  methods: {
+		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {ayah: $event.target.value });}
+		  },
+		  props: ['ayah', 'ayahsCount'],
+		})
+
+
+		Vue.component('q-page', {
+		  template: '<span>P: \
+		  						<select v-model="page" @change="onChange">\
+		        				<option v-for="p in 604" :value="p">{{p}}</option>\
+		      				</select>\
+		             </span>',
+		  data: function(){
+		  },
+		  methods: {
+		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {page: $event.target.value });}
+		  },
+		  props: ['page'],
+		})
+
+
+		Vue.component('q-juz', {
+		  template: '<span>J: \
+		  						<select v-model="juz" @change="onChange">\
+		        				<option v-for="j in 30" :value="j">{{j}}</option>\
+		      				</select>\
+		             </span>',
+		  data: function(){
+		  },
+		  methods: {
+		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {juz: $event.target.value });}
+		  },
+		  props: ['juz'],
+		})
+
 	}
 });
