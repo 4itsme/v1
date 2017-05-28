@@ -460,6 +460,17 @@ require.config({
 		  router,
 		  el: '#app-1',
 		  data: {
+			verse: 1,
+		    data: {
+		      sura: 1,
+		      ayah: 1,
+		      page: 1,
+		      juz: 1,
+		      ayahsCount: 7,
+		      listFromPage:  [ { "surah": 1, "ayah": 1, "verseNo": 1 }, { "surah": 1, "ayah": 2, "verseNo": 2 }, { "surah": 1, "ayah": 3, "verseNo": 3 }, { "surah": 1, "ayah": 4, "verseNo": 4 }, { "surah": 1, "ayah": 5, "verseNo": 5 }, { "surah": 1, "ayah": 6, "verseNo": 6 }, { "surah": 1, "ayah": 7, "verseNo": 7 } ] ,
+		    },
+		    debug: {},
+
 		  	showAr: true,
 			sura:1,
 			page:1,
@@ -554,6 +565,35 @@ require.config({
 		  },
 		  
 		  methods: {
+			ayahchange: function(diff){
+	          	var verse = vm.verse + diff;
+	            if(verse < 1){ verse = 1; }
+	            else if(verse > 6236){ verse = 6236; }
+	            if(verse){ vm.verse = verse; }
+	          	/*var verse = (diff == -1) ? Q.ayah.prev(vm.data.sura, vm.data.ayah)
+	            					: (diff == +1) ? Q.ayah.next(vm.data.sura, vm.data.ayah)
+	                      : null;
+	            if(verse){ vm.verse = verse; }*/
+	        },
+	          
+	        versechange: function(diff){
+	          	var verse;
+	          	console.log(['versechange', JSON.stringify( arguments ) ] );
+	            if(diff.sura){ //corner case: current ayah selected is > what new sura
+	            	// has.. then reset it to 1.
+	            	var tmp = Q.surah.detail( +diff.sura ),
+	              		ayah = vm.data.ayah > tmp.ayahs ? 1 : vm.data.ayah; 
+	            	verse = Q.verseNo.ayah( +diff.sura, ayah );
+	            }else if(diff.ayah){
+	            	verse = Q.verseNo.ayah( vm.data.sura, +diff.ayah );
+	            }else if(diff.page){
+	            	verse = Q.verseNo.page( +diff.page );
+	            }else if(diff.juz){
+	            	verse = Q.verseNo.juz( +diff.juz );
+	            }
+	            if(verse){ vm.verse = verse; }
+	        },
+
 		    go: function () {
 		      var keyword = vm.keyword;
 			  //vm.searchResults = qSearch.search(keyword);
@@ -570,7 +610,23 @@ require.config({
 			getSynonymsDetailsFor: function(){},
 		  },
 		  
-		  watch: {	
+		  watch: {
+	        verse: function(val){
+	            var tmp = Q.ayah.fromVerse( +vm.verse ), //Ex: { "surah": 2, "ayah": 26 }
+	            	  tmp2 = Q.surah.detail( tmp.surah ),
+	                page = Q.ayah.page(tmp.surah, tmp.ayah),
+	                juz = Q.ayah.juz(tmp.surah, tmp.ayah);
+	            vm.debug = tmp2;
+	            vm.data = {
+	            	sura: tmp.surah,
+	              ayah: tmp.ayah,
+	            	page: page,
+	              juz:  juz,
+	              ayahsCount: tmp2.ayahs,
+	              listFromPage: Q.ayah.listFromPage( page ),
+	            };
+	        },
+
 			ref: function(newRef){
 				console.log('WATCH::ref ' + this.ref +' '+ newRef);
 				this.queryData.page = Q.ayah.page( this.queryData.sura, this.queryData.ayah);

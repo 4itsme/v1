@@ -182,6 +182,16 @@
   </div>
 
   <HR>
+    <p v-cloak>
+         <button v-on:click="ayahchange(-1)">&lt;</button>
+         <q-sura :sura="data.sura" @versechange="versechange"></q-sura>
+         <q-ayah :ayah="data.ayah" :ayahs-count="data.ayahsCount" @versechange="versechange"><</q-ayah>
+         <button v-on:click="ayahchange(+1)">&gt;</button>
+         <q-page :page="data.page" @versechange="versechange"><</q-page>
+         <q-juz :juz="data.juz" @versechange="versechange"><</q-juz>
+         &nbsp;verse: <input v-model="verse" style=width:60px type=number>
+    </p>
+  <HR>
 
   <div v-cloak v-if='!isLoading'>
   <div class="col-md-7">
