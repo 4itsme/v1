@@ -705,18 +705,26 @@ require.config({
 	function initializeVueComponents2(Vue){
 		// register
 		Vue.component('q-sura', {
-		  template: '<span>S: \
+		  template: 
+					'<span v-if="suras && suras.length > 0">\
+					    <select v-model="sura" @change="onChange">\
+					      <option v-for="s in suras" :value="s.value">\
+						    {{ s.name }}\
+					      </option>\
+					    </select>\
+					  </span>\
+					<span v-else>S: \
 		  						<select v-model="sura" @change="onChange">\
 		        				<option v-for="s in 114" :value="s">{{s}}</option>\
 		      				</select>\
 		             </span>',
 		  data: function(){
-		  	//return{ isura: this.sura };
+		  	return{ }; // isura: this.sura };
 		  },
 		  methods: {
 		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {sura: $event.target.value });}
 		  },
-		  props: ['sura'],
+		  props: ['sura', 'suras'],
 		})
 
 
@@ -727,6 +735,7 @@ require.config({
 		      				</select>\
 		             </span>',
 		  data: function(){
+		  	return {};
 		  },
 		  methods: {
 		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {ayah: $event.target.value });}
@@ -736,12 +745,13 @@ require.config({
 
 
 		Vue.component('q-page', {
-		  template: '<span>P: \
+		  template: '<span>Page: \
 		  						<select v-model="page" @change="onChange">\
 		        				<option v-for="p in 604" :value="p">{{p}}</option>\
 		      				</select>\
 		             </span>',
 		  data: function(){
+		  	return {};
 		  },
 		  methods: {
 		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {page: $event.target.value });}
@@ -751,12 +761,13 @@ require.config({
 
 
 		Vue.component('q-juz', {
-		  template: '<span>J: \
+		  template: '<span>Juz: \
 		  						<select v-model="juz" @change="onChange">\
 		        				<option v-for="j in 30" :value="j">{{j}}</option>\
 		      				</select>\
 		             </span>',
 		  data: function(){
+		  	return {};
 		  },
 		  methods: {
 		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {juz: $event.target.value });}

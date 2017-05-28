@@ -184,7 +184,7 @@
   <HR>
     <p v-cloak>
          <button v-on:click="ayahchange(-1)">&lt;</button>
-         <q-sura :sura="data.sura" @versechange="versechange"></q-sura>
+         <q-sura :sura="data.sura" :suras="suras" @versechange="versechange"></q-sura>
          <q-ayah :ayah="data.ayah" :ayahs-count="data.ayahsCount" @versechange="versechange"><</q-ayah>
          <button v-on:click="ayahchange(+1)">&gt;</button>
          <q-page :page="data.page" @versechange="versechange"><</q-page>
