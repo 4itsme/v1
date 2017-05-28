@@ -707,19 +707,24 @@ require.config({
 		Vue.component('q-sura', {
 		  template: 
 					'<span v-if="suras && suras.length > 0">\
-					    <select v-model="sura" @change="onChange">\
+					    <select v-model="iSura" @change="onChange">\
 					      <option v-for="s in suras" :value="s.value">\
 						    {{ s.name }}\
 					      </option>\
 					    </select>\
 					  </span>\
 					<span v-else>S: \
-		  						<select v-model="sura" @change="onChange">\
+		  						<select v-model="iSura" @change="onChange">\
 		        				<option v-for="s in 114" :value="s">{{s}}</option>\
 		      				</select>\
 		             </span>',
 		  data: function(){
 		  	return{ }; // isura: this.sura };
+		  },
+		  computed: {
+		  	iSura: function () {
+		  		return this.sura;
+		  	}
 		  },
 		  methods: {
 		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {sura: $event.target.value });}
@@ -730,12 +735,17 @@ require.config({
 
 		Vue.component('q-ayah', {
 		  template: '<span>A: \
-		  						<select v-model="ayah" @change="onChange">\
+		  						<select v-model="iAyah" @change="onChange">\
 		        				<option v-for="a in ayahsCount" :value="a">{{a}}</option>\
 		      				</select>\
 		             </span>',
 		  data: function(){
 		  	return {};
+		  },
+		  computed: {
+		  	iAyah: function () {
+		  		return this.ayah;
+		  	}
 		  },
 		  methods: {
 		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {ayah: $event.target.value });}
@@ -746,12 +756,17 @@ require.config({
 
 		Vue.component('q-page', {
 		  template: '<span>Page: \
-		  						<select v-model="page" @change="onChange">\
+		  						<select v-model="iPage" @change="onChange">\
 		        				<option v-for="p in 604" :value="p">{{p}}</option>\
 		      				</select>\
 		             </span>',
 		  data: function(){
 		  	return {};
+		  },
+		  computed: {
+		  	iPage: function () {
+		  		return this.page;
+		  	}
 		  },
 		  methods: {
 		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {page: $event.target.value });}
@@ -762,12 +777,17 @@ require.config({
 
 		Vue.component('q-juz', {
 		  template: '<span>Juz: \
-		  						<select v-model="juz" @change="onChange">\
+		  						<select v-model="iJuz" @change="onChange">\
 		        				<option v-for="j in 30" :value="j">{{j}}</option>\
 		      				</select>\
 		             </span>',
 		  data: function(){
 		  	return {};
+		  },
+		  computed: {
+		  	iJuz: function () {
+		  		return this.juz;
+		  	}
 		  },
 		  methods: {
 		  	onChange: function($event){ console.log('from child: onchange triggered: ' +$event +' '+$event.target.value); this.$emit('versechange', {juz: $event.target.value });}
