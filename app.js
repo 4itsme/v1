@@ -467,7 +467,7 @@ require.config({
 		      page: 1,
 		      juz: 1,
 		      ayahsCount: 7,
-		      listFromPage:  [ { "surah": 1, "ayah": 1, "verseNo": 1 }, { "surah": 1, "ayah": 2, "verseNo": 2 }, { "surah": 1, "ayah": 3, "verseNo": 3 }, { "surah": 1, "ayah": 4, "verseNo": 4 }, { "surah": 1, "ayah": 5, "verseNo": 5 }, { "surah": 1, "ayah": 6, "verseNo": 6 }, { "surah": 1, "ayah": 7, "verseNo": 7 } ] ,
+		      ayahsListFromPage:  [ { "surah": 1, "ayah": 1, "verseNo": 1 }, { "surah": 1, "ayah": 2, "verseNo": 2 }, { "surah": 1, "ayah": 3, "verseNo": 3 }, { "surah": 1, "ayah": 4, "verseNo": 4 }, { "surah": 1, "ayah": 5, "verseNo": 5 }, { "surah": 1, "ayah": 6, "verseNo": 6 }, { "surah": 1, "ayah": 7, "verseNo": 7 } ] ,
 		    },
 		    debug: {},
 
@@ -623,7 +623,7 @@ require.config({
 	            	page: page,
 	              juz:  juz,
 	              ayahsCount: tmp2.ayahs,
-	              listFromPage: Q.ayah.listFromPage( page ),
+	              ayahsListFromPage: Q.ayah.listFromPage( page ),
 	            };
 	        },
 

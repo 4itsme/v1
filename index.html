@@ -191,6 +191,11 @@
          <q-juz :juz="data.juz" @versechange="versechange"><</q-juz>
          &nbsp;verse: <input v-model="verse" style=width:60px type=number min="1" max="6236">
     </p>
+    <HR>
+    <p v-cloak>
+      <span>{{verse}}</span>:  <span>{{data}}</span> 
+      <div>      {{ debug }}      </div>
+    </p>
   <HR>
 
   <div v-cloak v-if='!isLoading'>
