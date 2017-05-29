@@ -138,29 +138,38 @@
 <body>  
 <H4>Qur'aan Viewer</H4>
 <div id="app-1" class="container-fluid">
-	<HR>
-    <p v-cloak>
-         <button v-on:click="ayahchange(-1)">&lt;</button>
-         <q-sura :sura="data.sura" :suras="suras" @versechange="versechange"></q-sura>
-         <q-ayah :ayah="data.ayah" :ayahs-count="data.ayahsCount" @versechange="versechange"><</q-ayah>
-         <button v-on:click="ayahchange(+1)">&gt;</button>
-         <q-page :page="data.page" @versechange="versechange"><</q-page>
-         <q-juz :juz="data.juz" @versechange="versechange"><</q-juz>
-         <span v-if=false>
-	         &nbsp;verse: <input v-model="verse" style=width:60px type=number min="1" max="6236">
-	     </span>
+	<HR/>
+       <div v-cloak class=row>
+       	 <div class=col-md-3>
+	         <button v-on:click="ayahchange(-1)">&lt;</button>
+	         <q-sura :sura="data.sura" :suras="suras" @versechange="versechange"></q-sura>
+	         <q-ayah :ayah="data.ayah" :ayahs-count="data.ayahsCount" @versechange="versechange"><</q-ayah>
+	         <button v-on:click="ayahchange(+1)">&gt;</button>
+	      </div>
 
-         <span>
+	      <div class=col-md-3>
+	         <q-page :page="data.page" @versechange="versechange"><</q-page>
+	         <q-juz :juz="data.juz" @versechange="versechange"><</q-juz>
+	         <span v-if=false>
+		         &nbsp;verse: <input v-model="verse" style=width:60px type=number min="1" max="6236">
+		     </span>
+		   </div>
+
+		   <div class=col-md-3>
            <!-- Search: -->
 			  <input v-model="keyword" v-on:keyup.enter="go" placeholder='Search "Noah"' type=text />
 			  <button v-on:click="go">Go</button>  {{keyword}} 
+			</div>
+
+			<div class=col-md-3>
+			  Options: 
 			  <input type=checkbox v-model="showTrans" click="showTrans = !showTrans" title="show translation" />Translation
 			  <input type=checkbox v-model="showTranslit" click="showTranslit = !showTranslit" title="show transliteration" />Transliteration
 			  <!-- <input type=checkbox v-model="showAsbab" click="showAsbab = !showAsbab; tab = 'asbab';" title="show Asbab (Sababun Nuzul)" />Asbab
 			  <input type=checkbox v-model="showSynonyms" click="showSynonyms = !showSynonyms; tab = 'synonyms';" title="show transliteration" />Synonyms -->
 			  <!-- <input type=checkbox v-model="showCorpus" click="showCorpus = !showCorpus" title="show transliteration" />Grammar -->
 			  <div v-if='isLoading'>
-			  	<BR><BR><BR><BR><BR>
+			  	<BR/><BR/><BR/><BR/><BR/>
 				<!-- <i class="fa-li fa fa-spinner fa-pulse"></i>Loading... -->
 				<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
 				<span class="sr-only">Loading...</span>
@@ -169,11 +178,11 @@
 			  <div v-cloak>
 			  	{{message}}
 			  </div>
-		 </span>
-    </p>
-    <HR>
+		 	</div>
+		 </div>
+    <HR/>
 
-  <div v-cloak v-if='!isLoading'>
+  <div v-cloak v-if='!isLoading' class=row>
   <div class="col-md-7">
 	<quran-page 
 		:ayahs-list-from-page="data.ayahsListFromPage"
@@ -394,17 +403,6 @@
 
 	</div>
 </div>
-
-<!--<span XXv-bind:style="!ayah.scoreVerb || ayah.scoreVerb < 0 ? 'color:lightgray' : ayah.scoreVerb <= 15 ? 'color:YellowGreen' : 'color:brown' " 
-				   vbind:style="'opacity:' + (!ayah.scoreVerb || ayah.scoreVerb < 0 ? '0.2' : ayah.scoreVerb <= 15 ? '0.5' : '1') " 
-				   vbind:title="JSON.stringify(ayah).split(',').join('\n')">
--->				   
-  <!-- <HR> -->
-  <!-- {{ayahsListFromPage}} -->
-  <!-- <HR> -->
-
-  
-
   
 </div>
 </div>
