@@ -574,7 +574,7 @@ require.config({
 	          	var verse = vm.verse + diff;
 	            if(verse < 1){ verse = 1; }
 	            else if(verse > 6236){ verse = 6236; }
-	            if(verse){ vm.verse = verse; }
+	            if(verse){ vm.verse = verse; console.log(['ayahchange', verse ] ); }
 	          	/*var verse = (diff == -1) ? Q.ayah.prev(vm.data.sura, vm.data.ayah)
 	            					: (diff == +1) ? Q.ayah.next(vm.data.sura, vm.data.ayah)
 	                      : null;
@@ -618,7 +618,7 @@ require.config({
 		  watch: {
 	        verse: function(val){
 	            var tmp = Q.ayah.fromVerse( +vm.verse ), //Ex: { "surah": 2, "ayah": 26 }
-	            	  tmp2 = Q.surah.detail( tmp.surah ),
+	                tmp2 = Q.surah.detail( tmp.surah ),
 	                page = Q.ayah.page(tmp.surah, tmp.ayah),
 	                juz = Q.ayah.juz(tmp.surah, tmp.ayah),
 	                oldpage = vm.data.page,
