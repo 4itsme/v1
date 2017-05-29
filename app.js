@@ -863,7 +863,10 @@ require.config({
 								<HR/>\
 							</div>\
 						</span>\
-						\
+						{{ words }}\
+						<div v-for="word in words">\
+							{{ word }} \
+						</div>\
 						<!-- show arabic ayah -->\
 						<span v-if="verse.BUCK" dir="rtl">\
 							\
@@ -903,7 +906,7 @@ require.config({
 		  		return this.verse;
 		  	}
 		  },
-		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr'],
+		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'words'],
 		});
 
 
