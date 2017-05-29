@@ -881,6 +881,9 @@ require.config({
 							<div v-if="showTranslit" dir=ltr v-html="verse.TRANSLIT"></div>\
 						</span>\
 \
+						<span v-if="showTrans || showTranslit" >\
+							<BR/>\
+						</span>\
 \
 		  			</span>',
 
