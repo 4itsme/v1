@@ -182,7 +182,7 @@ require.config({
 					}
 				}
 		
-				vm.goPage = function(page){
+				vm.goPage = function(XXXpage){
 					//this.ayahsListFromPage = Q.ayah.listFromPage(page);
 					//this.queryData.sura = _.first(this.ayahsListFromPage).surah;
 					//this.queryData.ayah = _.first(this.ayahsListFromPage).ayah;
@@ -204,14 +204,14 @@ require.config({
 
 					//now find out if any Asbab for this page as an async call
 					if(vm.showAsbab) 
-					qAsbab.findForPageAsync( page )
+					qAsbab.findForPageAsync( vm.data.page )
 						  .then(function(data){
 							vm.currentPageAsbab = (data || '').split(' ');
 					});
 					
 					//now find out if any Asbab for this page as an async call
 					if(vm.showSynonyms)
-					qSynonyms.findForPageAsync( page )
+					qSynonyms.findForPageAsync( vm.data.page )
 						  .then(function(data){
 							vm.currentPageSynonyms = (data || []);
 							currentPageSynonymsDetails = [];
@@ -638,7 +638,8 @@ require.config({
 	        	vm.pageChanged = false;
 
 	        	//TODO: now load up the content
-	        	console.log('watch: pageChanged: TODO: now fetch page content!')
+	        	console.log('watch: pageChanged: now preparing page content!')
+	        	vm.goPage();
 	        },
 
 
