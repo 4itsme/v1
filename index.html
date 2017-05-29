@@ -25,11 +25,15 @@
 	    /*background-color: #F7FCE3;*/
 	}
 
-	.aya.hover {
+	.aya.hover, .aya:hover {
 	    background-color: #E4EEDC;
 	}
 
-	.aya.selected,.aya.highlight {
+	.aya.select{
+		background-color: #F7FCE3;
+	}
+
+	.aya.highlight {
 	    background-color: #C4ECBD;
 	}
 
@@ -183,7 +187,7 @@
 					<span v-if="showTrans || showTranslit || showCorpus" style=font-size:.96em >
 						{{ verse.surah }}:{{ verse.ayah }} &nbsp; 
 					</span>
-					<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, selected: verse.isSelected }">{{ showAr ? verse.AR : verse.BUCK }}</span>
+					<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">{{ showAr ? verse.AR : verse.BUCK }}</span>
 					<span v-if="true || (!showTrans && !showTranslit && !showCorpus)" :title="'Ayah ref: ' + verse.surah + ':'+ verse.ayah"  style=font-size:.96em >
 						<span>﴿</span>{{ verse.ayah }}<span>﴾</span>
 					</span>

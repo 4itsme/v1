@@ -199,7 +199,7 @@ require.config({
 						verseEx.AR = qUtil.EnToAr( verseEx.BUCK );
 						verseEx.BARE = qUtil.BuckToBare( verseEx.BUCK );
 
-						verse = _.extend(verse, {isBasmallah: isBasmallah, isHighlighted: false, isSelected: false}, verseEx );
+						verse = _.extend(verse, {isBasmallah: isBasmallah, /*isHighlighted: false, isSelected: false*/}, verseEx );
 					});
 
 					//now find out if any Asbab for this page as an async call
@@ -467,7 +467,7 @@ require.config({
 		      page: 1,
 		      juz: 1,
 		      ayahsCount: 7,
-		      ayahsListFromPage:  [ { "surah": 1, "ayah": 1, "verseNo": 1 }, { "surah": 1, "ayah": 2, "verseNo": 2 }, { "surah": 1, "ayah": 3, "verseNo": 3 }, { "surah": 1, "ayah": 4, "verseNo": 4 }, { "surah": 1, "ayah": 5, "verseNo": 5 }, { "surah": 1, "ayah": 6, "verseNo": 6 }, { "surah": 1, "ayah": 7, "verseNo": 7 } ] ,
+		      ayahsListFromPage:  [ { "surah": 1, "ayah": 1, "verseNo": 1, isSelected: true }, { "surah": 1, "ayah": 2, "verseNo": 2 }, { "surah": 1, "ayah": 3, "verseNo": 3 }, { "surah": 1, "ayah": 4, "verseNo": 4 }, { "surah": 1, "ayah": 5, "verseNo": 5 }, { "surah": 1, "ayah": 6, "verseNo": 6 }, { "surah": 1, "ayah": 7, "verseNo": 7 } ] ,
 		    },
 		    debug: {},
 		    pageChanged: null,
@@ -630,7 +630,8 @@ require.config({
 	              vm.pageChanged = true;
 	            }
 
-	            //TODO: mark the sura:ayah as isSelected in the model.
+				//mark the sura:ayah as isSelected in the model, and rest all unmark.
+	            _.each(vm.data.ayahsListFromPage, function(i){ i.isSelected = (i.surah === vm.data.sura && i.ayah === vm.data.ayah); });
 	        },
 
 	        pageChanged: function(val){
