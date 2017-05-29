@@ -128,7 +128,10 @@
 <body>  
 <H4>Qur'aan Viewer</H4>
 <div id="app-1" class="container-fluid">
-
+	<p v-cloak>
+    	<quran-page :ayahs-list-from-page="data.ayahsListFromPage"></quran-page>
+    </p>
+	<HR>
     <p v-cloak>
          <button v-on:click="ayahchange(-1)">&lt;</button>
          <q-sura :sura="data.sura" :suras="suras" @versechange="versechange"></q-sura>

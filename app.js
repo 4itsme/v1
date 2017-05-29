@@ -822,5 +822,42 @@ require.config({
 		  props: ['juz'],
 		})
 
+
+
+		//////////////////////////////////////////////////////////////////////////////
+		Vue.component('quran-page', {
+		  template: '<div>quran-page: <div v-for="item in iList">\
+		  								<quran-ayah :ayah-from-page="item">\
+		  									\
+		  								</quran-ayah>\							\
+		  							  </div>\
+		  			 </div>',
+		  data: function(){
+		  	return {};
+		  },
+		  computed: {
+		  	iList: function () {
+		  		return this.ayahsListFromPage;
+		  	}
+		  },
+		  props: ['ayahsListFromPage'],
+		});
+
+
+		Vue.component('quran-ayah', {
+		  template: '<div>quran-ayah: {{ iAyahFromPage }}</div>',
+		  data: function(){
+		  	return {};
+		  },
+		  computed: {
+		  	iAyahFromPage: function () {
+		  		return this.ayahFromPage;
+		  	}
+		  },
+		  props: ['ayahFromPage'],
+		});
+
+
+
 	}
 });
