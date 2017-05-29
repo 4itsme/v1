@@ -470,6 +470,7 @@ require.config({
 		      ayahsListFromPage:  [ { "surah": 1, "ayah": 1, "verseNo": 1 }, { "surah": 1, "ayah": 2, "verseNo": 2 }, { "surah": 1, "ayah": 3, "verseNo": 3 }, { "surah": 1, "ayah": 4, "verseNo": 4 }, { "surah": 1, "ayah": 5, "verseNo": 5 }, { "surah": 1, "ayah": 6, "verseNo": 6 }, { "surah": 1, "ayah": 7, "verseNo": 7 } ] ,
 		    },
 		    debug: {},
+		    pageChanged: null,
 
 		  	showAr: true,
 			sura:1,
@@ -626,11 +627,20 @@ require.config({
 	            vm.data.ayahsCount = tmp2.ayahs;
 	            if(pageChanged){
 	              vm.data.ayahsListFromPage = Q.ayah.listFromPage( page );
-	              console.log('TODO: now fetch page content!')
+	              vm.pageChanged = true;
 	            }
 
 	            //TODO: mark the sura:ayah as isSelected in the model.
 	        },
+
+	        pageChanged: function(val){
+	        	if(!vm.pageChanged){ return; }
+	        	vm.pageChanged = false;
+
+	        	//TODO: now load up the content
+	        	console.log('watch: pageChanged: TODO: now fetch page content!')
+	        },
+
 
 			ref: function(newRef){
 				console.log('WATCH::ref ' + this.ref +' '+ newRef);
