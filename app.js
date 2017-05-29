@@ -826,11 +826,12 @@ require.config({
 
 		//////////////////////////////////////////////////////////////////////////////
 		Vue.component('quran-page', {
-		  template: '<div>quran-page: <div v-for="(verse, verseIndex) in iList">\
-		  								<quran-ayah :verse="verse">\
-		  									\
-		  								</quran-ayah>\							\
-		  							  </div>\
+		  template: '<div dir=rtl class=\'quranpage clearfix\' style="text-align: justify; Xoverflow:scroll; Xmax-height:550px; XXXwhite-space: nowrap;">\
+		  				<span v-for="(verse, verseIndex) in iList">\
+							<quran-ayah :verse="verse">\
+								\
+							</quran-ayah>\
+						</span>\
 		  			 </div>',
 		  data: function(){
 		  	return {};
@@ -845,14 +846,14 @@ require.config({
 
 
 		Vue.component('quran-ayah', {
-		  template: '<div>quran-ayah: \
+		  template: '<span>\
 						<!-- show basmallah -->\
 						<span v-if="!hideAr && verse.isBasmallah">\
-								<div id="bismillah" class="bismillah text-center word-font" style="text-align:center; font-size: 42px;" title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" >\
-									<HR>\
-									﷽\
-									<HR>\
-								</div>\
+							<div id="bismillah" class="bismillah text-center word-font" style="text-align:center; font-size: 42px;" title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" >\
+								<HR/>\
+								﷽\
+								<HR/>\
+							</div>\
 						</span>\
 						\
 						<!-- show arabic ayah -->\
@@ -861,14 +862,15 @@ require.config({
 							<span v-if="showTrans || showTranslit || showCorpus" style=font-size:.96em >\
 								{{ verse.surah }}:{{ verse.ayah }} &nbsp; \
 							</span>\
-							<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">{{ !hideAr ? verse.AR : verse.BUCK }}\
+							<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
+								{{ !hideAr ? verse.AR : verse.BUCK }}\
 							</span>\
 							<span v-if="true || (!showTrans && !showTranslit && !showCorpus)" :title="\'Ayah ref: \' + verse.surah + \':\'+ verse.ayah"  style=font-size:.96em >\
 								<span>﴿</span>{{ verse.ayah }}<span>﴾</span>\
 							</span>\
-\
+							\
 						</span>\
-		  			</div>',
+		  			</span>',
 
 		  data: function(){
 		  	return {};
