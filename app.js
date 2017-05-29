@@ -101,6 +101,7 @@ require.config({
 	vm = initializeVM();
 
 	vm._ = _;
+	vm.w2wEn = w2wEn;
 	vm.qUtil = qUtil;
 	vm.suras = _.chain( _.range(1, 115) )
 				.map( function(s){
@@ -510,6 +511,7 @@ require.config({
 			synonymsDetail: "",
 			_: { find:function(){} },
 			qUtil:{},
+			w2wEn:{},
 			qCorpus:{},
 			currentPageSynonymsDetails: [],
 			tab: 'about',
@@ -832,7 +834,9 @@ require.config({
 		Vue.component('quran-page', {
 		  template: '<div dir=rtl class=\'quranpage clearfix\' style="text-align: justify; Xoverflow:scroll; Xmax-height:550px; XXXwhite-space: nowrap;">\
 		  				<span v-for="(verse, verseIndex) in iList">\
-							<quran-ayah :verse="verse" :show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr">\
+							<quran-ayah :verse="verse" :show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr" \
+								:words="w2wEn.lookup( verse.verseNo )"\
+							>\
 								\
 							</quran-ayah>\
 						</span>\
@@ -845,7 +849,7 @@ require.config({
 		  		return this.ayahsListFromPage;
 		  	}
 		  },
-		  props: ['ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr'],
+		  props: ['ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'w2wEn'],
 		});
 
 
