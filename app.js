@@ -615,16 +615,21 @@ require.config({
 	            var tmp = Q.ayah.fromVerse( +vm.verse ), //Ex: { "surah": 2, "ayah": 26 }
 	            	  tmp2 = Q.surah.detail( tmp.surah ),
 	                page = Q.ayah.page(tmp.surah, tmp.ayah),
-	                juz = Q.ayah.juz(tmp.surah, tmp.ayah);
+	                juz = Q.ayah.juz(tmp.surah, tmp.ayah),
+	                oldpage = vm.data.page,
+	                pageChanged = (oldpage !== page);
 	            vm.debug = tmp2;
-	            vm.data = {
-	            	sura: tmp.surah,
-	              ayah: tmp.ayah,
-	            	page: page,
-	              juz:  juz,
-	              ayahsCount: tmp2.ayahs,
-	              ayahsListFromPage: Q.ayah.listFromPage( page ),
-	            };
+	            vm.data.sura = tmp.surah;
+	            vm.data.ayah = tmp.ayah;
+	            vm.data.page = page;
+	            vm.data.juz =  juz;
+	            vm.data.ayahsCount = tmp2.ayahs;
+	            if(pageChanged){
+	              vm.data.ayahsListFromPage = Q.ayah.listFromPage( page );
+	              console.log('TODO: now fetch page content!')
+	            }
+
+	            //TODO: mark the sura:ayah as isSelected in the model.
 	        },
 
 			ref: function(newRef){
