@@ -208,7 +208,7 @@
 	  <li v-if="showAsbab" v-bind:class="{ active: tab === 'asbab' }" @click="tab = 'asbab'"><a data-target="#asbab" data-toggle="tab">Asbab</a></li>
 	  <li v-if="showSynonyms" v-bind:class="{ active: tab === 'synonyms' }" @click="tab = 'synonyms'"><a data-target="#synonyms" data-toggle="tab">Synonyms</a></li>
 	  <li v-bind:class="{ active: tab === 'search' }" @click="tab = 'search'"><a data-target="#search" data-toggle="tab">Search results</a></li>
-	  <li v-bind:class="{ active: tab === 'misc' }" @click="tab = 'misc'"><a data-target="#misc" data-toggle="tab">Misc</a></li>
+	  <li v-if="false" v-bind:class="{ active: tab === 'misc' }" @click="tab = 'misc'"><a data-target="#misc" data-toggle="tab">Misc</a></li>
 	  <li v-bind:class="{ active: tab === 'about' }" @click="tab = 'about'"><a data-target="#about" data-toggle="tab">About</a></li>	
 	</ul>
 
@@ -313,7 +313,7 @@
 	  </div>
 
 	  <div v-bind:class="{ 'tab-pane': true, active: tab === 'search' }" id="search">
-
+	  	<div class=well>
 		  <div Xclass=searchResults v-if="searchResults && Object.keys(searchResults).length > 1">
 			  <HR>Search results: <BR>
 			  {{searchResults.matchesCount}} matches found searching for: {{searchResults.keyword}}<BR><BR>
@@ -341,9 +341,10 @@
 		  <h6><small><span v-cloak v-if=message class=text-muted>
 		  	{{message}}
 		  </span></small></h6>
+		</div>
 	  </div>
 
-	  <div v-bind:class="{ 'tab-pane': true, active: tab === 'misc' }" id="misc">
+	  <div v-if="false" v-bind:class="{ 'tab-pane': true, active: tab === 'misc' }" id="misc">
 	  	  <div v-if="wordCorpusResults">
 	  	  	{{ wordCorpusResults }}
 	  	  </div>
@@ -402,18 +403,20 @@
 	  </div>
 
 	  <div v-bind:class="{ 'tab-pane': true, active: tab === 'about' }" id="about">
-	  	About.. content coming soon. <BR><BR>
-	  	In the meanwhile, feel free to leave feedback below.<BR><BR>
+	  	<div class=well>
+		  	* Offline searchable Qur'aan <BR/>
+		  	* Lot of Qur'aan related info in one single place <BR/><BR/>
+		  	Feel free to leave feedback below.<BR/><BR/>
 
-		<div id=contact form>
-			<form method="POST">
-			  <!--<meta name="referrer" content="origin" /> -->
-			  <input v-model="feedbackEmail" type="email" name="email" placeholder="Your email (optional)"><BR><BR>
-			  <textarea v-model="feedbackMessage" name="message" placeholder="Your message"></textarea><BR><BR>
-			  <button v-on:click.stop.prevent="feedbackOnSubmit()" >Send</button>
-			</form>
+			<div id=contact form>
+				<form method="POST">
+				  <!--<meta name="referrer" content="origin" /> -->
+				  <input v-model="feedbackEmail" type="email" name="email" placeholder="Your email (optional)"><BR/><BR/>
+				  <textarea v-model="feedbackMessage" name="message" placeholder="Your message"></textarea><BR/><BR/>
+				  <button v-on:click.stop.prevent="feedbackOnSubmit()" >Send</button>
+				</form>
+			</div>
 		</div>
-
 	  </div>
 
 	</div>
