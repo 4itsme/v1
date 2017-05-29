@@ -226,12 +226,13 @@ require.config({
 								ayah: +tmp[1],
 								word: +tmp[2]
 						},
-						pageNo = Q.ayah.page(loc.sura, loc.ayah),
+						verseNo = Q.verseNo.ayah(loc.sura, loc.ayah),
+						//pageNo = Q.ayah.page(loc.sura, loc.ayah),
 						keyword = result.keyword,
 						category = result.category,
 						count = result.matches.length,
 						hilites = [ keyword ];
-					vm.goPage( pageNo );
+					vm.verse = verseNo; //vm.goPage( pageNo );
 					
 
 					//first un-highlight all ayahs on page
@@ -240,17 +241,20 @@ require.config({
 					//});
 
 					//also highlight that ayah on the page
-					var verse = _.find( vm.data.ayahsListFromPage, {surah: loc.sura, ayah: loc.ayah});
-					verse && (verse.isHighlighted = true);
+					//var verse = _.find( vm.data.ayahsListFromPage, {surah: loc.sura, ayah: loc.ayah});
+					//verse && (verse.isHighlighted = true);
 
 
 					setTimeout(function(){
+						//mark the sura:ayah as isHighlighted in the model, and rest all unmark.
+	            		_.each(vm.data.ayahsListFromPage, function(i){ i.isHighlighted = (i.surah === loc.sura && i.ayah === loc.ayah); });
+
 						// and bring that ayah into view (scrollIntoview)
 						$('.aya.highlight').length > 0 && typeof( $('.aya.highlight')[0].scrollIntoView ) != 'undefined'
 							&& $('.aya.highlight')[0].scrollIntoView();
 
 						// and finally hilite the search keyword on that Quran page
-					}, 0);
+					}, 100);
 
 
 					//clear out old keywords and set new ones.
