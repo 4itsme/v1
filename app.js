@@ -183,12 +183,12 @@ require.config({
 				}
 		
 				vm.goPage = function(page){
-					this.ayahsListFromPage = Q.ayah.listFromPage(page);
+					//this.ayahsListFromPage = Q.ayah.listFromPage(page);
 					//this.queryData.sura = _.first(this.ayahsListFromPage).surah;
 					//this.queryData.ayah = _.first(this.ayahsListFromPage).ayah;
 					
 					//now populate the ayah details for each ayah
-					_.each(this.ayahsListFromPage, function(verse){
+					_.each(this.data.ayahsListFromPage, function(verse){
 						//existing verse properties: ayah, surah, verseNo
 						var verseEx = vm.getVerse(verse.verseNo);
 
@@ -240,7 +240,7 @@ require.config({
 					//});
 
 					//also highlight that ayah on the page
-					var verse = _.find( vm.ayahsListFromPage, {surah: loc.sura, ayah: loc.ayah});
+					var verse = _.find( vm.data.ayahsListFromPage, {surah: loc.sura, ayah: loc.ayah});
 					verse && (verse.isHighlighted = true);
 
 
@@ -511,7 +511,7 @@ require.config({
 			currentVerse: 1,
 			queryData: {sura: 1, ayah: 1, word: 1, page: 1},
 			ayahsCount: 7,
-			ayahsListFromPage: [{sura: 1, ayah: 1, verse: 1}],
+			//ayahsListFromPage: [{sura: 1, ayah: 1, verse: 1}],
 			
 		    S: [],
 			corpus: {},
