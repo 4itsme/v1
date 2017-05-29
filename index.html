@@ -173,7 +173,10 @@
 		   <div class=col-md-3>
            <!-- Search: -->
 			  <input v-model="keyword" v-on:keyup.enter="go" placeholder='Search "Noah"' type=text />
-			  <button v-on:click="go">Go</button>  {{keyword}} 
+			  <button v-on:click="go">Go</button>
+			  <h6><small><span v-cloak v-if=message class=text-muted>
+			  	{{message}}
+			  </span></small></h6>
 			</div>
 
 			<div class=col-md-3>
@@ -183,11 +186,6 @@
 			  <!-- <input type=checkbox v-model="showAsbab" click="showAsbab = !showAsbab; tab = 'asbab';" title="show Asbab (Sababun Nuzul)" />Asbab
 			  <input type=checkbox v-model="showSynonyms" click="showSynonyms = !showSynonyms; tab = 'synonyms';" title="show transliteration" />Synonyms -->
 			  <!-- <input type=checkbox v-model="showCorpus" click="showCorpus = !showCorpus" title="show transliteration" />Grammar -->
-			  
-
-			  <div v-cloak>
-			  	{{message}}
-			  </div>
 		 	</div>
 		 </div>
     <HR/>
