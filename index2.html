@@ -128,6 +128,13 @@
 <body>  
 <H4>Qur'aan Viewer</H4>
 <div id="app-1" class="container-fluid">
+	<p v-cloak>
+    	<quran-page 
+    		:ayahs-list-from-page="data.ayahsListFromPage"
+    		:show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="!showAr"
+    	>
+    	</quran-page>
+    </p>
 	<HR>
     <p v-cloak>
          <button v-on:click="ayahchange(-1)">&lt;</button>
@@ -160,17 +167,171 @@
 		 </span>
     </p>
     <HR>
+<!--     <p v-cloak>
+      <span>{{verse}}</span>:  <span>{{data}}</span> 
+      <div>      {{ debug }}      </div>
+    </p>
+  <HR> -->
 
   <div v-cloak v-if='!isLoading'>
   <div class="col-md-7">
-	<quran-page 
-		:ayahs-list-from-page="data.ayahsListFromPage"
-		:show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="!showAr"
-	>
-	</quran-page>
+	<div v-if="data.ayahsListFromPage">
+		<!-- <button v-show="queryData.page !== 1" @click="queryData.page = queryData.page <= 1 ? 1 : queryData.page - 1; onChange('page');">Previous page</button> -->
+		<div dir=rtl class='quranpage clearfix' style="text-align: justify; Xoverflow:scroll; Xmax-height:550px; XXXwhite-space: nowrap;">
+			<span v-for="(verse, verseIndex) in data.ayahsListFromPage">
+				<!-- show basmallah -->
+				<span v-if="showAr && verse.isBasmallah">
+						<div id="bismillah" class="bismillah text-center word-font" style="text-align:center; font-size: 42px;" title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" >
+							<HR>
+							﷽
+							<HR>
+						</div>
+				</span>
+
+				<!-- show arabic ayah -->
+				<span v-if="verse.BUCK" dir="rtl">
+					
+					<span v-if="showTrans || showTranslit || showCorpus" style=font-size:.96em >
+						{{ verse.surah }}:{{ verse.ayah }} &nbsp; 
+					</span>
+					<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">{{ showAr ? verse.AR : verse.BUCK }}</span>
+					<span v-if="true || (!showTrans && !showTranslit && !showCorpus)" :title="'Ayah ref: ' + verse.surah + ':'+ verse.ayah"  style=font-size:.96em >
+						<span>﴿</span>{{ verse.ayah }}<span>﴾</span>
+					</span>
+
+					<span v-show="showAsbab && currentPageAsbab.join(' ').indexOf(' ' + verse.surah + ':' + verse.ayah + ' ') != -1">
+						<A HREF="#" @click="showAsbabFor(verse.surah, verse.ayah); tab='asbab';" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >
+							<!-- [A] -->
+							<span style="cursor:pointer" class="label label-warning" >ASB</span>
+						</A>
+						
+					</span>
+					<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + ':' + verse.ayah)">
+						<A HREF="#" @click="tab = 'synonyms'; showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >
+							<!-- [S] -->
+							<span style="cursor:pointer" class="label label-info" >SYN</span>
+						</A> <!--&nbsp; &nbsp;<BR>
+						<span v-for="first in _.find(currentPageSynonyms, verse.surah + ':' + verse.ayah)">
+							<span v-for="item in first">
+								<A HREF="#" @click="tab = 'synonyms'; showSynonymsFor(item, verse.surah, verse.ayah)">
+									<span class="label label-success">
+										{{item.n}}<span class="badge">{{ getSynonymsDetailsFor(item, verse.surah, verse.ayah).words.length }}</span>
+									</span>
+								</A>&nbsp; &nbsp;
+								<!--<span v-for="word in getSynonymsDetailsFor(item, verse.surah, verse.ayah).words">
+									<!-- vm.synonymsDetail = {name: name, topicId: topicId, topicUrl: topicUrl, 	words: lookup, ref: key }; -->	<!--
+									<A HREF="#" @click="showSynonymsFor(word, item, verse.surah, verse.ayah)">
+										<span class="label label-info" :title="word.word">
+											{{word.wordEn}}
+										</span>
+									</A>&nbsp;
+								</span>--><!--
+							</span>
+						</span> -->
+						
+					</span>
+				</span>
+
+				<!-- show translation, translit etc -->
+				<span v-if="verse.BARE" v-html="">	</span>
+				<span v-if="verse.TRANS" >
+					<div v-if="showTrans" dir=ltr>{{ verse.TRANS }}</div>
+				</span>
+				<span v-if="verse.TRANSLIT" >
+					<div v-if="showTranslit" dir=ltr v-html="verse.TRANSLIT"></div>
+				</span>
+				<span v-if="verse.CORPUS" >
+					<div v-if="showCorpus" dir=rtl>
+						<!--{{ verse.CORPUS }}-->
+						<span v-for="(word, wordIndex) in qCorpus.parseEx( verse.CORPUS )">
+							<!-- {{ word }} -->
+							<span :title=" word.en +'\n'+ word.score +'\n'+ word.scoreVerb +'\n\n' + JSON.stringify(word) ">
+								{{ word.ar }}
+							</span>
+							<!-- <A href=# :click="wordCorpusResults = word.en" >
+								<span :title=" word.en +'\n'+ word.score +'\n'+ word.scoreVerb +'\n\n' + JSON.stringify(word) "	>
+									{{ word.ar }}
+								</span>
+							</A> -->
+						</span>
+					</div>
+				</span>
+
+
+<!--
+				<span v-for="(ayah, prop, ayahindex) in getVerse(verse.verseNo)">
+					<span v-if="prop == 'BUCK'" dir="rtl">
+						
+						<span v-if="showTrans || showTranslit" style=font-size:.96em >
+							{{ verse.surah }}:{{ verse.ayah }} &nbsp; 
+						</span>
+						<span style=direction:rtl;font-size:2.35em >{{ayah}}</span>
+						<span v-if="true || (!showTrans && !showTranslit)" :title="'Ayah ref: ' + verse.surah + ':'+ verse.ayah"  style=font-size:.96em >
+							<span>﴿</span>{{ verse.ayah }}<span>﴾</span>
+						</span>
+
+						<span v-show="showAsbab && currentPageAsbab.join(' ').indexOf(' ' + verse.surah + ':' + verse.ayah + ' ') != -1">
+							<A HREF="#" @click="showAsbabFor(verse.surah, verse.ayah); tab='asbab';" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >
+								<!-- [A] --><!--
+								<span style="cursor:pointer" class="label label-warning" >ASB</span>
+							</A>
+							
+						</span>
+						<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + ':' + verse.ayah)">
+							<A HREF="#" @click="tab = 'synonyms'; showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >
+								<!-- [S] --><!--
+								<span style="cursor:pointer" class="label label-info" >SYN</span>
+							</A> <!--&nbsp; &nbsp;<BR>
+							<span v-for="first in _.find(currentPageSynonyms, verse.surah + ':' + verse.ayah)">
+								<span v-for="item in first">
+									<A HREF="#" @click="tab = 'synonyms'; showSynonymsFor(item, verse.surah, verse.ayah)">
+										<span class="label label-success">
+											{{item.n}}<span class="badge">{{ getSynonymsDetailsFor(item, verse.surah, verse.ayah).words.length }}</span>
+										</span>
+									</A>&nbsp; &nbsp;
+									<!--<span v-for="word in getSynonymsDetailsFor(item, verse.surah, verse.ayah).words">
+										<!-- vm.synonymsDetail = {name: name, topicId: topicId, topicUrl: topicUrl, 	words: lookup, ref: key }; -->	<!--
+										<A HREF="#" @click="showSynonymsFor(word, item, verse.surah, verse.ayah)">
+											<span class="label label-info" :title="word.word">
+												{{word.wordEn}}
+											</span>
+										</A>&nbsp;
+									</span>--><!--
+								</span>
+							</span> -->
+<!--							
+						</span>
+					</span>
+					<span v-if="prop == 'isBasmallah'">
+						<div v-if="ayah" id="bismillah" class="bismillah text-center word-font" style="text-align:center;" title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" >
+							<HR>
+							﷽
+							<HR>
+						</div>
+					</span>
+					<span v-else-if="prop == 'BARE'" v-html="">	</span>
+					<span v-else-if="prop == 'TRANS'" >
+						<div v-if="showTrans" dir=ltr>{{ ayah }}</div>
+					</span>
+					<span v-else-if="prop == 'TRANSLIT'" >
+						<div v-if="showTranslit" dir=ltr v-html="ayah"></div>
+					</span>
+					<span v-else>
+						{{ayah}} 
+					</span>
+				</span>	
+-->
+				<span v-if="showTrans || showTranslit" >
+					<BR/>
+				</span>
+			</span>
+		</div>
+		<!-- <button v-show="queryData.page !== 604" @click="queryData.page = queryData.page >= 604 ? 604 : queryData.page + 1; onChange('page');">Next page</button> -->
+	</div>
   </div>
 
 <div class="col-md-5">
+
 
 	<ul class="nav nav-tabs" id="myTab">
 	  <li v-bind:class="{ active: tab === 'asbab' }" @click="tab = 'asbab'"><a data-target="#asbab" data-toggle="tab">Asbab</a></li>
