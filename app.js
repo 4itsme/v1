@@ -870,6 +870,18 @@ require.config({
 							</span>\
 							\
 						</span>\
+\
+\
+						<!-- show translation, translit etc -->\
+						<span v-if="verse.BARE" v-html="">	</span>\
+						<span v-if="verse.TRANS" >\
+							<div v-if="showTrans" dir=ltr>{{ verse.TRANS }}</div>\
+						</span>\
+						<span v-if="verse.TRANSLIT" >\
+							<div v-if="showTranslit" dir=ltr v-html="verse.TRANSLIT"></div>\
+						</span>\
+\
+\
 		  			</span>',
 
 		  data: function(){
