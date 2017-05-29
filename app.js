@@ -254,7 +254,7 @@ require.config({
 							&& $('.aya.highlight')[0].scrollIntoView();
 
 						// and finally hilite the search keyword on that Quran page
-					}, 100);
+					}, 0);
 
 
 					//clear out old keywords and set new ones.
