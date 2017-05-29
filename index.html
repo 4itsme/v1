@@ -174,7 +174,7 @@
 	<div v-if="data.ayahsListFromPage">
 		<!-- <button v-show="queryData.page !== 1" @click="queryData.page = queryData.page <= 1 ? 1 : queryData.page - 1; onChange('page');">Previous page</button> -->
 		<div dir=rtl class='quranpage clearfix' style="text-align: justify; Xoverflow:scroll; Xmax-height:550px; XXXwhite-space: nowrap;">
-			<span v-for="(verse, verseIndex) in data.ayahsListFromPage" Xstyle="display:inline-block; float: right;">
+			<span v-for="(verse, verseIndex) in data.ayahsListFromPage">
 				<!-- show basmallah -->
 				<span v-if="showAr && verse.isBasmallah">
 						<div id="bismillah" class="bismillah text-center word-font" style="text-align:center; font-size: 42px;" title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" >

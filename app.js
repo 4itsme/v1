@@ -826,8 +826,8 @@ require.config({
 
 		//////////////////////////////////////////////////////////////////////////////
 		Vue.component('quran-page', {
-		  template: '<div>quran-page: <div v-for="item in iList">\
-		  								<quran-ayah :ayah-from-page="item">\
+		  template: '<div>quran-page: <div v-for="(verse, verseIndex) in iList">\
+		  								<quran-ayah :verse="verse">\
 		  									\
 		  								</quran-ayah>\							\
 		  							  </div>\
@@ -845,16 +845,40 @@ require.config({
 
 
 		Vue.component('quran-ayah', {
-		  template: '<div>quran-ayah: {{ iAyahFromPage }}</div>',
+		  template: '<div>quran-ayah: \
+						<!-- show basmallah -->\
+						<span v-if="!hideAr && verse.isBasmallah">\
+								<div id="bismillah" class="bismillah text-center word-font" style="text-align:center; font-size: 42px;" title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" >\
+									<HR>\
+									﷽\
+									<HR>\
+								</div>\
+						</span>\
+						\
+						<!-- show arabic ayah -->\
+						<span v-if="verse.BUCK" dir="rtl">\
+							\
+							<span v-if="showTrans || showTranslit || showCorpus" style=font-size:.96em >\
+								{{ verse.surah }}:{{ verse.ayah }} &nbsp; \
+							</span>\
+							<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">{{ !hideAr ? verse.AR : verse.BUCK }}\
+							</span>\
+							<span v-if="true || (!showTrans && !showTranslit && !showCorpus)" :title="\'Ayah ref: \' + verse.surah + \':\'+ verse.ayah"  style=font-size:.96em >\
+								<span>﴿</span>{{ verse.ayah }}<span>﴾</span>\
+							</span>\
+\
+						</span>\
+		  			</div>',
+
 		  data: function(){
 		  	return {};
 		  },
 		  computed: {
-		  	iAyahFromPage: function () {
-		  		return this.ayahFromPage;
+		  	iVerse: function () {
+		  		return this.verse;
 		  	}
 		  },
-		  props: ['ayahFromPage'],
+		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr'],
 		});
 
 
