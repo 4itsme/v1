@@ -202,8 +202,8 @@
 <div class="col-md-5">
 
 	<ul class="nav nav-tabs" id="myTab">
-	  <li v-bind:class="{ active: tab === 'asbab' }" @click="tab = 'asbab'"><a data-target="#asbab" data-toggle="tab">Asbab</a></li>
-	  <li v-bind:class="{ active: tab === 'synonyms' }" @click="tab = 'synonyms'"><a data-target="#synonyms" data-toggle="tab">Synonyms</a></li>
+	  <li v-if="showAsbab" v-bind:class="{ active: tab === 'asbab' }" @click="tab = 'asbab'"><a data-target="#asbab" data-toggle="tab">Asbab</a></li>
+	  <li v-if="showSynonyms" v-bind:class="{ active: tab === 'synonyms' }" @click="tab = 'synonyms'"><a data-target="#synonyms" data-toggle="tab">Synonyms</a></li>
 	  <li v-bind:class="{ active: tab === 'search' }" @click="tab = 'search'"><a data-target="#search" data-toggle="tab">Search results</a></li>
 	  <li v-bind:class="{ active: tab === 'misc' }" @click="tab = 'misc'"><a data-target="#misc" data-toggle="tab">Misc</a></li>
 	  <li v-bind:class="{ active: tab === 'about' }" @click="tab = 'about'"><a data-target="#about" data-toggle="tab">About</a></li>	
@@ -212,7 +212,7 @@
 
 	<div class="tab-content">
 	  
-	  <div v-bind:class="{ 'tab-pane': true, active: tab === 'asbab' }" id="asbab">
+	  <div v-if="showAsbab" v-bind:class="{ 'tab-pane': true, active: tab === 'asbab' }" id="asbab">
 	  	<div>
 	  		Asbab-un-Nuzul in current page:
 	  		<span v-for="asbab in currentPageAsbab">
@@ -237,7 +237,7 @@
 		<div v-else>Asbab shown here if available</div>
 	  </div>
 	  
-	  <div v-bind:class="{ 'tab-pane': true, active: tab === 'synonyms' }" id="synonyms">
+	  <div v-if="showSynonyms" v-bind:class="{ 'tab-pane': true, active: tab === 'synonyms' }" id="synonyms">
 	  	<div>
 	  		Near-Synonyms in current page:
 			<span v-for="(first, index1) in currentPageSynonyms">
