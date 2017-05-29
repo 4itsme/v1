@@ -162,7 +162,7 @@
 	         <button v-on:click="ayahchange(+1)">&gt;</button>
 	      </div>
 
-	      <div class=col-md-3>
+	      <div class=col-md-4>
 	         <q-page :page="data.page" @versechange="versechange"><</q-page>
 	         <q-juz :juz="data.juz" @versechange="versechange"><</q-juz>
 	         <span v-if=false>
@@ -170,10 +170,16 @@
 		     </span>
 		   </div>
 
-		   <div class=col-md-3>
+		   <div class=col-md-2>
            <!-- Search: -->
-			  <input v-model="keyword" v-on:keyup.enter="go" placeholder='Search "Noah"' type=text />
-			  <button v-on:click="go">Go</button>
+			<div class="input-group">
+		      <input v-model="keyword" v-on:keyup.enter="go" type="text" class="form-control" placeholder='Search for "Noah"...'>
+		      <span class="input-group-btn">
+		        <button v-on:click="go" class="btn btn-default" type="button">Go</button>
+		      </span>
+		    </div><!-- /input-group -->
+			  <!-- <input v-model="keyword" v-on:keyup.enter="go" placeholder='Search "Noah"' type=text />
+			  <button v-on:click="go">Go</button> -->
 			</div>
 
 			<div class=col-md-3>
