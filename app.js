@@ -46,6 +46,8 @@ require.config({
 	"qCorpus2": 'data/manzil2,3,4',
 	"qCorpus3": 'data/manzil5,6',
 
+	"w2w": 'data/w2w',
+	"w2wEn": 'data/w2wEn',
   }
 });
 
@@ -55,6 +57,7 @@ require.config({
 					,'underscore' ,'jquery', 'jqueryMark', 'moment'
 					,'Q' ,'qUtil' 
 					,'qSearch'
+					,'w2wEn'
 					//,'qCorpus'
 					//,'qAsbab' ,'qSynonyms'
 					
@@ -68,6 +71,7 @@ require.config({
 					,_ ,$, jqueryMark, moment
 					,Q ,qUtil 
 					,qSearch
+					,w2wEn
 					//,qCorpus 
 					//,qAsbab ,qSynonyms
 
@@ -75,7 +79,6 @@ require.config({
 					//,qRoot ,qRootLemDict ,qRootMeanings ,qSearch
 					//,qSarf ,qAntonyms
 		){
-
 
 	const User = {
 	  template: '<div>User {{ $route.params.id }}</div>'
