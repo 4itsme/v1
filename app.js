@@ -863,8 +863,7 @@ require.config({
 								<HR/>\
 							</div>\
 						</span>\
-						{{ words }}\
-						<div v-for="word in words">\
+						<div v-for="word in segmentify(verse.BUCK, words)">\
 							{{ word }} \
 						</div>\
 						<!-- show arabic ayah -->\
@@ -907,6 +906,12 @@ require.config({
 		  	}
 		  },
 		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'words'],
+		  methods:{
+		  	segmentify: function(BUCK, words){
+		  		var bucks = BUCK.split(' ');
+		  		return _.zip(bucks, words);
+		  	}
+		  },
 		});
 
 
