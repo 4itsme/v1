@@ -135,10 +135,25 @@
   </style>
 </head>
 
-<body>  
-<H4>Qur'aan Viewer</H4>
+<body>
+
 <div id="app-1" class="container-fluid">
-	<HR/>
+	<div class=row>
+		<div class="col-md-3 col-md-offset-4">
+			<H4 class=lead>Qur'aan Viewer</H4>
+		</div>
+		<HR/>
+	</div>
+
+ 	  <div v-if='isLoading' class=row>
+ 	  	<div class="col-md-3 col-md-offset-4">
+		  	<BR/><BR/><BR/><BR/><BR/>
+			<!-- <i class="fa-li fa fa-spinner fa-pulse"></i>Loading... -->
+			<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+			<span class="sr-only">Loading...</span>
+		</div>
+	   </div>
+
        <div v-cloak class=row>
        	 <div class=col-md-3>
 	         <button v-on:click="ayahchange(-1)">&lt;</button>
@@ -168,12 +183,7 @@
 			  <!-- <input type=checkbox v-model="showAsbab" click="showAsbab = !showAsbab; tab = 'asbab';" title="show Asbab (Sababun Nuzul)" />Asbab
 			  <input type=checkbox v-model="showSynonyms" click="showSynonyms = !showSynonyms; tab = 'synonyms';" title="show transliteration" />Synonyms -->
 			  <!-- <input type=checkbox v-model="showCorpus" click="showCorpus = !showCorpus" title="show transliteration" />Grammar -->
-			  <div v-if='isLoading'>
-			  	<BR/><BR/><BR/><BR/><BR/>
-				<!-- <i class="fa-li fa fa-spinner fa-pulse"></i>Loading... -->
-				<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-				<span class="sr-only">Loading...</span>
-			  </div>
+			  
 
 			  <div v-cloak>
 			  	{{message}}
