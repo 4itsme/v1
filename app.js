@@ -353,10 +353,10 @@ require.config({
 					var startTime = new moment(), endTime, message = '';
 					  //vm.searchResults = qSearch.search(keyword);
 					//console.log((message = 'Searching...' /*(startTime = new moment()) +' request fired. '*/) );
-					vm.isLoading = true;
+					vm.isSearching = true;
 					//vm.message = message;
 					qSearch.searchAsync(keyword).then(function(results){
-						vm.isLoading = false;
+						vm.isSearching = false;
 						vm.searchResults = results || {};
 						vm.searchResults.searching = false;
 						console.log((vm.message += ((endTime = new moment()) +' results received') ) );
@@ -488,6 +488,7 @@ require.config({
 			wordCorpusResults: {},
 			
 			isLoading: true,
+			isSearching: false,
 			message: '',
 			debug: false,
 			showArabic: true,

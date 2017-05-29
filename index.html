@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Qur'aan Viewer</title>
+  <title>Qur'aan Vsiewer</title>
   <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
   <!-- <script src="lib/vue.js"></script> -->
   <!-- Latest compiled and minified CSS -->
@@ -174,9 +174,6 @@
            <!-- Search: -->
 			  <input v-model="keyword" v-on:keyup.enter="go" placeholder='Search "Noah"' type=text />
 			  <button v-on:click="go">Go</button>
-			  <h6><small><span v-cloak v-if=message class=text-muted>
-			  	{{message}}
-			  </span></small></h6>
 			</div>
 
 			<div class=col-md-3>
@@ -310,6 +307,7 @@
 	  </div>
 
 	  <div v-bind:class="{ 'tab-pane': true, active: tab === 'search' }" id="search">
+
 		  <div Xclass=searchResults v-if="searchResults && Object.keys(searchResults).length > 1">
 			  <HR>Search results: <BR>
 			  {{searchResults.matchesCount}} matches found searching for: {{searchResults.keyword}}<BR><BR>
@@ -331,9 +329,12 @@
 			  <HR>
 		  </div>
 		  <div v-else>Search results shown here if available</div>
-		  <div v-if="searchResults.searching">
+		  <div v-if="isSearching || searchResults.searching">
 		  	<i class="fa fa-spinner fa-pulse"></i>Searching...
 		  </div>
+		  <h6><small><span v-cloak v-if=message class=text-muted>
+		  	{{message}}
+		  </span></small></h6>
 	  </div>
 
 	  <div v-bind:class="{ 'tab-pane': true, active: tab === 'misc' }" id="misc">
