@@ -828,7 +828,7 @@ require.config({
 		Vue.component('quran-page', {
 		  template: '<div dir=rtl class=\'quranpage clearfix\' style="text-align: justify; Xoverflow:scroll; Xmax-height:550px; XXXwhite-space: nowrap;">\
 		  				<span v-for="(verse, verseIndex) in iList">\
-							<quran-ayah :verse="verse">\
+							<quran-ayah :verse="verse" :show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr">\
 								\
 							</quran-ayah>\
 						</span>\
@@ -841,7 +841,7 @@ require.config({
 		  		return this.ayahsListFromPage;
 		  	}
 		  },
-		  props: ['ayahsListFromPage'],
+		  props: ['ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr'],
 		});
 
 

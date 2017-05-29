@@ -129,7 +129,11 @@
 <H4>Qur'aan Viewer</H4>
 <div id="app-1" class="container-fluid">
 	<p v-cloak>
-    	<quran-page :ayahs-list-from-page="data.ayahsListFromPage"></quran-page>
+    	<quran-page 
+    		:ayahs-list-from-page="data.ayahsListFromPage"
+    		:show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="!showAr"
+    	>
+    	</quran-page>
     </p>
 	<HR>
     <p v-cloak>
