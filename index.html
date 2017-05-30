@@ -370,9 +370,11 @@
 	  	  		<HR/>
 
 				<h3> Root word </h3>
-	  	  		Lemma: {{ wordCorpusResults.w2w }}
+	  	  		Lemma: 
+	  	  			<div class='text-center arr2'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.lemmaAr }}</div>
 
 	  	  		Root: 
+	  	  			<div class='text-center arr2'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootAr }}</div>
 	  	  		<HR/>
 
 				<h3> Grammar </h3>

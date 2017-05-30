@@ -105,7 +105,12 @@ require.config({
 	bus.$on('onClickWord', function (word) {
 	  console.log(JSON.stringify(word));
 	  vm.tab = 'misc';
-	  vm.wordCorpusResults = word;
+	  require(['qCorpus'], function(qCorpus){
+	  	word.corpus = qCorpus.parse(word.corpus);
+	  	if( word.corpus.lemma ){ word.corpus.lemmaAr = qUtil.EnToAr( word.corpus.lemma ); }
+	  	if( word.corpus.root ){ word.corpus.rootAr = qUtil.EnToAr( word.corpus.root ); }
+	    vm.wordCorpusResults = word;
+	  });
 	});
 
 	vm = initializeVM();
