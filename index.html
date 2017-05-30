@@ -217,7 +217,7 @@
 	  <li v-if="showAsbab" v-bind:class="{ active: tab === 'asbab' }" @click="tab = 'asbab'"><a data-target="#asbab" data-toggle="tab">Asbab</a></li>
 	  <li v-if="showSynonyms" v-bind:class="{ active: tab === 'synonyms' }" @click="tab = 'synonyms'"><a data-target="#synonyms" data-toggle="tab">Synonyms</a></li>
 	  <li v-bind:class="{ active: tab === 'search' }" @click="tab = 'search'"><a data-target="#search" data-toggle="tab">Search results</a></li>
-	  <li v-if="false" v-bind:class="{ active: tab === 'misc' }" @click="tab = 'misc'"><a data-target="#misc" data-toggle="tab">Misc</a></li>
+	  <li v-if="true" v-bind:class="{ active: tab === 'misc' }" @click="tab = 'misc'"><a data-target="#misc" data-toggle="tab">Misc</a></li>
 	  <li v-bind:class="{ active: tab === 'about' }" @click="tab = 'about'"><a data-target="#about" data-toggle="tab">About</a></li>	
 	</ul>
 
@@ -353,7 +353,7 @@
 		</div>
 	  </div>
 
-	  <div v-if="false" v-bind:class="{ 'tab-pane': true, active: tab === 'misc' }" id="misc">
+	  <div v-if="true" v-bind:class="{ 'tab-pane': true, active: tab === 'misc' }" id="misc">
 	  	  <div v-if="wordCorpusResults">
 	  	  	{{ wordCorpusResults }}
 	  	  </div>

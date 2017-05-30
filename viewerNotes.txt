@@ -3,6 +3,10 @@ search results click; highlighting broken
 For sajda ayahs, the sign isnt shoing up at beginning or end.
 
 
+ENHANCEMENTS:
+http://corpus.quran.com/wordbyword.jsp?chapter=18&verse=2
+http://corpus.quran.com/qurandictionary.jsp?q=n*r#(18:2:2)
+
 FIXED:
 issue: word by word is off for ayah 1.
 95, 97... basmalla not getting stripped out.

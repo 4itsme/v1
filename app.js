@@ -100,6 +100,14 @@ require.config({
 
 	initializeVueComponents2(Vue);
 
+	var bus = new Vue();
+	
+	bus.$on('onClickWord', function (word) {
+	  console.log(JSON.stringify(word));
+	  vm.tab = 'misc';
+	  vm.wordCorpusResults = word;
+	});
+
 	vm = initializeVM();
 
 	vm._ = _;
@@ -954,6 +962,7 @@ require.config({
 			methods:{
 				onClickWord: function(word){
 					console.log(JSON.stringify(word));
+					bus.$emit('onClickWord', word);
 				},
 			},
 		});
