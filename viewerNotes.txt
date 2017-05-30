@@ -1,4 +1,6 @@
 OPEN ISSUES:
+for 2:26:16 the grammar details are off by one? correct word showing. correct meaning showing? no. off by 1.
+for the qRootLemDict root tree, the counts are missing for 1 instance of all roots starting with $.
 search results click; highlighting broken
 For sajda ayahs, the sign isnt shoing up at beginning or end.
 
