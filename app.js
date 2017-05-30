@@ -910,15 +910,44 @@ require.config({
 		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'words'],
 		  methods:{
 		  	segmentify: function(BUCK, words){
+				var count = 0;
+				return _.map(BUCK.split(' '), function(w){
+					var isStopLetter = /[ۚۖۛۗۙ]/.test( w ),
+						isOtherLetter = /[۞۩]/.test( w ),
+						no = (isStopLetter || isOtherLetter) ? null : ++count,
+						resp = {w: w};
+					if(isStopLetter || isOtherLetter){ resp.isStopLetter = true; }
+					else{ resp.no = no; resp.w2w = words[ no - 1 ]; };
+					return resp;
+				})
+		  	}
+		  	/*segmentify: function(BUCK, words){
 		  		//var stopletters = "ۚۖۛۗۙ";
 		  		var splitWordsRegex = /[ ]([ۚۖۛۗۙ] ?)?/g;
 		  		var bucks = BUCK.replace(/(۞ )|( ۩)/g, '').replace( splitWordsRegex, '\n' ).split('\n');
 		  		return _.zip(bucks, words);
-		  	}
+		  	}*/
 		  },
 		});
 
 
+		Vue.component('quran-word', {
+			template: '<span v-if="isStopLetter">\
+							{{w}} &nbsp;\
+					   </span>\
+					   <span v-else>\
+					   		<span :title="no +\": \"+ w2w">\
+					   			{{w}} &nbsp;\
+					   		</span>\
+					   	</span>',
+			data: function(){
+				return {};
+			},
+			props: ['w', 'no', 'w2w', 'isStopLetter'],
+			methods:{
+
+			},
+		});
 
 	}
 });
