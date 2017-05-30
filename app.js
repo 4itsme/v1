@@ -108,7 +108,7 @@ require.config({
 	  require(['qCorpus'], function(qCorpus){
 	  	word.corpus = qCorpus.parse(word.corpus);
 	  	if( word.corpus.lemma ){ word.corpus.lemmaAr = qUtil.EnToAr( word.corpus.lemma ); }
-	  	if( word.corpus.root ){ word.corpus.rootAr = qUtil.EnToAr( word.corpus.root ); }
+	  	if( word.corpus.root ){ word.corpus.rootAr = qUtil.EnToAr( word.corpus.root.split('').join(' ') ); }
 	    vm.wordCorpusResults = word;
 	  });
 	});
