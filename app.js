@@ -935,11 +935,11 @@ require.config({
 
 		Vue.component('quran-word', {
 			template: '<span v-if="word.isStopLetter" class=sign>\
-							{{ word.w }} &nbsp;\
+							{{ word.w }} \
 					   </span>\
 					   <span v-else>\
 					   		<span :title="word.w2w" class=w2w v-on:click.stop.prevent="onClickWord( word )">\
-					   			{{ word.w }} &nbsp;\
+					   			{{ word.w }} \
 					   		</span>\
 					   </span>',
 			data: function(){
