@@ -109,7 +109,17 @@ require.config({
 	  	word.corpus = qCorpus.parse(word.corpus);
 	  	if( word.corpus.lemma ){ word.corpus.lemmaAr = qUtil.EnToAr( word.corpus.lemma ); }
 	  	if( word.corpus.root ){ word.corpus.rootAr = qUtil.EnToAr( word.corpus.root.split('').join(' ') ); }
-	    vm.wordCorpusResults = word;
+
+	  	require(['qRootMeanings'], function( qRootMeanings ){
+	  		word.corpus.rootMeaning = qRootMeanings.lookup( word.corpus.root );
+
+	  		require(['qRootLemDict'], function( qRootLemDict ){
+	  			word.corpus.rootTree = qRootLemDict.lookup({lem: word.corpus.lemma, root: word.corpus.root });
+	  			vm.wordCorpusResults = word;
+	  		});
+	  		//vm.wordCorpusResults = word;
+	  	})
+	    //vm.wordCorpusResults = word;
 	  });
 	});
 
