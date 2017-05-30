@@ -21,6 +21,10 @@
 	    color: black;
 	}
 
+	.arr2{
+		font-size: 1.8235em;
+	}
+
 	.aya {
 	    /*background-color: #F7FCE3;*/
 	}
@@ -355,7 +359,36 @@
 
 	  <div v-if="true" v-bind:class="{ 'tab-pane': true, active: tab === 'misc' }" id="misc">
 	  	  <div v-if="wordCorpusResults">
-	  	  	{{ wordCorpusResults }}
+	  	  	<div class=well>
+	  	  		
+	  	  		<div class='text-center arr2'> {{ wordCorpusResults.w }} </div>
+	  	  		<HR/>
+	  	  		{{ [wordCorpusResults.surah, wordCorpusResults.ayah, wordCorpusResults.word].join(':') }}
+
+	  	  		<h3> Translation </h3>
+	  	  		{{ wordCorpusResults.w2w }}
+	  	  		<HR/>
+
+				<h3> Root word </h3>
+	  	  		Lemma: {{ wordCorpusResults.w2w }}
+
+	  	  		Root: 
+	  	  		<HR/>
+
+				<h3> Grammar </h3>
+	  	  		{{ wordCorpusResults.corpus }}
+	  	  		<HR/>
+
+				<h3> Transliteration </h3>
+	  	  		{{ wordCorpusResults.w2w }}
+	  	  		<HR/>
+
+	  	  		<HR/>
+
+	  	  		<HR/>
+	  	  		{{ wordCorpusResults }}
+
+	  	  	</div>
 	  	  </div>
 
 	  	  <div v-if="verbResults">
