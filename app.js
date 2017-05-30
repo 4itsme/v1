@@ -197,8 +197,10 @@ require.config({
 						var verseEx = vm.getVerse(verse.verseNo);
 
 						var basmallah = 'bisomi {ll~ahi {lr~aHoma`ni {lr~aHiymi ',
-							isBasmallah = verse.ayah == 1 && verseEx.BUCK && verseEx.BUCK.startsWith( basmallah );
-						if(isBasmallah){ verseEx.BUCK = verseEx.BUCK.substring( basmallah.length ); }
+							basmallah2 = 'b~isomi {ll~ahi {lr~aHoma`ni {lr~aHiymi',
+							isBasmallah = verse.ayah == 1 && verseEx.BUCK && verseEx.BUCK.startsWith( basmallah ),
+							isBasmallah2 = verse.ayah == 1 && verseEx.BUCK && verseEx.BUCK.startsWith( basmallah2 );
+						if(isBasmallah || isBasmallah2){ verseEx.BUCK = verseEx.BUCK.substring( basmallah.length + (isBasmallah2 ? 1 : 0) ); }
 						
 						verseEx.AR = qUtil.EnToAr( verseEx.BUCK );
 						verseEx.BARE = qUtil.BuckToBare( verseEx.BUCK );
