@@ -877,7 +877,7 @@ require.config({
 								{{ verse.surah }}:{{ verse.ayah }} &nbsp; \
 							</span>\
 							<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
-								<span v-for="word in segmentify(verse, words)">\
+								<span v-for="word in segmentify(verse, words, corpus)">\
 									<quran-word :word="word"></quran-word>\
 								</span>\
 							</span>\
@@ -916,7 +916,7 @@ require.config({
 		  },
 		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'words', 'corpus'],
 		  methods:{
-		  	segmentify: function(verse, words){
+		  	segmentify: function(verse, words, corpus){
 				var count = 0;
 				return _.map(verse.AR.split(' '), function(w){
 					var isStopLetter = /[ۚۖۛۗۙ]/.test( w ),
@@ -924,7 +924,7 @@ require.config({
 						no = (isStopLetter || isOtherLetter) ? null : ++count,
 						resp = {w: w};
 					if(isStopLetter || isOtherLetter){ resp.isStopLetter = true; }
-					else{ resp.surah = verse.surah; resp.ayah = verse.ayah; resp.word = no; resp.w2w = words[ no - 1 ]; };
+					else{ resp.surah = verse.surah; resp.ayah = verse.ayah; resp.word = no; resp.w2w = words[ no - 1 ]; resp.corpus = corpus[ no - 1 ]; };
 					return resp;
 				})
 		  	}
