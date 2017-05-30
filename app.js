@@ -908,7 +908,9 @@ require.config({
 		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'words'],
 		  methods:{
 		  	segmentify: function(BUCK, words){
-		  		var bucks = BUCK.split(' ');
+		  		//var stopletters = "ۚۖۛۗۙ";
+		  		var splitWordsRegex = /[ ]([ۚۖۛۗۙ] ?)?/g;
+		  		var bucks = BUCK.replace(/(۞ )|( ۩)/g, '').replace( splitWordsRegex, '\n' ).split('\n');
 		  		return _.zip(bucks, words);
 		  	}
 		  },
