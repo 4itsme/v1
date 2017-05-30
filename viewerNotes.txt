@@ -1,0 +1,44 @@
+OPEN ISSUES:
+search results click; highlighting broken
+For sajda ayahs, the sign isnt shoing up at beginning or end.
+
+
+FIXED:
+issue: word by word is off for ayah 1.
+95, 97... basmalla not getting stripped out.
+
+b~isomi {ll~ahi {lr~aHoma`ni {lr~aHiymi wa{lt~iyni wa{lz~ayotuwni\n\
+b~isomi {ll~ahi {lr~aHoma`ni {lr~aHiymi <in~aA^ >anzalona`hu fiY layolapi {loqadori\n\
+
+bisomi {ll~ahi {lr~aHoma`ni {lr~aHiymi {loqaAriEapu\n\
+
+
+
+
+*a`lika {lokita`bu laA rayoba ۛ fiyhi ۛ hudF]Y l~ilomut~aqiyna\n\
+
+<in~amaA yu&ominu bi_#aAya`tinaA {l~a*iyna <i*aA *uk~iruwA@ bihaA xar~uwA@ suj~adF]A wasab~aHuwA@ biHamodi rab~ihimo wahumo laA yasotakobiruwna ۩\n\
+
+۞ walaqado fatan~aA qabolahumo qawoma firoEawona wajaA^'ahumo rasuwlN] kariymN\n\
+
+
+>amorF]A m~ino EindinaA^ ۚ <in~aA kun~aA murosiliyna\n\
+
+
+
+var count = 0;
+var str = "*a`lika {lokita`bu laA rayoba ۛ fiyhi ۛ hudF]Y l~ilomut~aqiyna\n";
+str = "۞ walaqado fatan~aA qabolahumo qawoma firoEawona wajaA^'ahumo rasuwlN] kariymN\n"; 
+str = "<in~amaA yu&ominu bi_#aAya`tinaA {l~a*iyna <i*aA *uk~iruwA@ bihaA xar~uwA@ suj~adF]A wasab~aHuwA@ biHamodi rab~ihimo wahumo laA yasotakobiruwna ۩\n";
+console.table(
+_.map(str.split(' '), function(w){
+	var isStopLetter = /[ۚۖۛۗۙ]/.test( w ),
+		isOtherLetter = /[۞۩]/.test( w ),
+		no = (isStopLetter || isOtherLetter) ? count : ++count;
+	return {
+		w: w,
+		isStop: (isStopLetter || isOtherLetter),
+		no: no,
+    };
+})
+)

@@ -46,8 +46,8 @@ require.config({
 	"qCorpus2": 'data/manzil2,3,4',
 	"qCorpus3": 'data/manzil5,6',
 
-	"w2w": 'data/w2w',
 	"w2wEn": 'data/w2wEn',
+	"w2wCorpus": 'data/w2wCorpus',
   }
 });
 
@@ -58,6 +58,7 @@ require.config({
 					,'Q' ,'qUtil' 
 					,'qSearch'
 					,'w2wEn'
+					,'w2wCorpus'
 					//,'qCorpus'
 					//,'qAsbab' ,'qSynonyms'
 					
@@ -72,6 +73,7 @@ require.config({
 					,Q ,qUtil 
 					,qSearch
 					,w2wEn
+					,w2wCorpus
 					//,qCorpus 
 					//,qAsbab ,qSynonyms
 
@@ -102,6 +104,7 @@ require.config({
 
 	vm._ = _;
 	vm.w2wEn = w2wEn;
+	vm.w2wCorpus = w2wCorpus;
 	vm.qUtil = qUtil;
 	vm.suras = _.chain( _.range(1, 115) )
 				.map( function(s){
@@ -514,6 +517,7 @@ require.config({
 			_: { find:function(){} },
 			qUtil:{},
 			w2wEn:{},
+			w2wCorpus: {},
 			qCorpus:{},
 			currentPageSynonymsDetails: [],
 			tab: 'about',
@@ -838,6 +842,7 @@ require.config({
 		  				<span v-for="(verse, verseIndex) in iList">\
 							<quran-ayah :verse="verse" :show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr" \
 								:words="w2wEn.lookup( verse.verseNo )"\
+								:corpus="w2wCorpus.lookup( verse.verseNo )"\
 							>\
 								\
 							</quran-ayah>\
@@ -851,7 +856,7 @@ require.config({
 		  		return this.ayahsListFromPage;
 		  	}
 		  },
-		  props: ['ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'w2wEn'],
+		  props: ['ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'w2wEn', 'w2wCorpus'],
 		});
 
 
@@ -909,7 +914,7 @@ require.config({
 		  		return this.verse;
 		  	}
 		  },
-		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'words'],
+		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'words', 'corpus'],
 		  methods:{
 		  	segmentify: function(verse, words){
 				var count = 0;

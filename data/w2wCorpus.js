@@ -8,9 +8,12 @@ var oMod = (function(){
 							  //);
 	
 	function lookup(verse, word){
-		if(verse && verse > 0 && verse < _words.length &&
-		   word && word > 0 && word < maxWordsInLine){
-			return _words[verse][word - 1];
+		if(verse && verse > 0 && verse < _words.length){
+		   if(word && word > 0 && word < maxWordsInLine){
+				return _words[verse][word - 1];
+			}else{
+				return _words[verse];
+			}
 		}
 	}
 	
