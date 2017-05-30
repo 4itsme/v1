@@ -872,7 +872,7 @@ require.config({
 								{{ verse.surah }}:{{ verse.ayah }} &nbsp; \
 							</span>\
 							<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
-								<span v-for="word in segmentify(verse.AR, words)">\
+								<span v-for="word in segmentify(verse, words)">\
 									<quran-word :word="word"></quran-word>\
 								</span>\
 							</span>\
@@ -911,15 +911,15 @@ require.config({
 		  },
 		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'words'],
 		  methods:{
-		  	segmentify: function(BUCK, words){
+		  	segmentify: function(verse, words){
 				var count = 0;
-				return _.map(BUCK.split(' '), function(w){
+				return _.map(verse.AR.split(' '), function(w){
 					var isStopLetter = /[ۚۖۛۗۙ]/.test( w ),
 						isOtherLetter = /[۞۩]/.test( w ),
 						no = (isStopLetter || isOtherLetter) ? null : ++count,
 						resp = {w: w};
 					if(isStopLetter || isOtherLetter){ resp.isStopLetter = true; }
-					else{ resp.no = no; resp.w2w = words[ no - 1 ]; };
+					else{ resp.surah = verse.surah; resp.ayah = verse.ayah; resp.word = no; resp.w2w = words[ no - 1 ]; };
 					return resp;
 				})
 		  	}
@@ -938,16 +938,18 @@ require.config({
 							{{ word.w }} &nbsp;\
 					   </span>\
 					   <span v-else>\
-					   		<span :title="word.no + word.w2w">\
+					   		<span :title="word.w2w" class=w2w v-on:click.stop.prevent="onClickWord( word )">\
 					   			{{ word.w }} &nbsp;\
 					   		</span>\
-					   	</span>',
+					   </span>',
 			data: function(){
 				return {};
 			},
 			props: ['word'], //'w', 'no', 'w2w', 'isStopLetter'],
 			methods:{
-
+				onClickWord: function(word){
+					console.log(JSON.stringify(word));
+				},
 			},
 		});
 
