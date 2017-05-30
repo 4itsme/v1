@@ -865,9 +865,6 @@ require.config({
 								<HR/>\
 							</div>\
 						</span>\
-						<div v-for="word in segmentify(verse.BUCK, words)">\
-							{{ word }} \
-						</div>\
 						<!-- show arabic ayah -->\
 						<span v-if="verse.BUCK" dir="rtl">\
 							\
@@ -875,6 +872,11 @@ require.config({
 								{{ verse.surah }}:{{ verse.ayah }} &nbsp; \
 							</span>\
 							<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
+								<span v-for="word in segmentify(verse.AR, words)">\
+									<quran-word :word="word"></quran-word>\
+								</span>\
+							</span>\
+							<span v-if="false" style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
 								{{ !hideAr ? verse.AR : verse.BUCK }}\
 							</span>\
 							<span v-if="true || (!showTrans && !showTranslit && !showCorpus)" :title="\'Ayah ref: \' + verse.surah + \':\'+ verse.ayah"  style=font-size:.96em >\
@@ -932,18 +934,18 @@ require.config({
 
 
 		Vue.component('quran-word', {
-			template: '<span v-if="isStopLetter">\
-							{{w}} &nbsp;\
+			template: '<span v-if="word.isStopLetter" class=sign>\
+							{{ word.w }} &nbsp;\
 					   </span>\
 					   <span v-else>\
-					   		<span :title="no +\": \"+ w2w">\
-					   			{{w}} &nbsp;\
+					   		<span :title="word.no + word.w2w">\
+					   			{{ word.w }} &nbsp;\
 					   		</span>\
 					   	</span>',
 			data: function(){
 				return {};
 			},
-			props: ['w', 'no', 'w2w', 'isStopLetter'],
+			props: ['word'], //'w', 'no', 'w2w', 'isStopLetter'],
 			methods:{
 
 			},
