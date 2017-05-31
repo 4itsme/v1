@@ -1,4 +1,5 @@
 OPEN ISSUES:
+for 67:7:4 why verb score is 0; its V and PERF. samiuw.
 for 2:26:16 the grammar details are off by one? correct word showing. correct meaning showing? no. off by 1.
 for the qRootLemDict root tree, the counts are missing for 1 instance of all roots starting with $.
 search results click; highlighting broken
