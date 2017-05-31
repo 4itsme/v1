@@ -42,12 +42,13 @@ require.config({
 
 	"asbabDATA": 'data/asbabDATA',
 	"synonymsDATA": 'data/synonymsDATA',
-	"qCorpus1": 'data/manzil1,7',
-	"qCorpus2": 'data/manzil2,3,4',
-	"qCorpus3": 'data/manzil5,6',
+	//"qCorpus1": 'data/manzil1,7',
+	//"qCorpus2": 'data/manzil2,3,4',
+	//"qCorpus3": 'data/manzil5,6',
 
 	"w2wEn": 'data/w2wEn',
 	"w2wCorpus": 'data/w2wCorpus',
+
   }
 });
 
@@ -419,7 +420,8 @@ require.config({
 			}
 			
 			vm.showAsbabFor = function(sura, ayah){
-				require(['qAsbab'], function(qAsbab){
+				require(['qAsbab', 'asbabDATA'], function(qAsbab, asbabDATA){
+					qAsbab.setData( asbabDATA );
 					var lookup = qAsbab.get(sura, ayah);
 					vm.showAsbabDetail = true;
 					vm.asbabDetail = lookup;

@@ -1,4 +1,4 @@
-fnJsonCallbackASBAB( "(Al-Fâtihah)\n\
+define([], function(){ return /*fnJsonCallbackASBAB(*/ "(Al-Fâtihah)\n\
 [1:1-7]\n\
 There is some scholarly disagreement concerning this Surah [i.e. concerning where it was revealed]; the\n\
 majority is however of the opinion that it was revealed in Mecca, one among the first Surahs of the Qur'an\n\
@@ -8697,4 +8697,5 @@ He said: 'Two angels came to me…', and he mentioned the whole story”. The wh
 Bukhari from 'Ubayd ibn Isma'il from Abu Usamah. The same narration has different channels of\n\
 transmission in both the authentic collections of Bukhari and Muslim. \n\
 \n\
-" );
+" //);
+});
