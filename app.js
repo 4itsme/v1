@@ -434,8 +434,6 @@ require.config({
 			vm.showSynonymsFor = function(item, sura, ayah){
 				if(item){
 					var details = vm.getSynonymsDetailsFor(item, sura, ayah);
-					vm.showSynonymsDetail = true;
-					vm.synonymsDetail = details;
 				}else{
 					var key = sura + ':' + ayah;
 					_.first( vm.currentPageSynonyms, key);
@@ -458,10 +456,22 @@ require.config({
 				require(['qSynonyms'], function(qSynonyms){
 					var lookup = qSynonyms.get(topicId);
 					var content = '';
+					var details = {
+						name: name,
+						topicId: topicId,
+						topicUrl: topicUrl,
+						words: lookup,
+						ref: key,
+						content: content,
+					};
+					vm.showSynonymsDetail = true;
+					vm.synonymsDetail = details;
+
 					$.get( topicUrl )
 						.then(function(content){
 							var iContent = vm.fnGrabHtmlBody(content);
 							console.log([topicUrl, content.length, iContent.length] );
+
 							vm.synonymsDetail.content = iContent;
 							setTimeout(function(){
 								//hilite the full reference or atleast the sura # matches.
@@ -474,14 +484,6 @@ require.config({
 								});
 							}, 100);
 						});
-					return {
-						name: name,
-						topicId: topicId,
-						topicUrl: topicUrl,
-						words: lookup,
-						ref: key,
-						content: content,
-					};
 				});
 			}
 			
