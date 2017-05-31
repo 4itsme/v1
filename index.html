@@ -380,6 +380,7 @@
 	  	  		<HR/>
 
 				<h3> Grammar </h3>
+				<div v-if="wordCorpusResults.corpus" class=well v-html=" wordCorpusResults.corpus && wordCorpusResults.corpus.pretty "></div>
 	  	  		{{ wordCorpusResults.corpus }}
 	  	  		<HR/>
 
