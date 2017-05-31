@@ -160,6 +160,7 @@ require.config({
 			var remote = 'https://4itsme.github.io',
 				isLocalhost = (location.origin === "http://localhost:8080" || location.href.startsWith('http://localhost:8080') ),
 				origin = isLocalhost ? location.origin : remote;
+				vm.showAsbab = vm.showSynonyms = isLocalhost;
 			//if(isLocalhost){ vm.showCorpus = true; }
 			qMain.init(origin + '/', 'data/');
 			qMain.go(function(){
@@ -247,7 +248,8 @@ require.config({
 					
 					//now find out if any Asbab for this page as an async call
 					if(vm.showSynonyms){
-						require(['qSynonyms'], function(qSynonyms){
+						require(['qSynonyms', 'synonymsDATA'], function(qSynonyms, synonymsDATA){
+							qSynonyms.setData( synonymsDATA );
 							qSynonyms.findForPageAsync( vm.data.page )
 								  .then(function(data){
 									vm.currentPageSynonyms = (data || []);
