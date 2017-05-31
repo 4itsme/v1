@@ -235,20 +235,25 @@ require.config({
 					});
 
 					//now find out if any Asbab for this page as an async call
-					if(vm.showAsbab) 
-					qAsbab.findForPageAsync( vm.data.page )
-						  .then(function(data){
-							vm.currentPageAsbab = (data || '').split(' ');
-					});
+					if(vm.showAsbab){
+						require(['qAsbab'], function(qAsbab){
+							qAsbab.findForPageAsync( vm.data.page )
+								  .then(function(data){
+									vm.currentPageAsbab = (data || '').split(' ');
+							});
+						});
+					}
 					
 					//now find out if any Asbab for this page as an async call
-					if(vm.showSynonyms)
-					qSynonyms.findForPageAsync( vm.data.page )
-						  .then(function(data){
-							vm.currentPageSynonyms = (data || []);
-							currentPageSynonymsDetails = [];
-					});
-					
+					if(vm.showSynonyms){
+						require(['qSynonyms'], function(qSynonyms){
+							qSynonyms.findForPageAsync( vm.data.page )
+								  .then(function(data){
+									vm.currentPageSynonyms = (data || []);
+									currentPageSynonymsDetails = [];
+							});
+						});
+					}
 				}
 				
 				vm.goSearchResult = function(match, result){ //single string like this 5|12|sdfsfs fsdfsdfs
@@ -414,10 +419,12 @@ require.config({
 			}
 			
 			vm.showAsbabFor = function(sura, ayah){
-				var lookup = qAsbab.get(sura, ayah);
-				vm.showAsbabDetail = true;
-				vm.asbabDetail = lookup;
-				console.log( lookup );
+				require(['qAsbab'], function(qAsbab){
+					var lookup = qAsbab.get(sura, ayah);
+					vm.showAsbabDetail = true;
+					vm.asbabDetail = lookup;
+					console.log( lookup );
+				});
 			}
 					
 			vm.showSynonymsFor = function(item, sura, ayah){
@@ -444,32 +451,34 @@ require.config({
 				var name = item.n,
 					topicId = item.t,
 					topicUrl = item.u;
-				var lookup = qSynonyms.get(topicId);
-				var content = '';
-				$.get( topicUrl )
-					.then(function(content){
-						var iContent = vm.fnGrabHtmlBody(content);
-						console.log([topicUrl, content.length, iContent.length] );
-						vm.synonymsDetail.content = iContent;
-						setTimeout(function(){
-							//hilite the full reference or atleast the sura # matches.
-							var hilites = [];
-							hilites.push( vm.synonymsDetail.ref );
-							hilites.push( vm.synonymsDetail.ref.split(':')[0] + ':' ); //the sura ref, ex: '3:'
-							$('.synonymsDetailContent').unmark({ "done": function(){//now turn on highlighting of sura
-																	$('.synonymsDetailContent').mark( hilites );
-														 }
-							});
-						}, 100);
-					});
-				return {
-					name: name,
-					topicId: topicId,
-					topicUrl: topicUrl,
-					words: lookup,
-					ref: key,
-					content: content,
-				};
+				require(['qSynonyms'], function(qSynonyms){
+					var lookup = qSynonyms.get(topicId);
+					var content = '';
+					$.get( topicUrl )
+						.then(function(content){
+							var iContent = vm.fnGrabHtmlBody(content);
+							console.log([topicUrl, content.length, iContent.length] );
+							vm.synonymsDetail.content = iContent;
+							setTimeout(function(){
+								//hilite the full reference or atleast the sura # matches.
+								var hilites = [];
+								hilites.push( vm.synonymsDetail.ref );
+								hilites.push( vm.synonymsDetail.ref.split(':')[0] + ':' ); //the sura ref, ex: '3:'
+								$('.synonymsDetailContent').unmark({ "done": function(){//now turn on highlighting of sura
+																		$('.synonymsDetailContent').mark( hilites );
+															 }
+								});
+							}, 100);
+						});
+					return {
+						name: name,
+						topicId: topicId,
+						topicUrl: topicUrl,
+						words: lookup,
+						ref: key,
+						content: content,
+					};
+				});
 			}
 			
 			//ref: https://jsfiddle.net/228d4snb/
