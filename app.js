@@ -932,6 +932,8 @@ require.config({
 							<quran-ayah :verse="verse" :show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr" \
 								:show-asbab="showAsbab"\
 								:show-synonyms="showSynonyms"\
+								:current-page-asbab="currentPageAsbab"\
+								:current-page-synonyms="currentPageSynonyms"\
 								:words="w2wEn.lookup( verse.verseNo )"\
 								:corpus="w2wCorpus.lookup( verse.verseNo )"\
 							>\
@@ -947,7 +949,7 @@ require.config({
 		  		return this.ayahsListFromPage;
 		  	}
 		  },
-		  props: ['ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'hideAr', 'w2wEn', 'w2wCorpus'],
+		  props: ['ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'currentPageAsbab', 'currentPageSynonyms', 'hideAr', 'w2wEn', 'w2wCorpus'],
 		});
 
 
@@ -980,18 +982,19 @@ require.config({
 							</span>\
 							\
 						</span>\
-\
-\
+						\
+						\
 						<!-- show translation, translit etc -->\
-						<span v-if="verse.BARE" v-html="">	</span>\
+						<span v-if="verse.BARE" v-html="">	\
+						</span>\
 						<span v-if="verse.TRANS" >\
 							<div v-if="showTrans" dir=ltr>{{ verse.TRANS }}</div>\
 						</span>\
 						<span v-if="verse.TRANSLIT" >\
 							<div v-if="showTranslit" dir=ltr v-html="verse.TRANSLIT"></div>\
 						</span>\
-\
-						<span v-show="showAsbab && currentPageAsbab.join(\' \').indexOf(\' \' + verse.surah + \':\' + verse.ayah + \' \') != -1">\
+						\
+						<span v-show="showAsbab && currentPageAsbab && currentPageAsbab.join(\' \').indexOf(\' \' + verse.surah + \':\' + verse.ayah + \' \') != -1">\
 							<A HREF="#" @click="showAsbabFor(verse.surah, verse.ayah); tab=\'asbab\';" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
 								<!-- [A] -->\
 								<span style="cursor:pointer" class="label label-warning" >ASB</span>\
@@ -1001,12 +1004,12 @@ require.config({
 							<A HREF="#" @click="tab = \'synonyms\'; showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
 								<!-- [S] -->\
 								<span style="cursor:pointer" class="label label-info" >SYN</span>\
-							</A> <!--&nbsp; &nbsp;<BR>\
+							</A>\
 						</span>\
 						<span v-if="showTrans || showTranslit" >\
 							<BR/>\
 						</span>\
-\
+						\
 		  			</span>',
 
 		  data: function(){
@@ -1017,7 +1020,7 @@ require.config({
 		  		return this.verse;
 		  	}
 		  },
-		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'hideAr', 'words', 'corpus'],
+		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'currentPageAsbab', 'currentPageSynonyms', 'hideAr', 'words', 'corpus'],
 		  methods:{
 		  	segmentify: function(verse, words, corpus){
 				var count = 0;
