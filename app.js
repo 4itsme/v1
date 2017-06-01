@@ -989,6 +989,18 @@ require.config({
 							<div v-if="showTranslit" dir=ltr v-html="verse.TRANSLIT"></div>\
 						</span>\
 \
+						<span v-show="showAsbab && currentPageAsbab.join(' ').indexOf(' ' + verse.surah + ':' + verse.ayah + ' ') != -1">\
+							<A HREF="#" @click="showAsbabFor(verse.surah, verse.ayah); tab=\'asbab\';" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
+								<!-- [A] -->\
+								<span style="cursor:pointer" class="label label-warning" >ASB</span>\
+							</A>\							
+						</span>\
+						<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + ':' + verse.ayah)">\
+							<A HREF="#" @click="tab = \'synonyms\'; showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
+								<!-- [S] -->\
+								<span style="cursor:pointer" class="label label-info" >SYN</span>\
+							</A> <!--&nbsp; &nbsp;<BR>\
+						</span>\
 						<span v-if="showTrans || showTranslit" >\
 							<BR/>\
 						</span>\
