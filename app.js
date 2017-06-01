@@ -169,6 +169,18 @@ require.config({
 	  });
 	});
 
+	bus.$on('onClickAsbab', function (surah, ayah) {
+		console.log(['onclickAsbab', arguments]);
+		vm.tab = 'asbab';
+		vm.showAsbabFor(surah, ayah);
+	});
+
+	bus.$on('onClickSynonym', function (syn, surah, ayah) {
+		console.log(['onClickSynonym', arguments]);
+		vm.tab = 'synonyms';
+		vm.showSynonymsFor(syn, surah, ayah);
+	});
+
 	vm = initializeVM();
 
 	vm._ = _;
@@ -995,13 +1007,13 @@ require.config({
 						</span>\
 						\
 						<span v-show="showAsbab && currentPageAsbab && currentPageAsbab.join(\' \').indexOf(\' \' + verse.surah + \':\' + verse.ayah + \' \') != -1">\
-							<A HREF="#" @click="showAsbabFor(verse.surah, verse.ayah); tab=\'asbab\';" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
+							<A HREF="#" @click="showAsbabFor(verse.surah, verse.ayah);" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
 								<!-- [A] -->\
 								<span style="cursor:pointer" class="label label-warning" >ASB</span>\
 							</A>\
 						</span>\
 						<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + \':\' + verse.ayah)">\
-							<A HREF="#" @click="tab = \'synonyms\'; showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
+							<A HREF="#" @click="showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
 								<!-- [S] -->\
 								<span style="cursor:pointer" class="label label-info" >SYN</span>\
 							</A>\
@@ -1022,6 +1034,13 @@ require.config({
 		  },
 		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'currentPageAsbab', 'currentPageSynonyms', 'hideAr', 'words', 'corpus'],
 		  methods:{
+		  	showAsbabFor: function(surah, ayah){
+		  		bus.$emit('onClickAsbab', surah, ayah);
+		  	},
+		  	showSynonymsFor: function(syn, surah, ayah){
+		  		bus.$emit('onClickSynonym', syn, surah, ayah);
+		  	},
+
 		  	segmentify: function(verse, words, corpus){
 				var count = 0;
 				return _.map(verse.AR.split(' '), function(w){
@@ -1059,7 +1078,7 @@ require.config({
 			props: ['word'], //'w', 'no', 'w2w', 'isStopLetter'],
 			methods:{
 				onClickWord: function(word){
-					console.log(JSON.stringify(word));
+					//console.log(JSON.stringify(word));
 					bus.$emit('onClickWord', word);
 				},
 			},
