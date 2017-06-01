@@ -49,49 +49,49 @@ require.config({
 	"w2wEn": 'data/w2wEn',
 	"w2wCorpus": 'data/w2wCorpus',
 
-	"content/A": ['data/content/A.js', 'https://4itsme.github.io/v1/data/content/A'],
-	"content/AA": ['data/content/AA', 'https://4itsme.github.io/v1/data/content/AA'],
-	"content/appendix": ['data/content/appendix', 'https://4itsme.github.io/v1/data/content/appendix'],
-	"content/b": ['data/content/b', 'https://4itsme.github.io/v1/data/content/b'],
+	"content-A": ['data/content/A', 'https://4itsme.github.io/v1/data/content/A'],
+	"content-AA": ['data/content/AA', 'https://4itsme.github.io/v1/data/content/AA'],
+	"content-appendix": ['data/content/appendix', 'https://4itsme.github.io/v1/data/content/appendix'],
+	"content-b": ['data/content/b', 'https://4itsme.github.io/v1/data/content/b'],
 
-	"content/ch": ['data/content/ch', 'https://4itsme.github.io/v1/data/content/ch'],
-	"content/d": ['data/content/d', 'https://4itsme.github.io/v1/data/content/d'],
-	"content/DA": ['data/content/DA', 'https://4itsme.github.io/v1/data/content/DA'],
-	"content/dd": ['data/content/dd', 'https://4itsme.github.io/v1/data/content/dd'],
+	"content-ch": ['data/content/ch', 'https://4itsme.github.io/v1/data/content/ch'],
+	"content-d": ['data/content/d', 'https://4itsme.github.io/v1/data/content/d'],
+	"content-DA": ['data/content/DA', 'https://4itsme.github.io/v1/data/content/DA'],
+	"content-dd": ['data/content/dd', 'https://4itsme.github.io/v1/data/content/dd'],
 	
-	"content/dh": ['data/content/dh', 'https://4itsme.github.io/v1/data/content/dh'],
-	"content/E": ['data/content/E', 'https://4itsme.github.io/v1/data/content/E'],
-	"content/f": ['data/content/f', 'https://4itsme.github.io/v1/data/content/f'],
-	"content/gg": ['data/content/gg', 'https://4itsme.github.io/v1/data/content/gg'],
+	"content-dh": ['data/content/dh', 'https://4itsme.github.io/v1/data/content/dh'],
+	"content-E": ['data/content/E', 'https://4itsme.github.io/v1/data/content/E'],
+	"content-f": ['data/content/f', 'https://4itsme.github.io/v1/data/content/f'],
+	"content-gg": ['data/content/gg', 'https://4itsme.github.io/v1/data/content/gg'],
 	
-	"content/gh": ['data/content/gh', 'https://4itsme.github.io/v1/data/content/gh'],
-	"content/h": ['data/content/h', 'https://4itsme.github.io/v1/data/content/h'],
-	"content/HA": ['data/content/HA', 'https://4itsme.github.io/v1/data/content/HA'],
-	"content/j": ['data/content/j', 'https://4itsme.github.io/v1/data/content/j'],
+	"content-gh": ['data/content/gh', 'https://4itsme.github.io/v1/data/content/gh'],
+	"content-h": ['data/content/h', 'https://4itsme.github.io/v1/data/content/h'],
+	"content-HA": ['data/content/HA', 'https://4itsme.github.io/v1/data/content/HA'],
+	"content-j": ['data/content/j', 'https://4itsme.github.io/v1/data/content/j'],
 	
-	"content/k": ['data/content/k', 'https://4itsme.github.io/v1/data/content/k'],
-	"content/kh": ['data/content/kh', 'https://4itsme.github.io/v1/data/content/kh'],
-	"content/l": ['data/content/l', 'https://4itsme.github.io/v1/data/content/l'],
-	"content/m": ['data/content/m', 'https://4itsme.github.io/v1/data/content/m'],
+	"content-k": ['data/content/k', 'https://4itsme.github.io/v1/data/content/k'],
+	"content-kh": ['data/content/kh', 'https://4itsme.github.io/v1/data/content/kh'],
+	"content-l": ['data/content/l', 'https://4itsme.github.io/v1/data/content/l'],
+	"content-m": ['data/content/m', 'https://4itsme.github.io/v1/data/content/m'],
 	
-	"content/n": ['data/content/n', 'https://4itsme.github.io/v1/data/content/n'],
-	"content/p": ['data/content/p', 'https://4itsme.github.io/v1/data/content/p'],
-	"content/q": ['data/content/q', 'https://4itsme.github.io/v1/data/content/q'],
-	"content/r": ['data/content/r', 'https://4itsme.github.io/v1/data/content/r'],
+	"content-n": ['data/content/n', 'https://4itsme.github.io/v1/data/content/n'],
+	"content-p": ['data/content/p', 'https://4itsme.github.io/v1/data/content/p'],
+	"content-q": ['data/content/q', 'https://4itsme.github.io/v1/data/content/q'],
+	"content-r": ['data/content/r', 'https://4itsme.github.io/v1/data/content/r'],
 	
-	"content/s": ['data/content/s', 'https://4itsme.github.io/v1/data/content/s'],
-	"content/SA": ['data/content/SA', 'https://4itsme.github.io/v1/data/content/SA'],
-	"content/sh": ['data/content/sh', 'https://4itsme.github.io/v1/data/content/sh'],
-	"content/t": ['data/content/t', 'https://4itsme.github.io/v1/data/content/t'],
+	"content-s": ['data/content/s', 'https://4itsme.github.io/v1/data/content/s'],
+	"content-SA": ['data/content/SA', 'https://4itsme.github.io/v1/data/content/SA'],
+	"content-sh": ['data/content/sh', 'https://4itsme.github.io/v1/data/content/sh'],
+	"content-t": ['data/content/t', 'https://4itsme.github.io/v1/data/content/t'],
 	
-	"content/TA": ['data/content/TA', 'https://4itsme.github.io/v1/data/content/TA'],
-	"content/th": ['data/content/th', 'https://4itsme.github.io/v1/data/content/th'],
-	"content/tt": ['data/content/tt', 'https://4itsme.github.io/v1/data/content/tt'],
-	"content/w":  ['data/content/w', 'https://4itsme.github.io/v1/data/content/w'],
+	"content-TA": ['data/content/TA', 'https://4itsme.github.io/v1/data/content/TA'],
+	"content-th": ['data/content/th', 'https://4itsme.github.io/v1/data/content/th'],
+	"content-tt": ['data/content/tt', 'https://4itsme.github.io/v1/data/content/tt'],
+	"content-w":  ['data/content/w', 'https://4itsme.github.io/v1/data/content/w'],
 	
-	"content/y": ['data/content/y', 'https://4itsme.github.io/v1/data/content/y'],
-	"content/z": ['data/content/z', 'https://4itsme.github.io/v1/data/content/z'],
-	"content/ZA": ['data/content/ZA', 'https://4itsme.github.io/v1/data/content/ZA'],
+	"content-y": ['data/content/y', 'https://4itsme.github.io/v1/data/content/y'],
+	"content-z": ['data/content/z', 'https://4itsme.github.io/v1/data/content/z'],
+	"content-ZA": ['data/content/ZA', 'https://4itsme.github.io/v1/data/content/ZA'],
 
   }
 });
@@ -497,7 +497,7 @@ require.config({
 				var key = sura + ':' + ayah;
 				var name = item.n,
 					topicId = item.t,
-					topicUrl = item.u;
+					topicUrl = item.u; //ex: content/HA/HA8.html
 				require(['qSynonyms'], function(qSynonyms){
 					var lookup = qSynonyms.get(topicId);
 					var content = '';
@@ -512,8 +512,14 @@ require.config({
 					vm.showSynonymsDetail = true;
 					vm.synonymsDetail = details;
 
-					$.get( topicUrl )
-						.then(function(content){
+					var tmp = topicUrl.split('/'),
+						module = tmp.length > 1 && tmp[0] + '-' + tmp[1],
+						moduleKey = topicUrl;
+					require([ module ], function( content ){
+					//$.get( topicUrl )
+					// .then(function(content){
+							content = content && content[ moduleKey ];
+							if(!content){ debugger; return; }
 							var iContent = vm.fnGrabHtmlBody(content);
 							console.log([topicUrl, content.length, iContent.length] );
 
@@ -528,7 +534,7 @@ require.config({
 															 }
 								});
 							}, 100);
-						});
+					});
 				});
 			}
 			
