@@ -489,11 +489,16 @@ require.config({
 			}
 					
 			vm.showSynonymsFor = function(item, sura, ayah){
+				if(!item){
+					var key = sura + ':' + ayah;
+					var tmp = _.first( vm.currentPageSynonyms, key);
+					tmp = 	  _.flatten( _.values( tmp ) );
+					if(tmp && tmp.length > 0){
+						item = tmp[0]; //just pick the first topic among the topics for this ayah and cause it to be opened.
+					}
+				}
 				if(item){
 					var details = vm.getSynonymsDetailsFor(item, sura, ayah);
-				}else{
-					var key = sura + ':' + ayah;
-					_.first( vm.currentPageSynonyms, key);
 				}
 			}
 			
