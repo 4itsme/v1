@@ -930,6 +930,8 @@ require.config({
 		  template: '<div dir=rtl class=\'quranpage clearfix\' style="text-align: justify; Xoverflow:scroll; Xmax-height:550px; XXXwhite-space: nowrap;">\
 		  				<span v-for="(verse, verseIndex) in iList">\
 							<quran-ayah :verse="verse" :show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr" \
+								:show-asbab="showAsbab"\
+								:show-synonyms="showSynonyms"\
 								:words="w2wEn.lookup( verse.verseNo )"\
 								:corpus="w2wCorpus.lookup( verse.verseNo )"\
 							>\
@@ -989,13 +991,13 @@ require.config({
 							<div v-if="showTranslit" dir=ltr v-html="verse.TRANSLIT"></div>\
 						</span>\
 \
-						<span v-show="showAsbab && currentPageAsbab.join(' ').indexOf(' ' + verse.surah + ':' + verse.ayah + ' ') != -1">\
+						<span v-show="showAsbab && currentPageAsbab.join(\' \').indexOf(\' \' + verse.surah + \':\' + verse.ayah + \' \') != -1">\
 							<A HREF="#" @click="showAsbabFor(verse.surah, verse.ayah); tab=\'asbab\';" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
 								<!-- [A] -->\
 								<span style="cursor:pointer" class="label label-warning" >ASB</span>\
-							</A>\							
+							</A>\
 						</span>\
-						<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + ':' + verse.ayah)">\
+						<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + \':\' + verse.ayah)">\
 							<A HREF="#" @click="tab = \'synonyms\'; showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
 								<!-- [S] -->\
 								<span style="cursor:pointer" class="label label-info" >SYN</span>\
