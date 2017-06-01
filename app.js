@@ -947,7 +947,7 @@ require.config({
 		  		return this.ayahsListFromPage;
 		  	}
 		  },
-		  props: ['ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'w2wEn', 'w2wCorpus'],
+		  props: ['ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'hideAr', 'w2wEn', 'w2wCorpus'],
 		});
 
 
@@ -1017,7 +1017,7 @@ require.config({
 		  		return this.verse;
 		  	}
 		  },
-		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'hideAr', 'words', 'corpus'],
+		  props: ['verse', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'hideAr', 'words', 'corpus'],
 		  methods:{
 		  	segmentify: function(verse, words, corpus){
 				var count = 0;
