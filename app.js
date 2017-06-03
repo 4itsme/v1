@@ -148,6 +148,11 @@ require.config({
 	  		props: (route) => ({ suras: vm.suras }),
 	  	},
 	  	{
+	  		path: '/search/:keyword',
+	  		component: comps.quranSearch,
+	  		props: ($route) => ({ results: (vm.keyword = $route.params.keyword) && vm.go() && vm.searchResults }),
+	  	},
+	  	{
 	  		path: '/page/:pageno',
 	  		component: comps.quranPage,
 	  		props: ($route) => ({ ayahsListFromPage: (vm.verseNo = +($route.params.pageno) ) && vm.data.ayahsListFromPage }),
@@ -1189,8 +1194,14 @@ require.config({
 			props: ['suras'],
 		});
 
+		var quranSearch = Vue.component('quran-search', {
+			template: '<div>Search results: <BR/>  {{ results }}</div>',
+			props: 'results',
+		});
+
 		return {
 			quranDashboard: quranDashboard,
+			quranSearch: quranSearch,
 			quranPage: quranPage,
 			quranAyah: quranAyah,
 			quranWord: quranWord,
