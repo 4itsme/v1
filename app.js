@@ -1154,7 +1154,9 @@ require.config({
 						<div class=container>\
 						  <div class=row>\
 						    <div class="col-md-10 col-md-offset-1" >\
-								SURAHS (CHAPTERS)<BR/><BR/>\
+						    	<div class="dashboardClass4 text-muted">\
+									SURAHS (CHAPTERS)<BR/><BR/>\
+								</div>\
 								<div v-if="suras" class="row suras-menu-row">\
 								  <div class="col-md-4">\
 								  	<ul class="list-unstyled" v-for="sura in suras.slice(0, 38)">\
