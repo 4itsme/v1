@@ -148,6 +148,11 @@ require.config({
 	  		props: (route) => ({ suras: vm.suras }),
 	  	},
 	  	{
+	  		path: '/page/:pageno',
+	  		component: comps.quranPage,
+	  		props: (route) => ({ ayahsListFromPage: vm.data.ayahsListFromPage }),
+	  	},
+	  	{
 	  		path: '/:id', 
 	  		component: comps.quranPage,
 	  		props:{
