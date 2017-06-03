@@ -1124,10 +1124,26 @@ require.config({
 		var quranDashboard = Vue.component('quran-dashboard', {
 			template: '<div>Bismillah.. Quran dashboard here!<BR/>\
 						SURAHS (CHAPTERS)<BR/><BR/>\
-						<span v-for="sura in suras">\
-							<quran-suraname :metadata="sura"></quran-suraname>\
-							<BR/>\
-						</span>\
+						<div v-if="suras" class=row>\
+						  <div class="col-md-4">\
+							<span v-for="sura in suras.slice(0, 38)">\
+								<quran-suraname :metadata="sura"></quran-suraname>\
+								<BR/>\
+							</span>\
+						  </div>\
+						  <div class="col-md-4">\
+						  	<span v-for="sura in suras.slice(38, 76)">\
+								<quran-suraname :metadata="sura"></quran-suraname>\
+								<BR/>\
+							</span>\
+						  </div>\
+						  <div class="col-md-4">\
+						  	<span v-for="sura in suras.slice(76)">\
+								<quran-suraname :metadata="sura"></quran-suraname>\
+								<BR/>\
+							</span>\
+						  </div>\
+						</div>\
 						{{suras}}\
 					   </div>',
 			props: ['suras'],
