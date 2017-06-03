@@ -487,7 +487,7 @@ require.config({
 						vm.isSearching = false;
 						vm.searchResults = results || {};
 						vm.searchResults.searching = false;
-						console.log((vm.message += ((endTime = new moment()) +' results received') ) );
+						endTime = new moment(); //console.log((vm.message += ((endTime = new moment()) +' results received') ) );
 						if(!(endTime - startTime))debugger;
 						vm.message = 'Search time: ' + endTime.diff(startTime, 'seconds') + ' seconds. (' + (endTime - startTime) + ' ms.) ';//moment(startTime).fromNow() + ' ' + vm.message;
 						setTimeout(function(){
