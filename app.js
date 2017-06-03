@@ -1140,7 +1140,7 @@ require.config({
 		var quranSuraname = Vue.component('quran-suraname', {
 			template: //'<span>{{ metadata.name }}</span>',
 						'<li class="sura-menu-class1">\
-							<a class="sura-menu-class2 row" @click="onClickSura( metadata.value )">\
+							<a class="sura-menu-class2 row" href=# v-on:click.stop.prevent="onClickSura( metadata.value )">\
 								<div class="col-xs-2 text-muted">{{ metadata.value }}</div>\
 								<div class="col-xs-7">{{ metadata.english_name }}</div>\
 								<div class="col-xs-3 text-left sura-menu-class3 arr2">\
