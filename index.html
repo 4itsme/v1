@@ -369,7 +369,7 @@
 	  		Asbab-un-Nuzul in current page:
 	  		<span v-for="asbab in currentPageAsbab">
 	  			<span v-if="asbab">
-	  				<A HREF="#" @click="showAsbabFor(asbab.split(':')[0], asbab.split(':')[1]); tab='asbab';" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.93em >
+	  				<A HREF="#" v-on:click.stop.prevent="showAsbabFor(asbab.split(':')[0], asbab.split(':')[1]); tab='asbab';" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.93em >
 						<span class="label label-warning" style="cursor: pointer;">{{asbab}}</span> &nbsp;
 					</A>
 	  			</span>
@@ -378,7 +378,7 @@
 		<div v-if="showAsbabDetail">
 			<BR/>
 			Sabab Nuzul details for selected Ayah: 
-			<button class="btn btn-default btn-xs pull-right" @click='showAsbabPretty = !showAsbabPretty'>Show {{ showAsbabPretty ? 'raw' : 'formatted' }}</button><BR><HR>
+			<button class="btn btn-default btn-xs pull-right" v-on:click.stop.prevent='showAsbabPretty = !showAsbabPretty'>Show {{ showAsbabPretty ? 'raw' : 'formatted' }}</button><BR><HR>
 			<span v-if='showAsbabPretty'>
 				<span v-html='asbabDetail.pretty'></span>
 			</span>
@@ -396,20 +396,12 @@
 				<span v-for="(subItem, subKey) in first">
 					<BR>{{ subKey }}: 
 					<span v-for="(item, key) in subItem">
-						<A HREF="#" @click="tab = 'synonyms'; showSynonymsFor(item, subKey.split(':')[0], subKey.split(':')[1])">
+						<A HREF="#" v-on:click.stop.prevent="tab = 'synonyms'; showSynonymsFor(item, subKey.split(':')[0], subKey.split(':')[1])">
 							<span class="label label-info">
 								{{item.n}}
 								<!--<span class="badge">{{ getSynonymsDetailsFor(item, key.split(':')[0], key.split(':')[1]).words.length }}</span>-->
 							</span>
 						</A>&nbsp; &nbsp;
-						<!--<span v-for="word in getSynonymsDetailsFor(item, verse.surah, verse.ayah).words">
-							<!-- vm.synonymsDetail = {name: name, topicId: topicId, topicUrl: topicUrl, 	words: lookup, ref: key }; -->	<!--
-							<A HREF="#" @click="showSynonymsFor(word, item, verse.surah, verse.ayah)">
-								<span class="label label-info" :title="word.word">
-									{{word.wordEn}}
-								</span>
-							</A>&nbsp;
-						</span>-->
 					</span>
 				</span>
 			</span>
@@ -424,7 +416,7 @@
 						<i class="fa fa-external-link" aria-hidden="true"></i>
 					</A>
 				</span>
-				<button class="btn btn-default btn-xs pull-right" @click='showSynonymsPretty = !showSynonymsPretty'>Show {{ showSynonymsPretty ? 'raw' : 'formatted' }}</button>
+				<button class="btn btn-default btn-xs pull-right" v-on:click.stop.prevent='showSynonymsPretty = !showSynonymsPretty'>Show {{ showSynonymsPretty ? 'raw' : 'formatted' }}</button>
 			</div>
 			<span v-if='showSynonymsPretty'>
 				<HR><span class='synonymsDetailContent' v-html='synonymsDetail.content'></span><HR>
@@ -444,7 +436,7 @@
 			
 			
 			<span v-for="word in synonymsDetail.words">
-				<A HREF="#" @click="showSynonymsFor(word, item, verse.surah, verse.ayah)">
+				<A HREF="#" v-on:click.stop.prevent="showSynonymsFor(word, item, verse.surah, verse.ayah)">
 				<span class="label label-success" :title="word.word">
 					{{word.wordEn}}
 				</span>
@@ -474,7 +466,7 @@
 				<div class=searchResults v-if="result.matches && result.matches.length" style="overflow:scroll; max-height:200px; white-space: nowrap;" :dir="result.category.indexOf( 'Arabic' ) != -1 ? 'rtl' : 'ltr'">
 					<div v-for="match in result.matches">
 						<!-- {{match}} -->
-						<A href=# @click='goSearchResult(match, result);' v-bind:title='match.verse'>
+						<A href=# v-on:click.stop.prevent='goSearchResult(match, result);' v-bind:title='match.verse'>
 							{{ match.split('|')[0] }}:{{ match.split('|')[1] }}
 						</A>
 						{{ result.category.indexOf( 'Arabic' ) != -1 ? qUtil.EnToAr( match.split('|')[2] ) : match.split('|')[2] }}
@@ -550,7 +542,7 @@
 			  <!-- {{ rootLemResults }} -->
 			  ROOT:{{rootLemResults.length > 0 ? rootLemResults[0].root : '-'}}, Instances: {{rootLemResults.length > 0 ? rootLemResults[0].rootInstances : '-'}}
 			  <div v-for="(match, key, index) in rootLemResults">
-				<A href=# @click='goRootToLem(match, key, index);' v-bind:title='match.verse'>
+				<A href=# v-on:click.stop.prevent='goRootToLem(match, key, index);' v-bind:title='match.verse'>
 					LEM:{{match.lem}}
 				</A>, Instances: {{match.lemInstances}}
 			  </div>
@@ -563,7 +555,7 @@
 				
 				<div v-if="lemResults && Object.keys(lemResults).length > 0" style="overflow:scroll; max-height:200px; white-space: nowrap;">
 					<div v-for="(match, key, index) in lemResults">
-						<A href=# @click='goLem(match, key, index);' v-bind:title='match.verse'>
+						<A href=# v-on:click.stop.prevent='goLem(match, key, index);' v-bind:title='match.verse'>
 							{{match.surah}}:{{match.ayah}}:{{match.word}}
 						</A>
 						{{match.snippet.substring(0,100)}}

@@ -940,11 +940,11 @@ require.config({
 
 		Vue.component('q-page', {
 		  template: '<span>Page: \
-		  						<a class="arrow-link arrow-left" @click="onChange( -1 );" title="Previous page">◄</a>\
+		  						<a class="arrow-link arrow-left" href=# v-on:click.stop.prevent="onChange( -1 );" title="Previous page">◄</a>\
 		  						<select v-model="iPage" @change="onChange">\
 		        					<option v-for="p in 604" :value="p">{{p}}</option>\
 		      					</select>\
-		      					<a class="arrow-link arrow-right" @click="onChange( +1 );" title="Next page">►</a>\
+		      					<a class="arrow-link arrow-right" href=# v-on:click.stop.prevent="onChange( +1 );" title="Next page">►</a>\
 		             </span>',
 		  data: function(){
 		  	return {};
@@ -1059,13 +1059,13 @@ require.config({
 						</span>\
 						\
 						<span v-show="showAsbab && currentPageAsbab && currentPageAsbab.join(\' \').indexOf(\' \' + verse.surah + \':\' + verse.ayah + \' \') != -1">\
-							<A HREF="#" @click="showAsbabFor(verse.surah, verse.ayah);" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
+							<A HREF="#" v-on:click.stop.prevent="showAsbabFor(verse.surah, verse.ayah);" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
 								<!-- [A] -->\
 								<span style="cursor:pointer" class="label label-warning" >ASB</span>\
 							</A>\
 						</span>\
 						<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + \':\' + verse.ayah)">\
-							<A HREF="#" @click="showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
+							<A HREF="#" v-on:click.stop.prevent="showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
 								<!-- [S] -->\
 								<span style="cursor:pointer" class="label label-info" >SYN</span>\
 							</A>\
@@ -1230,7 +1230,7 @@ require.config({
 		var quranMain = Vue.component('quran-main', {
 			template: '',
 			props: '',
-			
+
 		});
 
 		return {
