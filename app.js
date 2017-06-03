@@ -145,6 +145,7 @@ require.config({
 	  	{
 	  		path: '/',
 	  		component: comps.quranDashboard,
+	  		props: (route) => ({ suras: vm.suras }),
 	  	},
 	  	{
 	  		path: '/:id', 
@@ -1116,7 +1117,10 @@ require.config({
 		});
 
 		var quranDashboard = Vue.component('quran-dashboard', {
-			template: '<div>Bismillah.. Quran dashboard here!</div>',
+			template: '<div>Bismillah.. Quran dashboard here!\
+						{{suras}}\
+					   </div>',
+			props: ['suras'],
 		});
 
 		return {
