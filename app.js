@@ -1117,12 +1117,24 @@ require.config({
 		});
 
 		var quranSuraname = Vue.component('quran-suraname', {
-			template: '<span>{{ metadata.name }}</span>',
+			template: //'<span>{{ metadata.name }}</span>',
+						'<li class="sura-menu-class1">\
+							<a class="sura-menu-class2 row" href="/39">\
+								<div class="col-xs-2 text-muted">{{ metadata.value }}</div>\
+								<div class="col-xs-7">{{ metadata.english_name }}</div>\
+								<div class="col-xs-3 text-left sura-menu-class3">\
+									<span class="icon-surah39">{{ metadata.arabic_name }}</span>\
+								</div>\
+								<div class="col-xs-10 col-xs-offset-2 sura-menu-class4">\
+									<span class="text-uppercase english">{{ metadata.english_meaning }}</span>\
+								</div>\
+							</a>\
+						</li>',
 			props: ['metadata'], //ex: { "start": 7, "ayahs": 286, "order": 87, "rukus": 40, "arabic_name": "البقرة", "english_name": "Al-Baqara", "english_meaning": "The Cow", "type": "Medinan", "name": "2. Al-Baqara البقرة", "value": 2 }
 		});
 
 		var quranDashboard = Vue.component('quran-dashboard', {
-			template: '<div>Bismillah.. Quran dashboard here!<BR/>\
+			template: '<div>\
 						<div class="dashboardheader" style="background-image:url(images/background.jpg);">\
 							<div class="container">\
 								<div class="row"><div class="col-md-10 col-md-offset-1 text-center">\
@@ -1139,26 +1151,32 @@ require.config({
 							</div>\
 						 </div>\
 						</div>\
-						SURAHS (CHAPTERS)<BR/><BR/>\
-						<div v-if="suras" class=row>\
-						  <div class="col-md-4">\
-							<span v-for="sura in suras.slice(0, 38)">\
-								<quran-suraname :metadata="sura"></quran-suraname>\
-								<BR/>\
-							</span>\
-						  </div>\
-						  <div class="col-md-4">\
-						  	<span v-for="sura in suras.slice(38, 76)">\
-								<quran-suraname :metadata="sura"></quran-suraname>\
-								<BR/>\
-							</span>\
-						  </div>\
-						  <div class="col-md-4">\
-						  	<span v-for="sura in suras.slice(76)">\
-								<quran-suraname :metadata="sura"></quran-suraname>\
-								<BR/>\
-							</span>\
-						  </div>\
+						<div class=container>\
+						  <div class=row>\
+						    <div class="col-md-10 col-md-offset-1" >\
+								SURAHS (CHAPTERS)<BR/><BR/>\
+								<div v-if="suras" class="row suras-menu-row">\
+								  <div class="col-md-4">\
+								  	<ul class="list-unstyled" v-for="sura in suras.slice(0, 38)">\
+										<quran-suraname :metadata="sura"></quran-suraname>\
+										<BR/>\
+									</ul>\
+								  </div>\
+								  <div class="col-md-4">\
+								  	<ul class="list-unstyled" v-for="sura in suras.slice(38, 76)">\
+										<quran-suraname :metadata="sura"></quran-suraname>\
+										<BR/>\
+									</ul>\
+								  </div>\
+								  <div class="col-md-4">\
+								  	<ul class="list-unstyled" v-for="sura in suras.slice(76)">\
+										<quran-suraname :metadata="sura"></quran-suraname>\
+										<BR/>\
+									</ul>\
+								  </div>\
+								</div>\
+							</div>\
+						</div>\
 						</div>\
 					   </div>',
 			props: ['suras'],
