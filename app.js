@@ -131,19 +131,39 @@ require.config({
 	  template: '<div>User {{ $route.params.id }}</div>'
 	}
 
+
+	var vm = { data: {}, }, comps = {};
+
+	comps = _.extend(comps, initializeVueComponents(Vue) );
+
+	comps = _.extend(comps, initializeVueComponents2(Vue) );
+
+	Vue.use(VueRouter);
+
 	const router = new VueRouter({
 	  routes: [
+	  	{
+	  		path: '/',
+	  		component: comps.quranDashboard,
+	  	},
+	  	{
+	  		path: '/:id', 
+	  		component: comps.quranPage,
+	  		props:{
+	  			ayahsListFromPage: vm.data.ayahsListFromPage,
+				showTrans: vm.showTrans, //:show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="!showAr"
+				//show-asbab="showAsbab" :show-synonyms="showSynonyms"
+				//current-page-asbab="currentPageAsbab"
+				//current-page-synonyms="currentPageSynonyms"
+				//w2w-en="w2wEn"
+				//w2w-corpus="w2wCorpus"
+	  		}
+	  	},
+
 	    // dynamic segments start with a colon
-	    { path: '/user/:id', component: User }
+	    { path: '/user/:id', component: User },
 	  ]
 	})
-
-
-	var vm;
-
-	initializeVueComponents(Vue);
-
-	initializeVueComponents2(Vue);
 
 	var bus = new Vue();
 	
@@ -181,7 +201,7 @@ require.config({
 		vm.showSynonymsFor(syn, surah, ayah);
 	});
 
-	vm = initializeVM();
+	vm = initializeVM( router );
 
 	vm._ = _;
 	vm.w2wEn = w2wEn;
@@ -574,9 +594,9 @@ require.config({
 	}
 
 
-	function initializeVM(){
+	function initializeVM( router ){
 		vm = new Vue({
-		  router,
+		  router: router,
 		  el: '#app-1',
 		  data: {
 			verse: 1,
@@ -785,7 +805,7 @@ require.config({
 
 
 	function initializeVueComponents(Vue){
-
+		var vGrid = 
 		// register the grid component
 		Vue.component('v-grid', {
 		  template: '#grid-template',
@@ -839,9 +859,12 @@ require.config({
 		    }
 		  }
 		})
+
+		return {vGrid: vGrid};
 	}
 
 	function initializeVueComponents2(Vue){
+
 		// register
 		Vue.component('q-sura', {
 		  template: 
@@ -943,6 +966,7 @@ require.config({
 
 
 		//////////////////////////////////////////////////////////////////////////////
+		var quranPage = 
 		Vue.component('quran-page', {
 		  template: '<div dir=rtl class=\'quranpage clearfix\' style="text-align: justify; Xoverflow:scroll; Xmax-height:550px; XXXwhite-space: nowrap;">\
 		  				<span v-for="(verse, verseIndex) in iList">\
@@ -970,6 +994,7 @@ require.config({
 		});
 
 
+		var quranAyah = 
 		Vue.component('quran-ayah', {
 		  template: '<span>\
 						<!-- show basmallah -->\
@@ -1068,6 +1093,7 @@ require.config({
 		});
 
 
+		var quranWord = 
 		Vue.component('quran-word', {
 			template: '<span v-if="word.isStopLetter" class=sign>\
 							{{ word.w }} \
@@ -1088,6 +1114,17 @@ require.config({
 				},
 			},
 		});
+
+		var quranDashboard = Vue.component('quran-dashboard', {
+			template: '<div>Bismillah.. Quran dashboard here!</div>',
+		});
+
+		return {
+			quranDashboard: quranDashboard,
+			quranPage: quranPage,
+			quranAyah: quranAyah,
+			quranWord: quranWord,
+		};
 
 	}
 });
