@@ -159,7 +159,7 @@ require.config({
 	  	},
 	  	{
 	  		path: '/:id', 
-	  		component: comps.quranPage,
+	  		component: comps.quranMain,
 	  		props:{
 	  			ayahsListFromPage: vm.data.ayahsListFromPage,
 				showTrans: vm.showTrans, //:show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="!showAr"
@@ -1227,8 +1227,15 @@ require.config({
 			props: 'results',
 		});
 
+		var quranMain = Vue.component('quran-main', {
+			template: '',
+			props: '',
+			
+		});
+
 		return {
 			quranDashboard: quranDashboard,
+			quranMain: quranMain,
 			quranSearch: quranSearch,
 			quranPage: quranPage,
 			quranAyah: quranAyah,
