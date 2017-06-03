@@ -1116,8 +1116,18 @@ require.config({
 			},
 		});
 
+		var quranSuraname = Vue.component('quran-suraname', {
+			template: '<span>{{ metadata.name }}</span>',
+			props: ['metadata']
+		});
+
 		var quranDashboard = Vue.component('quran-dashboard', {
-			template: '<div>Bismillah.. Quran dashboard here!\
+			template: '<div>Bismillah.. Quran dashboard here!<BR/>\
+						SURAHS (CHAPTERS)<BR/><BR/>\
+						<span v-for="sura in suras">\
+							<quran-suraname :metadata="sura"></quran-suraname>\
+							<BR/>\
+						</span>\
 						{{suras}}\
 					   </div>',
 			props: ['suras'],
