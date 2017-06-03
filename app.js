@@ -1131,7 +1131,8 @@ require.config({
 									</a>\
 									<h4 class="dashboardClass2">THE NOBLE QUR\'AN</h4>\
 									<div class="right-inner-addon searchinput undefined">\
-										<a tabindex="-1"><i class="ss-icon ss-search"></i></a>\
+										<a tabindex="-1">\
+										<i class="fa fa-search ss-icon ss-search"></i></a>\
 										<input type="search" placeholder="Search &quot;Noah&quot;">\
 									</div>\
 								</div>\
