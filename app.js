@@ -1122,8 +1122,8 @@ require.config({
 							<a class="sura-menu-class2 row" href="/39">\
 								<div class="col-xs-2 text-muted">{{ metadata.value }}</div>\
 								<div class="col-xs-7">{{ metadata.english_name }}</div>\
-								<div class="col-xs-3 text-left sura-menu-class3">\
-									<span class="icon-surah39">{{ metadata.arabic_name }}</span>\
+								<div class="col-xs-3 text-left sura-menu-class3 arr2">\
+									<span class="icon-surah">{{ metadata.arabic_name }}</span>\
 								</div>\
 								<div class="col-xs-10 col-xs-offset-2 sura-menu-class4">\
 									<span class="text-uppercase english">{{ metadata.english_meaning }}</span>\
