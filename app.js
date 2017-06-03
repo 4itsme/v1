@@ -1118,7 +1118,7 @@ require.config({
 
 		var quranSuraname = Vue.component('quran-suraname', {
 			template: '<span>{{ metadata.name }}</span>',
-			props: ['metadata']
+			props: ['metadata'], //ex: { "start": 7, "ayahs": 286, "order": 87, "rukus": 40, "arabic_name": "البقرة", "english_name": "Al-Baqara", "english_meaning": "The Cow", "type": "Medinan", "name": "2. Al-Baqara البقرة", "value": 2 }
 		});
 
 		var quranDashboard = Vue.component('quran-dashboard', {
