@@ -1123,6 +1123,21 @@ require.config({
 
 		var quranDashboard = Vue.component('quran-dashboard', {
 			template: '<div>Bismillah.. Quran dashboard here!<BR/>\
+						<div class="dashboardheader" style="background-image:url(images/background.jpg);">\
+							<div class="container">\
+								<div class="row"><div class="col-md-10 col-md-offset-1 text-center">\
+									<a class="dashboardIndexHeader" data-metrics-event-name="IndexHeader:Link:Index" href="/">\
+										<img src="images/logo-lg-w.png" class="dashboardClass3" alt="logo">\
+									</a>\
+									<h4 class="dashboardClass2">THE NOBLE QUR\'AN</h4>\
+									<div class="right-inner-addon searchinput undefined">\
+										<a tabindex="-1"><i class="ss-icon ss-search"></i></a>\
+										<input type="search" placeholder="Search &quot;Noah&quot;">\
+									</div>\
+								</div>\
+							</div>\
+						 </div>\
+						</div>\
 						SURAHS (CHAPTERS)<BR/><BR/>\
 						<div v-if="suras" class=row>\
 						  <div class="col-md-4">\
@@ -1144,7 +1159,6 @@ require.config({
 							</span>\
 						  </div>\
 						</div>\
-						{{suras}}\
 					   </div>',
 			props: ['suras'],
 		});
