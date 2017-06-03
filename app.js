@@ -150,7 +150,7 @@ require.config({
 	  	{
 	  		path: '/search/:keyword',
 	  		component: comps.quranSearch,
-	  		props: ($route) => ({ results: (vm.keyword = $route.params.keyword) && vm.go() && vm.searchResults }),
+	  		//props: ($route) => ({ results: (vm.keyword = $route.params.keyword) && vm.go() && vm.searchResults }),
 	  	},
 	  	{
 	  		path: '/page/:pageno',
@@ -177,7 +177,17 @@ require.config({
 	})
 
 	var bus = new Vue();
-	
+
+	bus.$on('onClickSura', function( surano ){
+		console.log( ['onClickSura', JSON.stringify( surano ) ] );
+		router.push({ path: '' + surano });
+	});
+
+	bus.$on('onSearch', function(query){
+		console.log( ['onSearch', JSON.stringify( query ) ] );
+		router.push({ path: 'search/' + query.keyword }); //, params: query})
+	});
+
 	bus.$on('onClickWord', function (word) {
 	  console.log(JSON.stringify(word));
 	  vm.tab = 'misc';
@@ -811,6 +821,7 @@ require.config({
 			}
 		  }
 			 }).$mount('#app-1');
+		vm.router = router;
 		return vm;
 	}
 
@@ -1129,7 +1140,7 @@ require.config({
 		var quranSuraname = Vue.component('quran-suraname', {
 			template: //'<span>{{ metadata.name }}</span>',
 						'<li class="sura-menu-class1">\
-							<a class="sura-menu-class2 row" href="/39">\
+							<a class="sura-menu-class2 row" @click="onClickSura( metadata.value )">\
 								<div class="col-xs-2 text-muted">{{ metadata.value }}</div>\
 								<div class="col-xs-7">{{ metadata.english_name }}</div>\
 								<div class="col-xs-3 text-left sura-menu-class3 arr2">\
@@ -1141,6 +1152,14 @@ require.config({
 							</a>\
 						</li>',
 			props: ['metadata'], //ex: { "start": 7, "ayahs": 286, "order": 87, "rukus": 40, "arabic_name": "البقرة", "english_name": "Al-Baqara", "english_meaning": "The Cow", "type": "Medinan", "name": "2. Al-Baqara البقرة", "value": 2 }
+			data: function(){
+				return {  };
+			},
+			methods:{
+				onClickSura: function( surano ){
+					bus.$emit('onClickSura', surano );
+				},
+			},
 		});
 
 		var quranDashboard = Vue.component('quran-dashboard', {
@@ -1153,9 +1172,9 @@ require.config({
 									</a>\
 									<h4 class="dashboardClass2">THE NOBLE QUR\'AN</h4>\
 									<div class="right-inner-addon searchinput undefined">\
-										<a tabindex="-1">\
+										<a :click="onSearch" tabindex="-1">\
 										<i class="fa fa-search ss-icon ss-search"></i></a>\
-										<input type="search" placeholder="Search &quot;Noah&quot;">\
+										<input type="search" v-model="keyword" v-on:keyup.enter="onSearch" placeholder="Search &quot;Noah&quot;">\
 									</div>\
 								</div>\
 							</div>\
@@ -1192,6 +1211,15 @@ require.config({
 						</div>\
 					   </div>',
 			props: ['suras'],
+			data: function(){
+				return { keyword: null };
+			},
+			methods:{
+				onSearch: function(){
+					console.log(JSON.stringify( this.keyword ));
+					bus.$emit('onSearch', {keyword: this.keyword});
+				},
+			},
 		});
 
 		var quranSearch = Vue.component('quran-search', {
