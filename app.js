@@ -150,7 +150,7 @@ require.config({
 	  	{
 	  		path: '/page/:pageno',
 	  		component: comps.quranPage,
-	  		props: (route) => ({ ayahsListFromPage: vm.data.ayahsListFromPage }),
+	  		props: ($route) => ({ ayahsListFromPage: (vm.verseNo = +($route.params.pageno) ) && vm.data.ayahsListFromPage }),
 	  	},
 	  	{
 	  		path: '/:id', 
@@ -981,8 +981,8 @@ require.config({
 								:show-synonyms="showSynonyms"\
 								:current-page-asbab="currentPageAsbab"\
 								:current-page-synonyms="currentPageSynonyms"\
-								:words="w2wEn.lookup( verse.verseNo )"\
-								:corpus="w2wCorpus.lookup( verse.verseNo )"\
+								:words="w2wEn && w2wEn.lookup && w2wEn.lookup( verse.verseNo )"\
+								:corpus="w2wCorpus && w2wCorpus.lookup && w2wCorpus.lookup( verse.verseNo )"\
 							>\
 								\
 							</quran-ayah>\
@@ -1085,7 +1085,7 @@ require.config({
 						no = (isStopLetter || isOtherLetter) ? null : ++count,
 						resp = {w: w};
 					if(isStopLetter || isOtherLetter){ resp.isStopLetter = true; }
-					else{ resp.surah = verse.surah; resp.ayah = verse.ayah; resp.word = no; resp.w2w = words[ no - 1 ]; resp.corpus = corpus[ no - 1 ]; };
+					else{ resp.surah = verse.surah; resp.ayah = verse.ayah; resp.word = no; resp.w2w = words && words[ no - 1 ]; resp.corpus = corpus && corpus[ no - 1 ]; };
 					return resp;
 				})
 		  	}
