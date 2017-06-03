@@ -648,7 +648,7 @@ require.config({
 			message: '',
 			debug: false,
 			showArabic: true,
-			showTrans: false,
+			showTrans: true,
 			showTranslit: false,
 			showCorpus: false,
 			showAsbab: false,
