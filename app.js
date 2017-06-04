@@ -49,6 +49,7 @@ require.config({
 
 	"w2wEn": 'data/w2wEn',
 	"w2wCorpus": 'data/w2wCorpus',
+	"w2wCorpusV2": 'data/w2wCorpus.v2',
 
 	"content-A": ['data/content/A', 'https://4itsme.github.io/v1/data/content/A'],
 	"content-AA": ['data/content/AA', 'https://4itsme.github.io/v1/data/content/AA'],
@@ -1258,7 +1259,9 @@ require.config({
 							<H4>Qur\'aan Word details</H4>\
 							<div v-if=\'loading\'>Loading...</div>\
 							<div class=well v-else>\
-								{{ data }}\
+								{{ data.data2[ +word - 1 ] }}<BR/>\
+								{{  data.data[ +word - 1 ] }}<BR/>\
+								<div class=text-muted>{{ data }}</div>\
 							</div>\
 					   </div>',
 			props: ['sura', 'ayah', 'word'],
@@ -1282,10 +1285,11 @@ require.config({
 		    		this.error = this.data = null;
 		    		this.loading = true;
 		    		var comp = this; //save a reference
-		    		require(['Q', 'w2wCorpus'], function(Q, w2wCorpus){
+		    		require(['Q', 'w2wCorpus', 'w2wCorpusV2'], function(Q, w2wCorpus, w2wCorpusV2){
 		    			var verseNo = Q.verseNo.ayah( +comp.sura, +comp.ayah ),
-		    				data = w2wCorpus.lookup( +verseNo );
-		    			comp.data = data;
+		    				data = w2wCorpus.lookup( +verseNo ),
+		    				data2 = w2wCorpusV2.lookup( +verseNo );
+		    			comp.data = {data: data, data2: data2};
 		    			comp.loading = false;
 		    			comp.error = null;
 		    		});//TODO: add error handling code here
