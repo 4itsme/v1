@@ -1240,7 +1240,33 @@ require.config({
 		});
 
 		var quranSarf = Vue.component('quran-sarf', {
-			template: '<div> isLoading: {{ loading }} {{ data }} </div>',
+			template: '<div xclass="well">\
+							<H4>Sarf Sagheer (for enhanced verbs)</H4>\
+							<div v-if=\'isLoading\'>Loading...</div>\
+							<div class=well v-else>\
+								<div class="row">\
+								  <div class="col-md-3"><span class=arr2>{{data.faail}}</span> <BR/><span class="label label-info">Faail</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.masdr}}</span> <BR/><span class="label label-info">Masdr</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.present}}</span> <BR/><span class="label label-info">Present</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.past}}</span> <BR/><span class="label label-info">Past</span></div>\
+								</div>\
+									<BR/>\
+								<div class="row">\
+								  <div class="col-md-3"><span class=arr2>{{data.mafool}}</span> <BR/><span class="label label-info">Mafool</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.masdr}}</span> <BR/><span class="label label-info">Masdr</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.presentP}}</span> <BR/><span class="label label-info">Passive Present</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.pastP}}</span> <BR/><span class="label label-info">Passive Past</span></div>\
+								</div>\
+									<BR/>\
+								<div class="row">\
+								  <div class="col-md-3"></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.tharf}}</span> <BR/><span class="label label-info">Tharf</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.forbid}}</span> <BR/><span class="label label-info">Nahi / forbid</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.command}}</span> <BR/><span class="label label-info">Amr / command</span></div>\
+								</div>\
+							</div>\
+							<BR/>\
+						</div>',
 			props: ['root', 'form'],
 			data: function(){
 				return {
@@ -1254,6 +1280,15 @@ require.config({
 			    // already being observed
 			    this.fetchData()
 		    },
+		    watch: {
+		    	root: function(){ debugger; fetchData(); },
+		    	form: function(){ debugger; fetchData(); },
+		    	$route: function(to, from) {
+			      // react to route changes...
+			      debugger; fetchData();
+			    },
+			    route: function(){ debugger; fetchData(); },
+		    },
 		    methods: {
 		    	fetchData: function(){
 		    		this.error = this.data = null;
@@ -1262,7 +1297,9 @@ require.config({
 		    			comp = this; //save a reference
 		    		require(['qSarfGenerator'], function(qSarfGenerator){
 		    			comp.data = qSarfGenerator.lookup(root, form);
-		    		});
+		    			comp.loading = false;
+		    			comp.error = null;
+		    		});//TODO: add error handling code here
 		    	},
 		    },
 
