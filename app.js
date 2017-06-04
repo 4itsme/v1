@@ -1239,6 +1239,7 @@ require.config({
 
 		});
 
+		//  /#/sarf?root=xwf&form=2
 		var quranSarf = Vue.component('quran-sarf', {
 			template: '<div xclass="well">\
 							<H4>Sarf Sagheer (for enhanced verbs)</H4>\
