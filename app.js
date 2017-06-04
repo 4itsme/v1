@@ -4,7 +4,7 @@ require.config({
     							//'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min',
     "underscore": 'lib/lodash.min', //"lib/underscore",
     							//"https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min"
-    "bootstrap": "libcss/bootstrap-3.3.7-dist/js/bootstrap.min", 
+    "bootstrapjs": "libcss/bootstrap-3.3.7-dist/js/bootstrap.min", 
     							//"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
     "vue": location.origin !== "http://localhost:8080" ? 'lib/vue.min' : 'lib/vue',
     							//"https://unpkg.com/vue/dist/vue"
@@ -102,6 +102,7 @@ require.config({
 	var _dependencies = [
 					 'vue', 'vue-router', 'qMain'
 					,'underscore' ,'jquery', 'jqueryMark', 'moment'
+					,'bootstrapjs'
 					,'Q' ,'qUtil' 
 					,'qSearch'
 					,'w2wEn'
@@ -117,6 +118,7 @@ require.config({
 	require(_dependencies, function( 
 					Vue, VueRouter, qMain
 					,_ ,$, jqueryMark, moment
+					,bootstrapjs
 					,Q ,qUtil 
 					,qSearch
 					,w2wEn
