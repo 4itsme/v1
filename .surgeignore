@@ -1,1 +1,7 @@
 content/
+data/content/content.js
+lib/modules/notReady/
+data/unused, delete/
+lib/unused, delete/
+"data/unused, delete/"
+"lib/unused, delete/"
