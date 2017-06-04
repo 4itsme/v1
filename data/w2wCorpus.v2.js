@@ -34,7 +34,7 @@ var oMod = (function(){
 		var root = query.root,
 			lem = query.lemma || query.lem,
 			key = root +';'+ lem,
-			data = _.filter(_treeKeys, { k: key } ),
+			data = _.find(_treeKeys, { k: key } ),
 			dataLookups = data && data.v,
 			dataMapped = _.map( dataLookups, function( i ){
 				return _tree[ +i ];
