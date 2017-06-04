@@ -104,7 +104,7 @@ require.config({
 					,'Q' ,'qUtil' 
 					,'qSearch'
 					,'w2wEn'
-					,'w2wCorpus'
+					//,'w2wCorpus'
 					//,'qCorpus'
 					//,'qAsbab' ,'qSynonyms'
 					
@@ -119,7 +119,7 @@ require.config({
 					,Q ,qUtil 
 					,qSearch
 					,w2wEn
-					,w2wCorpus
+					//,w2wCorpus
 					//,qCorpus 
 					//,qAsbab ,qSynonyms
 
@@ -152,6 +152,11 @@ require.config({
 	  		path: '/sarf',
 	  		component: comps.quranSarf,
 	  		props: (route) => ({ root: route.query.root, form: route.query.form }),
+	  	},
+	  	{
+	  		path: '/:sura/:ayah/:word',
+	  		component: comps.quranGrammar,
+	  		props: (route) => ({ sura: route.params.sura, ayah: route.params.ayah, word: route.params.word }),
 	  	},
 	  	{
 	  		path: '/search/:keyword',
@@ -232,7 +237,7 @@ require.config({
 
 	vm._ = _;
 	vm.w2wEn = w2wEn;
-	vm.w2wCorpus = w2wCorpus;
+	vm.w2wCorpus = typeof( w2wCorpus ) !== 'undefined' ? w2wCorpus : null;
 	vm.qUtil = qUtil;
 	vm.suras = _.chain( _.range(1, 115) )
 				.map( function(s){
@@ -1239,6 +1244,55 @@ require.config({
 
 		});
 
+
+
+
+
+
+
+
+
+
+		var quranGrammar = Vue.component('quran-grammar', {
+			template: '<div>quran grammar test {{ [+sura, +ayah, +word] }}\
+							<H4>Qur\'aan Word details</H4>\
+							<div v-if=\'loading\'>Loading...</div>\
+							<div class=well v-else>\
+								{{ data }}\
+							</div>\
+					   </div>',
+			props: ['sura', 'ayah', 'word'],
+			data: function(){
+				return {
+					loading: false,
+					data: null,
+					error: null,
+				};
+			},
+			created: function(){
+				this.fetchData();
+			},
+			watch: {
+				$route: function(to, from){
+					this.fetchData();
+				}
+			},
+			methods: {
+				fetchData: function(){
+		    		this.error = this.data = null;
+		    		this.loading = true;
+		    		var comp = this; //save a reference
+		    		require(['Q', 'w2wCorpus'], function(Q, w2wCorpus){
+		    			var verseNo = Q.verseNo.ayah( +comp.sura, +comp.ayah ),
+		    				data = w2wCorpus.lookup( +verseNo );
+		    			comp.data = data;
+		    			comp.loading = false;
+		    			comp.error = null;
+		    		});//TODO: add error handling code here
+				},
+			}
+		});
+
 		//  /#/sarf?root=xwf&form=2
 		var quranSarf = Vue.component('quran-sarf', {
 			template: '<div xclass="well">\
@@ -1313,6 +1367,8 @@ require.config({
 			quranAyah: quranAyah,
 			quranWord: quranWord,
 			quranSarf: quranSarf,
+			quranGrammar: quranGrammar,
+
 		};
 
 	}
