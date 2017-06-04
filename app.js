@@ -157,6 +157,11 @@ require.config({
 	  		props: (route) => ({ root: route.query.root, form: route.query.form }),
 	  	},
 	  	{
+	  		path: '/:sura/:ayah',
+	  		component: comps.quranAyahComp,
+	  		props: (route) => ({ sura: route.params.sura, ayah: route.params.ayah }),
+	  	},
+	  	{
 	  		path: '/:sura/:ayah/:word',
 	  		component: comps.quranGrammar,
 	  		props: (route) => ({ sura: route.params.sura, ayah: route.params.ayah, word: route.params.word }),
@@ -1308,6 +1313,97 @@ require.config({
 		});
 
 
+		var quranAyahComp = Vue.component('quran-ayah-comp',{
+			template: '<div>Ayah comp testing...\
+							<div v-if=\'loading\'>Loading...</div>\
+							<div class=well v-else>\
+						<span>\
+						<!-- show basmallah -->\
+						<span v-if="!hideAr && verse.isBasmallah">\
+							<div id="bismillah" class="bismillah text-center word-font" style="text-align:center; font-size: 42px;" title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" >\
+								<HR/>\
+								﷽\
+								<HR/>\
+							</div>\
+						</span>\
+						<!-- show arabic ayah -->\
+						<span v-if="verse.BUCK" dir="rtl">\
+							\
+							<span v-if="showTrans || showTranslit || showCorpus" style=font-size:.96em >\
+								{{ verse.surah }}:{{ verse.ayah }} &nbsp; \
+							</span>\
+							<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
+								<span v-for="word in segmentify(verse, words, corpus)">\
+									<quran-word :word="word"></quran-word>\
+								</span>\
+							</span>\
+							<span v-if="false" style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
+								{{ !hideAr ? verse.AR : verse.BUCK }}\
+							</span>\
+							<span v-if="true || (!showTrans && !showTranslit && !showCorpus)" :title="\'Ayah ref: \' + verse.surah + \':\'+ verse.ayah"  style=font-size:.96em >\
+								<span>﴿</span>{{ verse.ayah }}<span>﴾</span>\
+							</span>\
+							\
+						</span>\
+						\
+						\
+						<!-- show translation, translit etc -->\
+						<span v-if="verse.BARE" v-html="">	\
+						</span>\
+						<span v-if="verse.TRANS" >\
+							<div v-if="showTrans" dir=ltr>{{ verse.TRANS }}</div>\
+						</span>\
+						<span v-if="verse.TRANSLIT" >\
+							<div v-if="showTranslit" dir=ltr v-html="verse.TRANSLIT"></div>\
+						</span>\
+						\
+						<span v-show="showAsbab && currentPageAsbab && currentPageAsbab.join(\' \').indexOf(\' \' + verse.surah + \':\' + verse.ayah + \' \') != -1">\
+							<A HREF="#" v-on:click.stop.prevent="showAsbabFor(verse.surah, verse.ayah);" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
+								<!-- [A] -->\
+								<span style="cursor:pointer" class="label label-warning" >ASB</span>\
+							</A>\
+						</span>\
+						<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + \':\' + verse.ayah)">\
+							<A HREF="#" v-on:click.stop.prevent="showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
+								<!-- [S] -->\
+								<span style="cursor:pointer" class="label label-info" >SYN</span>\
+							</A>\
+						</span>\
+						<span v-if="showTrans || showTranslit" >\
+							<BR/>\
+						</span>\
+						\
+		  			</span>\
+							</div>\
+					   </div>',
+			props: ['sura', 'ayah'],
+			data: function(){
+				return {
+					loading: false,
+					data: null,
+					error: null,
+				};
+			},
+			created: function(){
+				this.fetchData();
+			},
+			watch: {
+				$route: function(to, from){
+					this.fetchData();
+				},
+			},
+			methods: {
+				fetchData: function(){
+					this.error = this.data = null;
+		    		this.loading = true;
+		    		var comp = this; //save a reference
+		    		comp.data = {
+		    			isBasmallah: false,
+		    		};
+				},
+			},
+		});
+
 		//	/#/44/10/6
 		var quranGrammar = Vue.component('quran-grammar', {
 			template: '<div>quran grammar test {{ [+sura, +ayah, +word] }}\
@@ -1419,6 +1515,7 @@ require.config({
 		});
 
 		return {
+			quranAyahComp: quranAyahComp,
 			quranDashboard: quranDashboard,
 			quranMain: quranMain,
 			quranSearch: quranSearch,
