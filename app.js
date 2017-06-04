@@ -1256,7 +1256,10 @@ require.config({
 
 
 
-		// 
+		// /#/related?root=smw&lem=samaA%5E%27
+		// /#/related?root=smw&lem=%7Bsom
+		// /#/related?lem=%7Bsom
+		// /#/related?root=smw
 		var quranGrammarConcordance = Vue.component('quran-grammar-concordance', {
 			template: '<div>Qur\'aan grammar concordance test {{ [root, lem] }}\
 							<H4>Qur\'aan Word details</H4>\
