@@ -34,13 +34,20 @@ var oMod = (function(){
 		var root = query.root,
 			lem = query.lemma || query.lem,
 			key = root +';'+ lem,
+			isRootOnly = (root && !lem),
 			data = ( root && lem ) ? _.find(_treeKeys, { k: key } )
-								   : (root ? _.find(_treeKeys, function(o){ return o.k.split(';')[0] === root; })
+								   : (root ? _.filter(_treeKeys, function(o){ return o.k.split(';')[0] === root; })
 								   		   : (lem ? _.find(_treeKeys, function(o){ return o.k.split(';')[1] === lem; })
 								   		  		  : null
 								   		  	 )
-								   	 ),
-			dataLookups = data && data.v,
+								   	 );
+		if(isRootOnly){
+			return _.map(data, function(o){
+				return lookupRootLem({root: root, lem: o.k.split(';')[1] });
+			});
+			//This call recursively calls itself for each Root-Lem combination, and then terminates (returns all combined result sets)
+		}
+		var	dataLookups = data && data.v,
 			dataMapped = _.map( dataLookups, function( i ){
 				return _tree[ +i ];
 			}),
