@@ -497,23 +497,23 @@
 	  	  		{{ wordCorpusResults.w2w }}
 	  	  		<HR/>
 
-				<h3> Root word </h3>
+				    <h3> Root word </h3>
 	  	  		Lemma: 
 	  	  			<div class='text-center arr2'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.lemmaAr }}</div>
 
 	  	  		Root: 
 	  	  			<div class='text-center arr2'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootAr }}</div>
-	  	  			<b><div class=text-center> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootMeaning }}</div></b>
+	  	  			<b><div class=Xtext-center> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootMeaning }}</div></b>
 	  	  			<div class='text-muted text-center'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootTree }}</div>
 	  	  		<HR/>
 
-				<h3> Grammar </h3>
-				<div v-if="wordCorpusResults.corpus" class=well v-html=" wordCorpusResults.corpus && wordCorpusResults.corpus.pretty "></div>
+				    <h3> Grammar </h3>
+				    <div v-if="wordCorpusResults.corpus" class=well v-html=" wordCorpusResults.corpus && wordCorpusResults.corpus.pretty "></div>
 	  	  		<span class=text-muted>{{ wordCorpusResults.corpus }}</span>
 	  	  		<HR/>
 
-				<h3> Transliteration </h3>
-	  	  		<span class=text-muted>{{ wordCorpusResults.w2w }}</span>
+				    <h3> Transliteration </h3>
+	  	  		<span>{{ wordCorpusResults.w2w }}</span>
 	  	  		<HR/>
 
 	  	  		<HR/>
@@ -527,8 +527,8 @@
 	  	  <div v-if="false && verbResults">
 	  	  	<HR>Verbs lookup results: <BR>
 	  	  	<form id="searchVerb">
-			    Search verb<input name="query" v-model="verbSearchQuery">
-			</form>
+			       Search verb<input name="query" v-model="verbSearchQuery">
+			    </form>
 	  	  	<!-- <v-grid
 			    :data="verbResults"
 			    :columns=" _.without( _.keys(_.first( verbResults ) ), 'sarf' )"
@@ -537,18 +537,7 @@
 	  	  	<!-- {{ verbResults }} -->
 	  	  </div>
 
-		  <div v-if="rootLemResults && rootLemResults.length > 0">
-			  <HR>Dictionary lookup results: <BR>
-			  <!-- {{ rootLemResults }} -->
-			  ROOT:{{rootLemResults.length > 0 ? rootLemResults[0].root : '-'}}, Instances: {{rootLemResults.length > 0 ? rootLemResults[0].rootInstances : '-'}}
-			  <div v-for="(match, key, index) in rootLemResults">
-				<A href=# v-on:click.stop.prevent='goRootToLem(match, key, index);' v-bind:title='match.verse'>
-					LEM:{{match.lem}}
-				</A>, Instances: {{match.lemInstances}}
-			  </div>
-			  <HR>
-		  </div>
-		  
+  		    		  
 		  <div v-if="lemResults && Object.keys(lemResults).length > 0">
 			<HR>Dictionary Lemma lookup results: {{ Object.keys(lemResults).length}}<BR>
 				<!-- {{ lemResults }} -->
@@ -566,15 +555,6 @@
 
 		  <div v-else>Misc details shown here if available</div>
 
-		  <div v-show="debug">
-			  {{queryData}}
-			  {{ref}}
-			  Asbab: {{currentPageAsbab}}
-			  Synonyms: {{currentPageSynonyms}}
-			  <!-- <PRE> -->
-				<!-- {{asbabDetail}} -->
-			  <!-- </PRE> -->
-		  </div>
 	  </div>
 
 	  <div v-bind:class="{ 'tab-pane': true, active: tab === 'about' }" id="about">
