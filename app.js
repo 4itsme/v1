@@ -1245,24 +1245,24 @@ require.config({
 							<div v-if=\'loading\'>Loading...</div>\
 							<div class=well v-else>\
 								<div class="row">\
-								  <div class="col-md-3"><span class=arr2>{{data.faail}}</span> <BR/><span class="label label-info">Faail</span></div>\
-								  <div class="col-md-3"><span class=arr2>{{data.masdr}}</span> <BR/><span class="label label-info">Masdr</span></div>\
-								  <div class="col-md-3"><span class=arr2>{{data.present}}</span> <BR/><span class="label label-info">Present</span></div>\
-								  <div class="col-md-3"><span class=arr2>{{data.past}}</span> <BR/><span class="label label-info">Past</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.faail}}</span> <BR/><span class="label label-info">Faail</span><BR/><span class=text-muted> (Active Participle)</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.masdr}}</span> <BR/><span class="label label-info">Masdr</span><BR/><span class=text-muted> (Verbal Noun)</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.present}}</span> <BR/><span class="label label-info">Fi\'l mudari\'</span><BR/><span class=text-muted> (Present, Future)</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.past}}</span> <BR/><span class="label label-info">Fi\'l maDiy</span><BR/><span class=text-muted> (Past)</span></div>\
 								</div>\
 									<BR/>\
 								<div class="row">\
-								  <div class="col-md-3"><span class=arr2>{{data.mafool}}</span> <BR/><span class="label label-info">Mafool</span></div>\
-								  <div class="col-md-3"><span class=arr2>{{data.masdr}}</span> <BR/><span class="label label-info">Masdr</span></div>\
-								  <div class="col-md-3"><span class=arr2>{{data.presentP}}</span> <BR/><span class="label label-info">Passive Present</span></div>\
-								  <div class="col-md-3"><span class=arr2>{{data.pastP}}</span> <BR/><span class="label label-info">Passive Past</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.mafool}}</span> <BR/><span class="label label-info">Maf\'ool</span><BR/><span class=text-muted> (Passive Participle)</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.masdr}}</span> <BR/><span class="label label-info">Masdr</span><BR/><span class=text-muted> (Verbal Noun)</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.presentP}}</span> <BR/><span class="label label-info">Majhool Fi\'l mudari\'</span><BR/><span class=text-muted> (Passive Present, Future)</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.pastP}}</span> <BR/><span class="label label-info">Majhool Fi\'l maDiy</span><BR/><span class=text-muted> (Passive Past)</span></div>\
 								</div>\
 									<BR/>\
 								<div class="row">\
 								  <div class="col-md-3"></div>\
-								  <div class="col-md-3"><span class=arr2>{{data.tharf}}</span> <BR/><span class="label label-info">Tharf</span></div>\
-								  <div class="col-md-3"><span class=arr2>{{data.forbid}}</span> <BR/><span class="label label-info">Nahi / forbid</span></div>\
-								  <div class="col-md-3"><span class=arr2>{{data.command}}</span> <BR/><span class="label label-info">Amr / command</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.tharf}}</span> <BR/><span class="label label-info">Tharf</span><BR/><span class=text-muted>(Time/Location Adverb)</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.forbid}}</span> <BR/><span class="label label-info">Nahi</span><BR/><span class=text-muted> (Forbid)</span></div>\
+								  <div class="col-md-3"><span class=arr2>{{data.command}}</span> <BR/><span class="label label-info">Amr</span><BR/><span class=text-muted> (Command)</span></div>\
 								</div>\
 							</div>\
 							<BR/>\
