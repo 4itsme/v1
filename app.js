@@ -1181,11 +1181,11 @@ require.config({
 
 		var quranDashboard = Vue.component('quran-dashboard', {
 			template: '<div>\
-						<div class="dashboardheader" style="background-image:url(images/background.jpg);">\
+						<div class="dashboardheader" style="background-image:url(/images/background.jpg);">\
 							<div class="container">\
 								<div class="row"><div class="col-md-10 col-md-offset-1 text-center">\
 									<a class="dashboardIndexHeader" data-metrics-event-name="IndexHeader:Link:Index" href="/">\
-										<img src="images/logo-lg-w.png" class="dashboardClass3" alt="logo">\
+										<img src="/images/logo-lg-w.png" class="dashboardClass3" alt="logo">\
 									</a>\
 									<h4 class="dashboardClass2">THE NOBLE QUR\'AN</h4>\
 									<div class="right-inner-addon searchinput undefined">\
