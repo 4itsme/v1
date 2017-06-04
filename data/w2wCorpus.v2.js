@@ -11,11 +11,12 @@ var oMod = (function(){
 							  //	function(a,b){ return a > b ? a : b; }
 							  //);
 	
-	function lookup(verse, word){ init();
-		if(typeof(verse) === 'object'){ return lookupRootLem( verse ); }
-		if(verse && verse > 0 && verse <= 6237 /*_words.length*/){
-			verse = +verse;
-			var obj = Q.ayah.fromVerse( verse ),
+	function lookup(sura, ayah, /*verse,*/ word){ init();
+		if(typeof(sura) === 'object'){ return lookupRootLem( sura ); }
+		if(sura && sura > 0 && sura <= 114 &&
+		   ayah && ayah > 0 && ayah <= 286){//6237 /*_words.length*/){
+			//verse = +verse;
+			var obj = {surah: +sura, ayah: +ayah}, //Q.ayah.fromVerse( verse ),
 				verseWords; // = _words[ verse ];
 			var start = refToWordFn(obj.surah, obj.ayah, 1),
 				maxWords = Q.word.count(obj.surah, obj.ayah),
@@ -24,8 +25,8 @@ var oMod = (function(){
 			if(!word){
 				return verseWords;
 			}
-			else if(word > 0 && word <= maxWordsInLine && (verse = +verse) && word <= verseWords.length ){
-				return _words[verse][word - 1];
+			else if(word > 0 && word <= maxWordsInLine && word <= verseWords.length ){
+				return _words[ end ]; //verseWords[word - 1];
 			}
 		}
 	}

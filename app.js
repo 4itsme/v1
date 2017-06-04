@@ -211,21 +211,27 @@ require.config({
 	  console.log(JSON.stringify(word));
 	  vm.tab = 'misc';
 	  require(['qCorpus'], function(qCorpus){
-	  	word.corpus = qCorpus.parse(word.corpus);
-	  	word.corpus.pretty = qCorpus.pretty( word.corpus );
-	  	if( word.corpus.lemma ){ word.corpus.lemmaAr = qUtil.EnToAr( word.corpus.lemma ); }
-	  	if( word.corpus.root ){ word.corpus.rootAr = qUtil.EnToAr( word.corpus.root.split('').join(' ') ); }
+	  	if(!word.corpus){
+	  		require(['w2wCorpusV2'], function(w2wCorpusV2){
+	  			word.corpus = w2wCorpusV2.lookup( word.surah, word.ayah, word.word );
+	  			console.log( word.corpus ); console.log('\n');
+			  	word.corpus = qCorpus.parse(word.corpus);
+			  	word.corpus.pretty = qCorpus.pretty( word.corpus );
+			  	if( word.corpus.lemma ){ word.corpus.lemmaAr = qUtil.EnToAr( word.corpus.lemma ); }
+			  	if( word.corpus.root ){ word.corpus.rootAr = qUtil.EnToAr( word.corpus.root.split('').join(' ') ); }
 
-	  	require(['qRootMeanings'], function( qRootMeanings ){
-	  		word.corpus.rootMeaning = qRootMeanings.lookup( word.corpus.root );
+			  	require(['qRootMeanings'], function( qRootMeanings ){
+			  		word.corpus.rootMeaning = qRootMeanings.lookup( word.corpus.root );
 
-	  		require(['qRootLemDict'], function( qRootLemDict ){
-	  			word.corpus.rootTree = qRootLemDict.lookup({lem: word.corpus.lemma, root: word.corpus.root });
-	  			vm.wordCorpusResults = word;
+			  		require(['qRootLemDict'], function( qRootLemDict ){
+			  			word.corpus.rootTree = qRootLemDict.lookup({lem: word.corpus.lemma, root: word.corpus.root });
+			  			vm.wordCorpusResults = word;
+			  		});
+			  		//vm.wordCorpusResults = word;
+			  	})
+			    //vm.wordCorpusResults = word;
 	  		});
-	  		//vm.wordCorpusResults = word;
-	  	})
-	    //vm.wordCorpusResults = word;
+	  	}//end of if
 	  });
 	});
 

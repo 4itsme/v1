@@ -509,22 +509,22 @@
 
 				<h3> Grammar </h3>
 				<div v-if="wordCorpusResults.corpus" class=well v-html=" wordCorpusResults.corpus && wordCorpusResults.corpus.pretty "></div>
-	  	  		<span class=text-muted>{{ wordCorpusResults.corpus }}</span>
+	  	  		{{ wordCorpusResults.corpus }}
 	  	  		<HR/>
 
 				<h3> Transliteration </h3>
-	  	  		<span class=text-muted>{{ wordCorpusResults.w2w }}</span>
+	  	  		{{ wordCorpusResults.w2w }}
 	  	  		<HR/>
 
 	  	  		<HR/>
 
 	  	  		<HR/>
-	  	  		<span class=text-muted>{{ wordCorpusResults }}</span>
+	  	  		{{ wordCorpusResults }}
 
 	  	  	</div>
 	  	  </div>
 
-	  	  <div v-if="false && verbResults">
+	  	  <div v-if="verbResults">
 	  	  	<HR>Verbs lookup results: <BR>
 	  	  	<form id="searchVerb">
 			    Search verb<input name="query" v-model="verbSearchQuery">
@@ -615,7 +615,7 @@
   <!--<script stc='https://cdnjs.com/libraries/mark.js/'></script>-->
 <!--   <script src='zdata/main.js'></script>
  -->  
-  <script src="/lib/require.js" data-main="/app"></script>
+  <script src="lib/require.js" data-main="app"></script>
 
   <!-- Vue grid component template -->
 <script type="text/x-template" id="grid-template">
