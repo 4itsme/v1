@@ -12,6 +12,7 @@ var oMod = (function(){
 							  //);
 	
 	function lookup(verse, word){ init();
+		if(typeof(verse) === 'object'){ return lookupRootLem( verse ); }
 		if(verse && verse > 0 && verse <= 6237 /*_words.length*/){
 			verse = +verse;
 			var obj = Q.ayah.fromVerse( verse ),
@@ -29,6 +30,18 @@ var oMod = (function(){
 		}
 	}
 	
+	function lookupRootLem( query ){ init();
+		var root = query.root,
+			lem = query.lemma || query.lem,
+			key = root +';'+ lem,
+			data = _.filter(_treeKeys, { k: key } ),
+			dataLookups = data && data.v,
+			dataMapped = _.map( dataLookups, function( i ){
+				return _tree[ +i ];
+			});
+		return dataMapped;
+	}
+
 	function setData(data){ 
 		if(data && data.length > 0){ _words = data; _isInited =false; init(); } 
 		else throw Error('no data'); 

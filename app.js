@@ -160,6 +160,11 @@ require.config({
 	  		props: (route) => ({ sura: route.params.sura, ayah: route.params.ayah, word: route.params.word }),
 	  	},
 	  	{
+	  		path: '/related',
+	  		component: comps.quranGrammarConcordance,
+	  		props: (route) => ({ root: route.query.root, lem: route.query.lem }),
+	  	},
+	  	{
 	  		path: '/search/:keyword',
 	  		component: comps.quranSearch,
 	  		//props: ($route) => ({ results: (vm.keyword = $route.params.keyword) && vm.go() && vm.searchResults }),
@@ -169,7 +174,7 @@ require.config({
 	  		component: comps.quranPage,
 	  		props: ($route) => ({ ayahsListFromPage: (vm.verseNo = +($route.params.pageno) ) && vm.data.ayahsListFromPage }),
 	  	},
-	  	{
+	  	/*{
 	  		path: '/:id', 
 	  		component: comps.quranMain,
 	  		props:{
@@ -181,7 +186,7 @@ require.config({
 				//w2w-en="w2wEn"
 				//w2w-corpus="w2wCorpus"
 	  		}
-	  	},
+	  	},*/
 
 	    // dynamic segments start with a colon
 	    { path: '/user/:id', component: User },
@@ -1251,9 +1256,48 @@ require.config({
 
 
 
+		// 
+		var quranGrammarConcordance = Vue.component('quran-grammar-concordance', {
+			template: '<div>Qur\'aan grammar concordance test {{ [root, lem] }}\
+							<H4>Qur\'aan Word details</H4>\
+							<div v-if=\'loading\'>Loading...</div>\
+							<div class=well v-else>\
+								<div class=text-muted>{{ data }}</div>\
+							</div>\
+					   </div>',
+			props: ['root', 'lem'],
+			data: function(){
+				return {
+					loading: false,
+					data: null,
+					error: null,
+				};
+			},
+			created: function(){
+				this.fetchData();
+			},
+			watch: {
+				$route: function(to, from){
+					this.fetchData();
+				}
+			},
+			methods: {
+				fetchData: function(){
+		    		this.error = this.data = null;
+		    		this.loading = true;
+		    		var comp = this; //save a reference
+		    		require(['Q', 'w2wCorpus', 'w2wCorpusV2'], function(Q, w2wCorpus, w2wCorpusV2){
+		    			var data = w2wCorpusV2.lookup( { root: comp.root, lem: comp.lem } );
+		    			comp.data = data;
+		    			comp.loading = false;
+		    			comp.error = null;
+		    		});//TODO: add error handling code here
+				},
+			}
+		});
 
 
-
+		//	/#/44/10/6
 		var quranGrammar = Vue.component('quran-grammar', {
 			template: '<div>quran grammar test {{ [+sura, +ayah, +word] }}\
 							<H4>Qur\'aan Word details</H4>\
@@ -1372,7 +1416,7 @@ require.config({
 			quranWord: quranWord,
 			quranSarf: quranSarf,
 			quranGrammar: quranGrammar,
-
+			quranGrammarConcordance: quranGrammarConcordance,
 		};
 
 	}
