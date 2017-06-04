@@ -1242,7 +1242,7 @@ require.config({
 		var quranSarf = Vue.component('quran-sarf', {
 			template: '<div xclass="well">\
 							<H4>Sarf Sagheer (for enhanced verbs)</H4>\
-							<div v-if=\'isLoading\'>Loading...</div>\
+							<div v-if=\'loading\'>Loading...</div>\
 							<div class=well v-else>\
 								<div class="row">\
 								  <div class="col-md-3"><span class=arr2>{{data.faail}}</span> <BR/><span class="label label-info">Faail</span></div>\
