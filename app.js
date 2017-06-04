@@ -1281,13 +1281,12 @@ require.config({
 			    this.fetchData()
 		    },
 		    watch: {
-		    	root: function(){ debugger; fetchData(); },
-		    	form: function(){ debugger; fetchData(); },
+		    	//root: function(){ debugger; this.fetchData(); },
+		    	//form: function(){ debugger; this.fetchData(); },
 		    	$route: function(to, from) {
 			      // react to route changes...
-			      debugger; fetchData();
+			      this.fetchData();
 			    },
-			    route: function(){ debugger; fetchData(); },
 		    },
 		    methods: {
 		    	fetchData: function(){
