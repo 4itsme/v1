@@ -1477,7 +1477,7 @@ require.config({
 		    		require(['Q', 'w2wCorpus', 'w2wCorpusV2'], function(Q, w2wCorpus, w2wCorpusV2){
 		    			var verseNo = Q.verseNo.ayah( +comp.sura, +comp.ayah ),
 		    				data = w2wCorpus.lookup( +verseNo ),
-		    				data2 = w2wCorpusV2.lookup( +verseNo );
+		    				data2 = w2wCorpusV2.lookup( +comp.sura, +comp.ayah );
 		    			comp.data = {data: data, data2: data2};
 		    			comp.loading = false;
 		    			comp.error = null;
