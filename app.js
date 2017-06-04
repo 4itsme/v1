@@ -32,6 +32,7 @@ require.config({
 
     "qRoot": 'lib/modules/qRoot',
 	"qSarf": 'lib/modules/qSarf',
+	"qSarfGenerator": 'lib/modules/qSarfGenerator',
 	"qAntonyms": 'lib/modules/qAntonyms',
 
 
@@ -146,6 +147,11 @@ require.config({
 	  		path: '/',
 	  		component: comps.quranDashboard,
 	  		props: (route) => ({ suras: vm.suras }),
+	  	},
+	  	{
+	  		path: '/sarf',
+	  		component: comps.quranSarf,
+	  		props: (route) => ({ root: route.query.root, form: route.query.form }),
 	  	},
 	  	{
 	  		path: '/search/:keyword',
@@ -1224,12 +1230,41 @@ require.config({
 
 		var quranSearch = Vue.component('quran-search', {
 			template: '<div>Search results: <BR/>  {{ results }}</div>',
-			props: 'results',
+			props: ['results'],
 		});
 
 		var quranMain = Vue.component('quran-main', {
 			template: '',
-			props: '',
+			props: [''],
+
+		});
+
+		var quranSarf = Vue.component('quran-sarf', {
+			template: '<div> isLoading: {{ loading }} {{ data }} </div>',
+			props: ['root', 'form'],
+			data: function(){
+				return {
+					loading: false,
+					data: null,
+					error: null,
+				};
+			},
+			created: function() {
+			    // fetch the data when the view is created and the data is
+			    // already being observed
+			    this.fetchData()
+		    },
+		    methods: {
+		    	fetchData: function(){
+		    		this.error = this.data = null;
+		    		this.loading = true;
+		    		var root = this.root, form = this.form, 
+		    			comp = this; //save a reference
+		    		require(['qSarfGenerator'], function(qSarfGenerator){
+		    			comp.data = qSarfGenerator.lookup(root, form);
+		    		});
+		    	},
+		    },
 
 		});
 
@@ -1240,6 +1275,7 @@ require.config({
 			quranPage: quranPage,
 			quranAyah: quranAyah,
 			quranWord: quranWord,
+			quranSarf: quranSarf,
 		};
 
 	}
