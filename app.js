@@ -1310,7 +1310,7 @@ require.config({
 		    		this.error = this.data = null;
 		    		this.loading = true;
 		    		var comp = this; //save a reference
-		    		require(['Q', 'w2wCorpus', 'w2wCorpusV2'], function(Q, w2wCorpus, w2wCorpusV2){
+		    		require(['Q', /*'w2wCorpus',*/ 'w2wCorpusV2'], function(Q, /*w2wCorpus,*/ w2wCorpusV2){
 		    			var data = w2wCorpusV2.lookup( { root: comp.root, lem: comp.lem } );
 		    			comp.data = data;
 		    			comp.loading = false;
@@ -1327,10 +1327,12 @@ require.config({
 							<H4>Qur\'aan Word details</H4>\
 							<div v-if=\'loading\'>Loading...</div>\
 							<div class=well v-else>\
-								{{ data.data2[ +word - 1 ] }}<BR/>\
-								{{  data.data[ +word - 1 ] }}<BR/>\
+								{{  data[ +word - 1 ] }}<BR/>\
 								<div class=text-muted>{{ data }}</div>\
 							</div>\
+							<BR/><BR/>\
+							<quran-ayah-comp :sura="sura" :ayah="ayah" :showTrans="true" :showTranslit="true" :showWord2Word="true" >\
+							</quran-ayah-comp>\
 					   </div>',
 			props: ['sura', 'ayah', 'word'],
 			data: function(){
@@ -1353,11 +1355,11 @@ require.config({
 		    		this.error = this.data = null;
 		    		this.loading = true;
 		    		var comp = this; //save a reference
-		    		require(['Q', 'w2wCorpus', 'w2wCorpusV2'], function(Q, w2wCorpus, w2wCorpusV2){
+		    		require(['Q', /*'w2wCorpus',*/ 'w2wCorpusV2'], function(Q, /*w2wCorpus,*/ w2wCorpusV2){
 		    			var verseNo = Q.verseNo.ayah( +comp.sura, +comp.ayah ),
-		    				data = w2wCorpus.lookup( +verseNo ),
+		    				//data = w2wCorpus.lookup( +verseNo ),
 		    				data2 = w2wCorpusV2.lookup( +comp.sura, +comp.ayah );
-		    			comp.data = {data: data, data2: data2};
+		    			comp.data = data2; //{data: data, data2: data2};
 		    			comp.loading = false;
 		    			comp.error = null;
 		    		});//TODO: add error handling code here
