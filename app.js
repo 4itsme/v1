@@ -159,7 +159,12 @@ require.config({
 	  	{
 	  		path: '/search/:keyword',
 	  		component: comps.quranSearch,
-	  		//props: ($route) => ({ results: (vm.keyword = $route.params.keyword) && vm.go() && vm.searchResults }),
+	  		props: ($route) => ({ keyword: $route.params.keyword }),
+	  	},
+	  	{
+	  		path: '/search',
+	  		component: comps.quranSearch,
+	  		props: ($route) => ({ keyword: $route.query.keyword }),
 	  	},
 	  	{
 	  		path: '/sarf',
@@ -1260,17 +1265,6 @@ require.config({
 			},
 		});
 
-		var quranSearch = Vue.component('quran-search', {
-			template: '<div>Search results: <BR/>  {{ results }}</div>',
-			props: ['results'],
-		});
-
-		var quranMain = Vue.component('quran-main', {
-			template: '',
-			props: [''],
-
-		});
-
 
 
 
@@ -2128,6 +2122,47 @@ require.config({
 		});
 
 
+
+
+		var quranMain = Vue.component('quran-main', {
+			template: '',
+			props: [''],
+
+		});
+
+
+		var quranSearch = Vue.component('quran-search',{
+			template: '<div>Qur\'aan Search results for: {{ keyword }}\
+							\
+					   </div>',
+			props: [ 'keyword', ],
+			data: function(){
+				return {
+					error: null,
+					loading: false,
+					data: null,
+				}
+			},
+			created: function() {
+			    // fetch the data when the view is created and the data is
+			    // already being observed
+			    this.fetchData()
+		    },
+		    watch: {
+		    	$route: function(to, from) {
+			      // react to route changes...
+			      this.fetchData();
+			    },
+		    },
+		    methods: {
+		    	fetchData: function(){
+		    		//this.data.id = + new Date();
+		    		this.error = /*this.data =*/ null;
+		    		this.loading = true;
+		    		this.data = {};
+		    	},
+		    }
+		});
 
 		return {
 			quranHeader: quranHeader,
