@@ -2016,7 +2016,7 @@ require.config({
 		    },
 		    watch: {
 		    	$route: function(to, from) {
-		    	  this.ayahsListFromPage = null;
+		    	  this.iList = null;
 			      // react to route changes...
 			      this.fetchData();
 			    },
@@ -2030,7 +2030,7 @@ require.config({
 		    		//this.data.id = + new Date();
 		    		this.error = /*this.data =*/ null;
 		    		this.loading = true;
-		    		if(!this.ayahsListFromPage || this.ayahsListFromPage.length == 0){
+		    		if(!this.iList || !this.ayahsListFromPage || this.ayahsListFromPage.length == 0){
 		    			var comp = this;
 		    			require(['Q', 'qSearch', 'underscore'], function(Q, qSearch, _){
 		    				comp.iList = Q.ayah.listFromPage( +comp.page );
@@ -2110,6 +2110,7 @@ require.config({
 		    		//this.data.id = + new Date();
 		    		this.error = /*this.data =*/ null;
 		    		this.loading = true;
+		    		this.sura = +this.sura;
 		    		this.page = Q.ayah.page(+this.sura, 1);
 		    	},
 		    }
