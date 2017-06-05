@@ -154,7 +154,7 @@ require.config({
 	  	{
 	  		path: '/page/:pageno',
 	  		component: comps.quranPageComp, //quranPage,
-	  		props: ($route) => ({ ayahsListFromPage: (vm.verseNo = +($route.params.pageno) ) && vm.data.ayahsListFromPage }),
+	  		props: ($route) => ({ page: +$route.params.pageno, showTrans: true, showTranslit: true, showWord2Word: true, ayahsListFromPage: /*(vm.verseNo = +($route.params.pageno) ) &&*/ vm.data.ayahsListFromPage }),
 	  	},
 	  	{
 	  		path: '/search/:keyword',
@@ -1992,14 +1992,96 @@ require.config({
 
 
 		var quranPageComp = Vue.component('quran-page-comp',{
-			template: '<div>Qur\'aan Page test\
-\
+			template: '<div>Qur\'aan Page# {{page}}\
+						<div dir=rtl class=\'quranpage clearfix\' style="text-align: justify; Xoverflow:scroll; Xmax-height:550px; XXXwhite-space: nowrap;">\
+		  				<span v-for="(verse, verseIndex) in iList">\
+							<quran-ayah-comp :sura="verse.surah" :ayah="verse.ayah" \
+								:verse="verse.verseNo" :show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr" \
+								:show-asbab="showAsbab"\
+								:show-synonyms="showSynonyms"\
+								:current-page-asbab="currentPageAsbab"\
+								:current-page-synonyms="currentPageSynonyms"\
+								:words="w2wEn && w2wEn.lookup && w2wEn.lookup( verse.verseNo )"\
+								:corpus="w2wCorpus && w2wCorpus.lookup && w2wCorpus.lookup( verse.verseNo )"\
+							>\
+							</quran-ayah-comp>\
+						</span>\
+		  			 </div>\
 					   </div>',
-			props: ['' ],
+			props: ['page', 'ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'currentPageAsbab', 'currentPageSynonyms', 'hideAr', 'w2wEn', 'w2wCorpus'],
 			data: function(){
 				return {
+					loading: false,
+					//data: null,
+					error: null,
+					iList: this.ayahsListFromPage,
+					// computed: {
+					//   	iList: function () {
+				 //  			return this.ayahsListFromPage;
+					//   	}
+					// },
+				};
+			},
+			created: function() {
+			    // fetch the data when the view is created and the data is
+			    // already being observed
+			    this.fetchData()
+		    },
+		    watch: {
+		    	$route: function(to, from) {
+			      // react to route changes...
+			      this.fetchData();
+			    },
+			    data: function(to, from){
+			    	debugger;
+			    	this.data.id = + new Date();
+			    },
+		    },
+		    methods: {
+		    	fetchData: function(){
+		    		//this.data.id = + new Date();
+		    		this.error = /*this.data =*/ null;
+		    		this.loading = true;
+		    		if(!this.ayahsListFromPage || this.ayahsListFromPage.length == 0){
+		    			var comp = this;
+		    			require(['Q', 'qSearch'], function(Q, qSearch){
+		    				comp.iList = Q.ayah.listFromPage( +comp.page );
 
-				}
+			    			/*comp.verse.verseNo = Q.verseNo.ayah( comp.verse.surah, comp.verse.ayah );
+							//existing verse properties: ayah, surah, verseNo
+							var verseEx = qSearch.lookup( comp.verse.verseNo );
+							if(verseEx){
+								verseEx.TRANS = !verseEx.TRANS ? '' : verseEx.TRANS.split('|')[2];
+								verseEx.TRANSLIT = !verseEx.TRANSLIT ? '' : verseEx.TRANSLIT.split('|')[2];
+							}
+
+							var basmallah = 'bisomi {ll~ahi {lr~aHoma`ni {lr~aHiymi ',
+								basmallah2 = 'b~isomi {ll~ahi {lr~aHoma`ni {lr~aHiymi',
+								isBasmallah = comp.verse.ayah == 1 && verseEx.BUCK && verseEx.BUCK.startsWith( basmallah ),
+								isBasmallah2 = comp.verse.ayah == 1 && verseEx.BUCK && verseEx.BUCK.startsWith( basmallah2 );
+							if(isBasmallah || isBasmallah2){ verseEx.BUCK = verseEx.BUCK.substring( basmallah.length + (isBasmallah2 ? 1 : 0) ); }
+							
+							verseEx.AR = qUtil.EnToAr( verseEx.BUCK );
+							verseEx.BARE = qUtil.BuckToBare( verseEx.BUCK );
+
+							comp.verse = _.extend(comp.verse, {isBasmallah: isBasmallah, *//*isHighlighted: false, isSelected: false*//*}, verseEx );*/
+				    		comp.loading = false;
+				    		comp.error = null;
+
+				    		// if(comp.showWord2Word && !comp.words){
+				    		// 	//TODO: show loading only for words tooltips
+				    		// 	require(['w2wEn'], function( w2wEn ){
+				    		// 		comp.words = w2wEn.lookup( comp.verse.verseNo );
+				    		// 		comp.id = + new Date(); //update the unique ID to hopefully trigger a refresh
+
+				    		// 		setTimeout(function(){
+				    		// 			$('span').tooltip(); //now turn on tooltips after delay.
+				    		// 		}, 0);
+				    		// 	});
+				    		// }
+				    	});
+		    		}
+		    	},
 			},
 		});
 
