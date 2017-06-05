@@ -1318,152 +1318,6 @@ require.config({
 		});
 
 
-		var quranAyahComp = Vue.component('quran-ayah-comp',{
-			template: '<div>Qur\'aan Ayah {{ sura }}:{{ ayah }}\
-							<div v-if=\'loading\'>Loading...</div>\
-							<div :key="id" dir=rtl class=well v-else>\
-						<span>\
-						<!-- show basmallah -->\
-						<span v-if="!hideAr && verse.isBasmallah">\
-							<div id="bismillah" class="bismillah text-center word-font" style="text-align:center; font-size: 42px;" title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" >\
-								<HR/>\
-								﷽\
-								<HR/>\
-							</div>\
-						</span>\
-						<!-- show arabic ayah -->\
-						<span v-if="verse.BUCK" dir="rtl">\
-							\
-							<span v-if="showTrans || showTranslit || showCorpus" style=font-size:.96em >\
-								{{ verse.surah }}:{{ verse.ayah }} &nbsp; \
-							</span>\
-							<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
-								<span v-for="word in segmentify(verse, words, corpus)">\
-									<quran-word :word="word"></quran-word>\
-								</span>\
-							</span>\
-							<span v-if="false" style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
-								{{ !hideAr ? verse.AR : verse.BUCK }}\
-							</span>\
-							<span v-if="true || (!showTrans && !showTranslit && !showCorpus)" :title="\'Ayah ref: \' + verse.surah + \':\'+ verse.ayah"  style=font-size:.96em >\
-								<span>﴿</span>{{ verse.ayah }}<span>﴾</span>\
-							</span>\
-							\
-						</span>\
-						\
-						\
-						<!-- show translation, translit etc -->\
-						<span v-if="verse.BARE" v-html="">	\
-						</span>\
-						<span v-if="verse.TRANS" >\
-							<div v-if="showTrans" dir=ltr>{{ verse.TRANS }}</div>\
-						</span>\
-						<span v-if="verse.TRANSLIT" >\
-							<div v-if="showTranslit" dir=ltr v-html="verse.TRANSLIT"></div>\
-						</span>\
-						\
-						<span v-show="showAsbab && currentPageAsbab && currentPageAsbab.join(\' \').indexOf(\' \' + verse.surah + \':\' + verse.ayah + \' \') != -1">\
-							<A HREF="#" v-on:click.stop.prevent="showAsbabFor(verse.surah, verse.ayah);" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
-								<!-- [A] -->\
-								<span style="cursor:pointer" class="label label-warning" >ASB</span>\
-							</A>\
-						</span>\
-						<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + \':\' + verse.ayah)">\
-							<A HREF="#" v-on:click.stop.prevent="showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
-								<!-- [S] -->\
-								<span style="cursor:pointer" class="label label-info" >SYN</span>\
-							</A>\
-						</span>\
-						<span v-if="showTrans || showTranslit" >\
-							<BR/>\
-						</span>\
-						\
-		  			</span>\
-							</div>\
-					   </div>',
-			props: ['sura', 'ayah', 'showTrans', 'showTranslit', 'showWord2Word', 'showCorpus', 'showAsbab', 'showSynonyms', 'hideAr'],
-			//props: ['verse', '', '', '', '', '', 'currentPageAsbab', 'currentPageSynonyms', '', 'words', 'corpus'],
-			data: function(){
-				return {
-					loading: false,
-					verse: null,
-					error: null,
-					id: + new Date(),
-					words: null,
-					corpus: null,
-					currentPageAsbab: null,
-					currentPageSynonyms: null,
-				};
-			},
-			created: function(){
-				this.fetchData();
-			},
-			watch: {
-				$route: function(to, from){
-					this.fetchData();
-				},
-			},
-			methods: {
-				fetchData: function(){
-					this.error = this.data = null;
-		    		this.loading = true;
-		    		var comp = this; //save a reference
-		    		comp.verse = {
-		    			surah: +this.sura,
-		    			ayah: +this.ayah,
-		    			verseNo: null,
-		    		};
-		    		require(['Q', 'qSearch'], function(Q, qSearch){
-		    			comp.verse.verseNo = Q.verseNo.ayah( comp.verse.surah, comp.verse.ayah );
-						//existing verse properties: ayah, surah, verseNo
-						var verseEx = qSearch.lookup( comp.verse.verseNo );
-						if(verseEx){
-							verseEx.TRANS = !verseEx.TRANS ? '' : verseEx.TRANS.split('|')[2];
-							verseEx.TRANSLIT = !verseEx.TRANSLIT ? '' : verseEx.TRANSLIT.split('|')[2];
-						}
-
-						var basmallah = 'bisomi {ll~ahi {lr~aHoma`ni {lr~aHiymi ',
-							basmallah2 = 'b~isomi {ll~ahi {lr~aHoma`ni {lr~aHiymi',
-							isBasmallah = comp.verse.ayah == 1 && verseEx.BUCK && verseEx.BUCK.startsWith( basmallah ),
-							isBasmallah2 = comp.verse.ayah == 1 && verseEx.BUCK && verseEx.BUCK.startsWith( basmallah2 );
-						if(isBasmallah || isBasmallah2){ verseEx.BUCK = verseEx.BUCK.substring( basmallah.length + (isBasmallah2 ? 1 : 0) ); }
-						
-						verseEx.AR = qUtil.EnToAr( verseEx.BUCK );
-						verseEx.BARE = qUtil.BuckToBare( verseEx.BUCK );
-
-						comp.verse = _.extend(comp.verse, {isBasmallah: isBasmallah, /*isHighlighted: false, isSelected: false*/}, verseEx );
-			    		comp.loading = false;
-			    		comp.error = null;
-
-			    		if(comp.showWord2Word && !comp.words){
-			    			//TODO: show loading only for words tooltips
-			    			require(['w2wEn'], function( w2wEn ){
-			    				comp.words = w2wEn.lookup( comp.verse.verseNo );
-			    				comp.id = + new Date(); //update the unique ID to hopefully trigger a refresh
-
-			    				setTimeout(function(){
-			    					$('span').tooltip(); //now turn on tooltips after delay.
-			    				}, 0);
-			    			});
-			    		}
-			    	});
-				},
-
-				segmentify: function(verse, words, corpus){
-					var count = 0;
-					return _.map(verse.AR.split(' '), function(w){
-						var isStopLetter = /[ۚۖۛۗۙ]/.test( w ),
-							isOtherLetter = /[۞۩]/.test( w ),
-							no = (isStopLetter || isOtherLetter) ? null : ++count,
-							resp = {w: w};
-						if(isStopLetter || isOtherLetter){ resp.isStopLetter = true; }
-						else{ resp.surah = verse.surah; resp.ayah = verse.ayah; resp.word = no; resp.w2w = words && words[ no - 1 ]; resp.corpus = corpus && corpus[ no - 1 ]; };
-						return resp;
-					})
-			  	},
-			}, //end of methods
-		});
-
 		//	/#/44/10/6
 		var quranGrammar = Vue.component('quran-grammar', {
 			template: '<div>quran grammar test {{ [+sura, +ayah, +word] }}\
@@ -1973,7 +1827,155 @@ require.config({
 		});
 
 
+		var quranAyahComp = Vue.component('quran-ayah-comp',{
+			template: '<div>Qur\'aan Ayah {{ sura }}:{{ ayah }}\
+							<div v-if=\'loading\'>Loading...</div>\
+							<div :key="id" dir=rtl class=well v-else>\
+						<span>\
+						<!-- show basmallah -->\
+						<span v-if="!hideAr && verse.isBasmallah">\
+							<div id="bismillah" class="bismillah text-center word-font" style="text-align:center; font-size: 42px;" title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" >\
+								<HR/>\
+								﷽\
+								<HR/>\
+							</div>\
+						</span>\
+						<!-- show arabic ayah -->\
+						<span v-if="verse.BUCK" dir="rtl">\
+							\
+							<span v-if="showTrans || showTranslit || showCorpus" style=font-size:.96em >\
+								{{ verse.surah }}:{{ verse.ayah }} &nbsp; \
+							</span>\
+							<span style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
+								<span v-for="word in segmentify(verse, words, corpus)">\
+									<quran-word :word="word"></quran-word>\
+								</span>\
+							</span>\
+							<span v-if="false" style=direction:rtl;font-size:2.35em v-bind:class="{ aya: true, highlight: verse.isHighlighted, select: verse.isSelected }">\
+								{{ !hideAr ? verse.AR : verse.BUCK }}\
+							</span>\
+							<span v-if="true || (!showTrans && !showTranslit && !showCorpus)" :title="\'Ayah ref: \' + verse.surah + \':\'+ verse.ayah"  style=font-size:.96em >\
+								<span>﴿</span>{{ verse.ayah }}<span>﴾</span>\
+							</span>\
+							\
+						</span>\
+						\
+						\
+						<!-- show translation, translit etc -->\
+						<span v-if="verse.BARE" v-html="">	\
+						</span>\
+						<span v-if="verse.TRANS" >\
+							<div v-if="showTrans" dir=ltr>{{ verse.TRANS }}</div>\
+						</span>\
+						<span v-if="verse.TRANSLIT" >\
+							<div v-if="showTranslit" dir=ltr v-html="verse.TRANSLIT"></div>\
+						</span>\
+						\
+						<span v-show="showAsbab && currentPageAsbab && currentPageAsbab.join(\' \').indexOf(\' \' + verse.surah + \':\' + verse.ayah + \' \') != -1">\
+							<A HREF="#" v-on:click.stop.prevent="showAsbabFor(verse.surah, verse.ayah);" title="Click to see Sabab Nuzul for this Ayah" style=font-size:.8em >\
+								<!-- [A] -->\
+								<span style="cursor:pointer" class="label label-warning" >ASB</span>\
+							</A>\
+						</span>\
+						<span v-show="showSynonyms && _.find(currentPageSynonyms, verse.surah + \':\' + verse.ayah)">\
+							<A HREF="#" v-on:click.stop.prevent="showSynonymsFor(null, verse.surah, verse.ayah)" title="Click to see Near Synonyms for some words in this Ayah." style=font-size:.8em >\
+								<!-- [S] -->\
+								<span style="cursor:pointer" class="label label-info" >SYN</span>\
+							</A>\
+						</span>\
+						<span v-if="showTrans || showTranslit" >\
+							<BR/>\
+						</span>\
+						\
+		  			</span>\
+							</div>\
+					   </div>',
+			props: ['sura', 'ayah', 'showTrans', 'showTranslit', 'showWord2Word', 'showCorpus', 'showAsbab', 'showSynonyms', 'hideAr'],
+			//props: ['verse', '', '', '', '', '', 'currentPageAsbab', 'currentPageSynonyms', '', 'words', 'corpus'],
+			data: function(){
+				return {
+					loading: false,
+					verse: null,
+					error: null,
+					id: + new Date(),
+					words: null,
+					corpus: null,
+					currentPageAsbab: null,
+					currentPageSynonyms: null,
+				};
+			},
+			created: function(){
+				this.fetchData();
+			},
+			watch: {
+				$route: function(to, from){
+					this.fetchData();
+				},
+			},
+			methods: {
+				fetchData: function(){
+					this.error = this.data = null;
+		    		this.loading = true;
+		    		var comp = this; //save a reference
+		    		comp.verse = {
+		    			surah: +this.sura,
+		    			ayah: +this.ayah,
+		    			verseNo: null,
+		    		};
+		    		require(['Q', 'qSearch'], function(Q, qSearch){
+		    			comp.verse.verseNo = Q.verseNo.ayah( comp.verse.surah, comp.verse.ayah );
+						//existing verse properties: ayah, surah, verseNo
+						var verseEx = qSearch.lookup( comp.verse.verseNo );
+						if(verseEx){
+							verseEx.TRANS = !verseEx.TRANS ? '' : verseEx.TRANS.split('|')[2];
+							verseEx.TRANSLIT = !verseEx.TRANSLIT ? '' : verseEx.TRANSLIT.split('|')[2];
+						}
+
+						var basmallah = 'bisomi {ll~ahi {lr~aHoma`ni {lr~aHiymi ',
+							basmallah2 = 'b~isomi {ll~ahi {lr~aHoma`ni {lr~aHiymi',
+							isBasmallah = comp.verse.ayah == 1 && verseEx.BUCK && verseEx.BUCK.startsWith( basmallah ),
+							isBasmallah2 = comp.verse.ayah == 1 && verseEx.BUCK && verseEx.BUCK.startsWith( basmallah2 );
+						if(isBasmallah || isBasmallah2){ verseEx.BUCK = verseEx.BUCK.substring( basmallah.length + (isBasmallah2 ? 1 : 0) ); }
+						
+						verseEx.AR = qUtil.EnToAr( verseEx.BUCK );
+						verseEx.BARE = qUtil.BuckToBare( verseEx.BUCK );
+
+						comp.verse = _.extend(comp.verse, {isBasmallah: isBasmallah, /*isHighlighted: false, isSelected: false*/}, verseEx );
+			    		comp.loading = false;
+			    		comp.error = null;
+
+			    		if(comp.showWord2Word && !comp.words){
+			    			//TODO: show loading only for words tooltips
+			    			require(['w2wEn'], function( w2wEn ){
+			    				comp.words = w2wEn.lookup( comp.verse.verseNo );
+			    				comp.id = + new Date(); //update the unique ID to hopefully trigger a refresh
+
+			    				setTimeout(function(){
+			    					$('span').tooltip(); //now turn on tooltips after delay.
+			    				}, 0);
+			    			});
+			    		}
+			    	});
+				},
+
+				segmentify: function(verse, words, corpus){
+					var count = 0;
+					return _.map(verse.AR.split(' '), function(w){
+						var isStopLetter = /[ۚۖۛۗۙ]/.test( w ),
+							isOtherLetter = /[۞۩]/.test( w ),
+							no = (isStopLetter || isOtherLetter) ? null : ++count,
+							resp = {w: w};
+						if(isStopLetter || isOtherLetter){ resp.isStopLetter = true; }
+						else{ resp.surah = verse.surah; resp.ayah = verse.ayah; resp.word = no; resp.w2w = words && words[ no - 1 ]; resp.corpus = corpus && corpus[ no - 1 ]; };
+						return resp;
+					})
+			  	},
+			}, //end of methods
+		});
+
+
 		return {
+			quranHeader: quranHeader,
 			quranNav: quranNav,
 			twoPaneView: twoPaneView,
 
