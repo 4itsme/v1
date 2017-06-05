@@ -214,11 +214,11 @@ require.config({
 	})
 
 	//Now, check if we are on a bookmarked or clean URL like /search/foo thats been redirected to 200.html page. if so try to route properly.
-	var currentRoute = location.href.replace(location.origin + location.pathname, '' );
-	if( currentRoute !== '' && currentRoute.indexOf('200.html') != -1 ){
-		console.log( 'redirectng ' +currentRoute );
-		router.replace( currentRoute ); //TODO: ensure not stuck in infinite loop.
-		return;
+	var currentSuffix = location.href.replace(location.origin + location.pathname, '' );
+	if( currentSuffix !== '' && location.pathname !== '/' && location.pathname !== '' && location.pathname.indexOf('200.html') == -1 ){
+		console.log( ['redirectng ', currentSuffix, location.pathname].join(' -- ') );
+		router.replace( location.pathname ); //TODO: ensure not stuck in infinite loop.
+		//return;
 	}
 
 	var bus = new Vue();
