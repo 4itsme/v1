@@ -2133,7 +2133,10 @@ require.config({
 
 		var quranSearch = Vue.component('quran-search',{
 			template: '<div>Qur\'aan Search results for: {{ keyword }}\
-							\
+							<div v-if="loading">Loading...</div>\
+							<div class=text-muted v-else>\
+								{{data}}\
+							</div>\
 					   </div>',
 			props: [ 'keyword', ],
 			data: function(){
@@ -2159,7 +2162,15 @@ require.config({
 		    		//this.data.id = + new Date();
 		    		this.error = /*this.data =*/ null;
 		    		this.loading = true;
-		    		this.data = {};
+		    		this.data = null;
+		    		var comp = this;
+	    			require(['Q', 'qSearch', 'underscore'], function(Q, qSearch, _){
+	    				qSearch.searchAsync( comp.keyword ).then(function(data){
+	    					comp.data = data;
+	    					comp.loading = false;
+	    					comp.error = null;
+	    				});//TODO: add error handling
+	    			});
 		    	},
 		    }
 		});
