@@ -2089,6 +2089,15 @@ require.config({
 								:show-synonyms="showSynonyms"\
 							>\
 							</quran-page-comp>\
+							<HR/><div class=text-muted>Next Page</div><HR/>\
+							<quran-page-comp \
+								:page="page + 1"\
+								:sura="sura"\
+								:show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr" \
+								:show-asbab="showAsbab"\
+								:show-synonyms="showSynonyms"\
+							>\
+							</quran-page-comp>\
 					   </div>',
 			props: [ 'sura', 'ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'currentPageAsbab', 'currentPageSynonyms', 'hideAr', 'w2wEn', 'w2wCorpus'],
 			data: function(){
