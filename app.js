@@ -1316,7 +1316,7 @@ require.config({
 		var quranAyahComp = Vue.component('quran-ayah-comp',{
 			template: '<div>Qur\'aan Ayah {{ sura }}:{{ ayah }}\
 							<div v-if=\'loading\'>Loading...</div>\
-							<div dir=rtl class=well v-else>\
+							<div :key="id" dir=rtl class=well v-else>\
 						<span>\
 						<!-- show basmallah -->\
 						<span v-if="!hideAr && verse.isBasmallah">\
@@ -1376,13 +1376,18 @@ require.config({
 		  			</span>\
 							</div>\
 					   </div>',
-			props: ['sura', 'ayah', 'showTrans', 'showTranslit', 'showWord2Word', 'showCorpus', 'showAsbab', 'showSynonyms', 'words', 'corpus', 'hideAr'],
+			props: ['sura', 'ayah', 'showTrans', 'showTranslit', 'showWord2Word', 'showCorpus', 'showAsbab', 'showSynonyms', 'hideAr'],
 			//props: ['verse', '', '', '', '', '', 'currentPageAsbab', 'currentPageSynonyms', '', 'words', 'corpus'],
 			data: function(){
 				return {
 					loading: false,
 					verse: null,
 					error: null,
+					id: + new Date(),
+					words: null,
+					corpus: null,
+					currentPageAsbab: null,
+					currentPageSynonyms: null,
 				};
 			},
 			created: function(){
@@ -1424,6 +1429,18 @@ require.config({
 						comp.verse = _.extend(comp.verse, {isBasmallah: isBasmallah, /*isHighlighted: false, isSelected: false*/}, verseEx );
 			    		comp.loading = false;
 			    		comp.error = null;
+
+			    		if(comp.showWord2Word && !comp.words){
+			    			//TODO: show loading only for words tooltips
+			    			require(['w2wEn'], function( w2wEn ){
+			    				comp.words = w2wEn.lookup( comp.verse.verseNo );
+			    				comp.id = + new Date(); //update the unique ID to hopefully trigger a refresh
+
+			    				setTimeout(function(){
+			    					$('span').tooltip(); //now turn on tooltips after delay.
+			    				}, 0);
+			    			});
+			    		}
 			    	});
 				},
 
