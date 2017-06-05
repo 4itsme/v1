@@ -2016,6 +2016,7 @@ require.config({
 		    },
 		    watch: {
 		    	$route: function(to, from) {
+		    	  this.ayahsListFromPage = null;
 			      // react to route changes...
 			      this.fetchData();
 			    },
@@ -2093,6 +2094,25 @@ require.config({
 					page: Q.ayah.page(+this.sura, 1), //TODO: add more pages as user scrolls down
 				}
 			},
+			created: function() {
+			    // fetch the data when the view is created and the data is
+			    // already being observed
+			    this.fetchData()
+		    },
+		    watch: {
+		    	$route: function(to, from) {
+			      // react to route changes...
+			      this.fetchData();
+			    },
+		    },
+		    methods: {
+		    	fetchData: function(){
+		    		//this.data.id = + new Date();
+		    		this.error = /*this.data =*/ null;
+		    		this.loading = true;
+		    		this.page = Q.ayah.page(+this.sura, 1);
+		    	},
+		    }
 		});
 
 
