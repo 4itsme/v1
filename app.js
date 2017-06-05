@@ -154,7 +154,7 @@ require.config({
 	  	{
 	  		path: '/page/:pageno',
 	  		component: comps.quranPageComp, //quranPage,
-	  		props: ($route) => ({ page: +$route.params.pageno, showTrans: true, showTranslit: true, showWord2Word: true, ayahsListFromPage: /*(vm.verseNo = +($route.params.pageno) ) &&*/ vm.data.ayahsListFromPage }),
+	  		props: ($route) => ({ page: +$route.params.pageno, showTrans: true, showTranslit: true, showWord2Word: true, XayahsListFromPage: /*(vm.verseNo = +($route.params.pageno) ) &&*/ vm.data.ayahsListFromPage }),
 	  	},
 	  	{
 	  		path: '/search/:keyword',
@@ -1995,7 +1995,7 @@ require.config({
 						</span>\
 		  			 </div>\
 					   </div>',
-			props: ['page', 'ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'currentPageAsbab', 'currentPageSynonyms', 'hideAr', 'w2wEn', 'w2wCorpus'],
+			props: ['page', 'sura', 'ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'currentPageAsbab', 'currentPageSynonyms', 'hideAr', 'w2wEn', 'w2wCorpus'],
 			data: function(){
 				return {
 					loading: false,
@@ -2031,9 +2031,12 @@ require.config({
 		    		this.loading = true;
 		    		if(!this.ayahsListFromPage || this.ayahsListFromPage.length == 0){
 		    			var comp = this;
-		    			require(['Q', 'qSearch'], function(Q, qSearch){
+		    			require(['Q', 'qSearch', 'underscore'], function(Q, qSearch, _){
 		    				comp.iList = Q.ayah.listFromPage( +comp.page );
 
+		    				if(comp.sura){//optionally, if sura is set.. either scroll to that sura or only start page from sura
+		    					comp.iList = _.filter(comp.iList, {surah: +comp.sura} );
+		    				}
 			    			/*comp.verse.verseNo = Q.verseNo.ayah( comp.verse.surah, comp.verse.ayah );
 							//existing verse properties: ayah, surah, verseNo
 							var verseEx = qSearch.lookup( comp.verse.verseNo );
@@ -2077,6 +2080,7 @@ require.config({
 			template: '<div>Qur\'aan Sura {{sura}}\
 							<quran-page-comp \
 								:page="page"\
+								:sura="sura"\
 								:show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr" \
 								:show-asbab="showAsbab"\
 								:show-synonyms="showSynonyms"\
