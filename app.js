@@ -95,7 +95,12 @@ require.config({
 	"content-z": ['data/content/z', 'https://4itsme.github.io/v1/data/content/z'],
 	"content-ZA": ['data/content/ZA', 'https://4itsme.github.io/v1/data/content/ZA'],
 
+  },
+  shim: {
+	/* Set bootstrap dependencies (just jQuery) */
+	'bootstrapjs' : ['jquery'],
   }
+
 });
 
 
