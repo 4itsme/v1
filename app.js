@@ -174,7 +174,7 @@ require.config({
 	  	{
 	  		path: '/:sura',
 	  		component: comps.quranSuraComp,
-	  		props: {},
+	  		props: ($route) => ({ sura: +$route.params.sura, showTrans: true, showTranslit: true, showWord2Word: true, ayahsListFromPage: /*(vm.verseNo = +($route.params.pageno) ) &&*/ vm.data.ayahsListFromPage }),
 	  	},
 	  	{
 	  		path: '/:sura/:ayah',
@@ -1977,20 +1977,7 @@ require.config({
 		});
 
 
-		var quranSuraComp = Vue.component('quran-sura-comp',{
-			template: '<div>Qur\'aan Sura test\
-\
-					   </div>',
-			props: ['' ],
-			data: function(){
-				return {
-
-				}
-			},
-		});
-
-
-
+		
 		var quranPageComp = Vue.component('quran-page-comp',{
 			template: '<div>Qur\'aan Page# {{page}}\
 						<div dir=rtl class=\'quranpage clearfix\' style="text-align: justify; Xoverflow:scroll; Xmax-height:550px; XXXwhite-space: nowrap;">\
@@ -2084,6 +2071,26 @@ require.config({
 		    	},
 			},
 		});
+
+
+		var quranSuraComp = Vue.component('quran-sura-comp',{
+			template: '<div>Qur\'aan Sura {{sura}}\
+							<quran-page-comp \
+								:page="page"\
+								:show-trans="showTrans" :show-translit="showTranslit" :show-corpus="showCorpus" :hide-ar="hideAr" \
+								:show-asbab="showAsbab"\
+								:show-synonyms="showSynonyms"\
+							>\
+							</quran-page-comp>\
+					   </div>',
+			props: [ 'sura', 'ayahsListFromPage', 'showTrans', 'showTranslit', 'showCorpus', 'showAsbab', 'showSynonyms', 'currentPageAsbab', 'currentPageSynonyms', 'hideAr', 'w2wEn', 'w2wCorpus'],
+			data: function(){
+				return {
+					page: Q.ayah.page(+this.sura, 1), //TODO: add more pages as user scrolls down
+				}
+			},
+		});
+
 
 
 		return {
