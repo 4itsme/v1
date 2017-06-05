@@ -159,7 +159,7 @@ require.config({
 	  	{
 	  		path: '/:sura/:ayah',
 	  		component: comps.quranAyahComp,
-	  		props: (route) => ({ sura: route.params.sura, ayah: route.params.ayah }),
+	  		props: (route) => ({ sura: route.params.sura, ayah: route.params.ayah, showTrans: true, showTranslit: true, showWord2Word: true, }),
 	  	},
 	  	{
 	  		path: '/:sura/:ayah/:word',
@@ -1314,7 +1314,7 @@ require.config({
 
 
 		var quranAyahComp = Vue.component('quran-ayah-comp',{
-			template: '<div>Qur\'aan Ayah {{ sura }} ; {{ ayah }}\
+			template: '<div>Qur\'aan Ayah {{ sura }}:{{ ayah }}\
 							<div v-if=\'loading\'>Loading...</div>\
 							<div dir=rtl class=well v-else>\
 						<span>\
@@ -1376,13 +1376,13 @@ require.config({
 		  			</span>\
 							</div>\
 					   </div>',
-			props: ['sura', 'ayah'],
+			props: ['sura', 'ayah', 'showTrans', 'showTranslit', 'showWord2Word', 'showCorpus', 'showAsbab', 'showSynonyms', 'words', 'corpus', 'hideAr'],
+			//props: ['verse', '', '', '', '', '', 'currentPageAsbab', 'currentPageSynonyms', '', 'words', 'corpus'],
 			data: function(){
 				return {
 					loading: false,
 					verse: null,
 					error: null,
-					hideAr: false,
 				};
 			},
 			created: function(){
