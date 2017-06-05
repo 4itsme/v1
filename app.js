@@ -104,6 +104,13 @@ require.config({
 });
 
 
+var reqjsLoadHistory = [];
+requirejs.onResourceLoad = function (context, map, depArray) {
+	reqjsLoadHistory.push( arguments );
+	console.log( map && map.url );
+}
+
+
 	var _dependencies = [
 					 'vue', 'vue-router', 'qMain'
 					,'underscore' ,'jquery', 'jqueryMark', 'moment'
@@ -119,7 +126,7 @@ require.config({
 					//, 'qRoot', 'qRootLemDict', 'qRootMeanings', 'qSearch'
 					//, 'qSarf', 'qAntonyms'
 		];
-
+//require(['onResourceLoad'], function () {
 	require(_dependencies, function( 
 					Vue, VueRouter, qMain
 					,_ ,$, jqueryMark, moment
@@ -280,7 +287,7 @@ require.config({
 	});
 
 	vm = initializeVM( router );
-
+	vm.reqjsLoadHistory = reqjsLoadHistory;
 	vm._ = _;
 	vm.w2wEn = w2wEn;
 	vm.w2wCorpus = typeof( w2wCorpus ) !== 'undefined' ? w2wCorpus : null;
