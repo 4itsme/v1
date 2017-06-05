@@ -1831,6 +1831,8 @@ require.config({
 \
 \
 \
+	</div>\
+</div>\
 					   </div>',
 			props: ['ayahsListFromPage', 'data', 'showTrans', 'showTranslit', 'showWord2Word', 'showCorpus', 'showAsbab', 'showSynonyms', 'hideAr',
 					'currentPageAsbab', 'currentPageSynonyms', 'words', 'corpus',
