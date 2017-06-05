@@ -145,6 +145,7 @@ require.config({
 	Vue.use(VueRouter);
 
 	const router = new VueRouter({
+	  mode: (location.origin === "http://localhost:8080" || location.origin.indexOf('surge.sh') != -1) ? 'history' : null,
 	  routes: [
 	  	{
 	  		path: '/',
