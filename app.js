@@ -152,9 +152,29 @@ require.config({
 	  		props: (route) => ({ suras: vm.suras }),
 	  	},
 	  	{
+	  		path: '/page/:pageno',
+	  		component: comps.quranPageComp, //quranPage,
+	  		props: ($route) => ({ ayahsListFromPage: (vm.verseNo = +($route.params.pageno) ) && vm.data.ayahsListFromPage }),
+	  	},
+	  	{
+	  		path: '/search/:keyword',
+	  		component: comps.quranSearch,
+	  		//props: ($route) => ({ results: (vm.keyword = $route.params.keyword) && vm.go() && vm.searchResults }),
+	  	},
+	  	{
 	  		path: '/sarf',
 	  		component: comps.quranSarf,
 	  		props: (route) => ({ root: route.query.root, form: route.query.form }),
+	  	},
+	  	{
+	  		path: '/related',
+	  		component: comps.quranGrammarConcordance,
+	  		props: (route) => ({ root: route.query.root, lem: route.query.lem }),
+	  	},
+	  	{
+	  		path: '/:sura',
+	  		component: comps.quranSuraComp,
+	  		props: {},
 	  	},
 	  	{
 	  		path: '/:sura/:ayah',
@@ -165,21 +185,6 @@ require.config({
 	  		path: '/:sura/:ayah/:word',
 	  		component: comps.quranGrammar,
 	  		props: (route) => ({ sura: route.params.sura, ayah: route.params.ayah, word: route.params.word }),
-	  	},
-	  	{
-	  		path: '/related',
-	  		component: comps.quranGrammarConcordance,
-	  		props: (route) => ({ root: route.query.root, lem: route.query.lem }),
-	  	},
-	  	{
-	  		path: '/search/:keyword',
-	  		component: comps.quranSearch,
-	  		//props: ($route) => ({ results: (vm.keyword = $route.params.keyword) && vm.go() && vm.searchResults }),
-	  	},
-	  	{
-	  		path: '/page/:pageno',
-	  		component: comps.quranPage,
-	  		props: ($route) => ({ ayahsListFromPage: (vm.verseNo = +($route.params.pageno) ) && vm.data.ayahsListFromPage }),
 	  	},
 	  	{
 	  		path: '/default',
@@ -200,8 +205,6 @@ require.config({
 	  		}
 	  	},*/
 
-	    // dynamic segments start with a colon
-	    { path: '/user/:id', component: User },
 	  ]
 	})
 
@@ -1974,10 +1977,39 @@ require.config({
 		});
 
 
+		var quranSuraComp = Vue.component('quran-sura-comp',{
+			template: '<div>Qur\'aan Sura test\
+\
+					   </div>',
+			props: ['' ],
+			data: function(){
+				return {
+
+				}
+			},
+		});
+
+
+
+		var quranPageComp = Vue.component('quran-page-comp',{
+			template: '<div>Qur\'aan Page test\
+\
+					   </div>',
+			props: ['' ],
+			data: function(){
+				return {
+
+				}
+			},
+		});
+
+
 		return {
 			quranHeader: quranHeader,
 			quranNav: quranNav,
 			twoPaneView: twoPaneView,
+			quranSuraComp: quranSuraComp,
+			quranPageComp: quranPageComp,
 
 			quranAyahComp: quranAyahComp,
 			quranDashboard: quranDashboard,
