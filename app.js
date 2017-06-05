@@ -1575,7 +1575,7 @@ require.config({
 		});
 
 		var twoPaneView = Vue.component('two-pane-view', {
-			template: '<div class=row>\
+			template: '<div :key="data.id" class=row>\
 							<div class="col-md-7">\
 								<quran-page \
 									:ayahs-list-from-page="data.ayahsListFromPage"\
@@ -1831,6 +1831,7 @@ require.config({
 \
 \
 \
+<div class=text-muted>{{data}}</div>\
 	</div>\
 </div>\
 					   </div>',
@@ -1840,6 +1841,47 @@ require.config({
 					'searchResults', 'lemResults', 'wordCorpusResults', 'message',
 					'feedbackEmail', 'feedbackMessage',
 					 ],
+			data: function(){
+				return {
+					loading: false,
+					//data: null,
+					error: null,
+				};
+			},
+			created: function() {
+			    // fetch the data when the view is created and the data is
+			    // already being observed
+			    this.fetchData()
+		    },
+		    watch: {
+		    	//root: function(){ debugger; this.fetchData(); },
+		    	//form: function(){ debugger; this.fetchData(); },
+		    	$route: function(to, from) {
+			      // react to route changes...
+			      this.fetchData();
+			    },
+			    data: function(to, from){
+			    	debugger;
+			    	this.data.id = + new Date();
+			    },
+		    },
+		    methods: {
+		    	fetchData: function(){
+		    		this.data.id = + new Date();
+		    		this.error = /*this.data =*/ null;
+		    		this.loading = true;
+		    		/*var root = this.root, form = this.form, 
+		    			comp = this; //save a reference
+		    		require(['qSarfGenerator'], function(qSarfGenerator){
+		    			comp.data = qSarfGenerator.lookup(root, form);
+		    			comp.loading = false;
+		    			comp.error = null;
+		    		});//TODO: add error handling code here
+		    		*/
+		    	},
+		    },
+
+
 		});
 
 		return {
