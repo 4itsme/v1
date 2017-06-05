@@ -1576,7 +1576,7 @@ require.config({
 
 		var twoPaneView = Vue.component('two-pane-view', {
 			template: '<div :key="data.id" class=row>\
-							<quran-nav></quran-nav>\
+							<quran-nav :data="data"></quran-nav>\
 							<div class="col-md-7">\
 								<quran-page \
 									:ayahs-list-from-page="data.ayahsListFromPage"\
@@ -1888,7 +1888,7 @@ require.config({
 		var quranNav = Vue.component('quran-nav', {
 			template: '<div>\
 						Quran Nav test\
-<div v-cloak class=row>\
+	<div v-cloak class=row>\
        	 <div class=col-md-3>\
 	         <button v-on:click="ayahchange(-1)">&lt;</button>\
 	         <q-sura :sura="data.sura" :suras="suras" @versechange="versechange"></q-sura>\
@@ -1927,11 +1927,23 @@ require.config({
 		 </div>\
     	 <HR/>\
 					   </div>',
-			props: [''],
+			props: ['data', 'keyword', 'suras', 'showTrans', 'showTranslit', 'showAsbab', 'showSynonyms', 'showCorpus'],
 			data: function(){
 				return{
 
 				};
+			},
+			methods: {
+				go: function(){
+
+				},
+				versechange: function(){
+
+				},
+				ayahchange: function(){
+
+				},
+
 			},
 		});
 
