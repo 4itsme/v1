@@ -184,7 +184,7 @@ require.config({
 	  	{
 	  		path: '/default',
 	  		component: comps.twoPaneView,
-	  		props: ($route) => ({ data: vm.data, ayahsListFromPage: vm.data.ayahsListFromPage }),
+	  		props: ($route) => ({ data: vm.data, ayahsListFromPage: vm.data.ayahsListFromPage, isLoading: vm.isLoading,  }),
 	  	},
 	  	/*{
 	  		path: '/:id', 
@@ -1576,6 +1576,7 @@ require.config({
 
 		var twoPaneView = Vue.component('two-pane-view', {
 			template: '<div :key="data.id" class=row>\
+							<quran-header :isLoading="isLoading"></quran-header>\
 							<quran-nav :data="data"></quran-nav>\
 							<div class="col-md-7">\
 								<quran-page \
@@ -1832,7 +1833,7 @@ require.config({
 \
 \
 \
-<div class=text-muted>{{data}}</div>\
+<!--<div class=text-muted>{{data}}</div>-->\
 	</div>\
 </div>\
 					   </div>',
@@ -1841,6 +1842,7 @@ require.config({
 					'showAr', 'w2wEn', 'w2wCorpus', 'tab', 'isSearching', 
 					'searchResults', 'lemResults', 'wordCorpusResults', 'message',
 					'feedbackEmail', 'feedbackMessage',
+					'isLoading',
 					 ],
 			data: function(){
 				return {
@@ -1885,9 +1887,32 @@ require.config({
 
 
 		
+		var quranHeader = Vue.component('quran-header', {
+			template: '<div>\
+	<div class=row>\
+		<div class="col-md-3 col-md-offset-4">\
+			<H4 class=lead>Qur\'aan Viewer</H4>\
+		</div>\
+		<HR/>\
+	</div>\
+\
+ 	  <div v-if="isLoading" class=row>\
+ 	  	<div class="col-md-3 col-md-offset-4">\
+		  	<BR/><BR/><BR/><BR/><BR/>\
+			<!-- <i class="fa-li fa fa-spinner fa-pulse"></i>Loading... -->\
+			<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>\
+			<span class="sr-only">Loading...</span>\
+		</div>\
+	   </div>\
+\
+					  </div>',
+			props: ['isLoading'],
+		});
+
+
+
 		var quranNav = Vue.component('quran-nav', {
 			template: '<div>\
-						Quran Nav test\
 	<div v-cloak class=row>\
        	 <div class=col-md-3>\
 	         <button v-on:click="ayahchange(-1)">&lt;</button>\
