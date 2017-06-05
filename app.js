@@ -184,6 +184,7 @@ require.config({
 	  	{
 	  		path: '/default',
 	  		component: comps.twoPaneView,
+	  		props: ($route) => ({ data: vm.data, ayahsListFromPage: vm.data.ayahsListFromPage }),
 	  	},
 	  	/*{
 	  		path: '/:id', 
@@ -1615,7 +1616,7 @@ require.config({
 										<div v-if="showAsbabDetail">\
 										<BR/>\
 										Sabab Nuzul details for selected Ayah: \
-										<button class="btn btn-default btn-xs pull-right" v-on:click.stop.prevent=\'showAsbabPretty = !showAsbabPretty\'>Show {{ showAsbabPretty ? \'raw\' : \'formatted\' }}</button><BR><HR>\
+										<button class="btn btn-default btn-xs pull-right" v-on:click.stop.prevent=\'showAsbabPretty = !showAsbabPretty\'>Show {{ showAsbabPretty ? \'raw\' : \'formatted\' }}</button><BR/><HR/>\
 										<span v-if=\'showAsbabPretty\'>\
 												<span v-html=\'asbabDetail.pretty\'></span>\
 										</span>\
@@ -1632,7 +1633,7 @@ require.config({
 	  										Near-Synonyms in current page:\
 											<span v-for="(first, index1) in currentPageSynonyms">\
 												<span v-for="(subItem, subKey) in first">\
-													<BR>{{ subKey }}: \
+													<BR/>{{ subKey }}: \
 													<span v-for="(item, key) in subItem">\
 														<A HREF="#" v-on:click.stop.prevent="tab = \'synonyms\'; showSynonymsFor(item, subKey.split(\':\')[0], subKey.split(\':\')[1])">\
 															<span class="label label-info">\
@@ -1658,7 +1659,7 @@ require.config({
 												<button class="btn btn-default btn-xs pull-right" v-on:click.stop.prevent=\'showSynonymsPretty = !showSynonymsPretty\'>Show {{ showSynonymsPretty ? \'raw\' : \'formatted\' }}</button>\
 											</div>\
 											<span v-if=\'showSynonymsPretty\'>\
-												<HR><span class=\'synonymsDetailContent\' v-html=\'synonymsDetail.content\'></span><HR>\
+												<HR/><span class=\'synonymsDetailContent\' v-html=\'synonymsDetail.content\'></span><HR/>\
 											</span>\
 											<span v-else><!-- for raw -->\
 												<!-- 16:9 aspect ratio -->\
@@ -1671,7 +1672,7 @@ require.config({
 												</div>\
 											</span>\
 											\
-											<BR>\
+											<BR/>\
 											\
 											<span v-for="word in synonymsDetail.words">\
 												<A HREF="#" v-on:click.stop.prevent="showSynonymsFor(word, item, verse.surah, verse.ayah)">\
@@ -1691,8 +1692,8 @@ require.config({
 	  <div v-bind:class="{ \'tab-pane\': true, active: tab === \'search\' }" id="search">\
 	  	<div class=well>\
 		  <div Xclass=searchResults v-if="searchResults && Object.keys(searchResults).length > 1">\
-			  <HR>Search results: <BR>\
-			  {{searchResults.matchesCount}} matches found searching for: {{searchResults.keyword}}<BR><BR>\
+			  <HR/>Search results: <BR/>\
+			  {{searchResults.matchesCount}} matches found searching for: {{searchResults.keyword}}<BR/><BR/>\
 \
 			  <!-- <div v-for="(matches, key, index) in searchResults"> -->\
 			  <div v-for="result in searchResults.results">\
@@ -1708,10 +1709,10 @@ require.config({
 					</div>\
 				</div>\
 			  </div>\
-			  <HR>\
+			  <HR/>\
 		  </div>\
 		  <div v-else>Search results shown here if available</div>\
-		  <div v-if="isSearching || searchResults.searching">\
+		  <div v-if="isSearching || (searchResults && searchResults.searching)">\
 		  	<i class="fa fa-spinner fa-pulse"></i>Searching...\
 		  </div>\
 		  <h6><small><span v-cloak v-if=message class=text-muted>\
@@ -1769,7 +1770,7 @@ require.config({
 \
 \
 	  	  <div v-if="false && verbResults">\
-	  	  	<HR>Verbs lookup results: <BR>\
+	  	  	<HR/>Verbs lookup results: <BR/>\
 	  	  	<form id="searchVerb">\
 			       Search verb<input name="query" v-model="verbSearchQuery">\
 			    </form>\
@@ -1787,7 +1788,7 @@ require.config({
 \
 \
 		  <div v-if="lemResults && Object.keys(lemResults).length > 0">\
-			<HR>Dictionary Lemma lookup results: {{ Object.keys(lemResults).length}}<BR>\
+			<HR/>Dictionary Lemma lookup results: {{ Object.keys(lemResults).length}}<BR/>\
 				<!-- {{ lemResults }} -->\
 				\
 				<div v-if="lemResults && Object.keys(lemResults).length > 0" style="overflow:scroll; max-height:200px; white-space: nowrap;">\
@@ -1798,7 +1799,7 @@ require.config({
 						{{match.snippet.substring(0,100)}}\
 					</div>\
 				</div>\
-			 <HR>\
+			 <HR/>\
 		  </div>\
 \
 		  <div v-else>Misc details shown here if available</div>\
@@ -1831,7 +1832,12 @@ require.config({
 \
 \
 					   </div>',
-			props: [''],
+			props: ['ayahsListFromPage', 'data', 'showTrans', 'showTranslit', 'showWord2Word', 'showCorpus', 'showAsbab', 'showSynonyms', 'hideAr',
+					'currentPageAsbab', 'currentPageSynonyms', 'words', 'corpus',
+					'showAr', 'w2wEn', 'w2wCorpus', 'tab', 'isSearching', 
+					'searchResults', 'lemResults', 'wordCorpusResults', 'message',
+					'feedbackEmail', 'feedbackMessage',
+					 ],
 		});
 
 		return {
