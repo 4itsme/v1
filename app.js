@@ -213,6 +213,14 @@ require.config({
 	  ]
 	})
 
+	//Now, check if we are on a bookmarked or clean URL like /search/foo thats been redirected to 200.html page. if so try to route properly.
+	var currentRoute = location.href.replace(location.origin + location.pathname, '' );
+	if( currentRoute !== '' && currentRoute.indexOf('200.html') != -1 ){
+		console.log( 'redirectng ' +currentRoute );
+		router.replace( currentRoute ); //TODO: ensure not stuck in infinite loop.
+		return;
+	}
+
 	var bus = new Vue();
 
 	bus.$on('onClickSura', function( surano ){
@@ -2133,7 +2141,7 @@ require.config({
 
 		var quranSearch = Vue.component('quran-search',{
 			template: '<div>Qur\'aan Search results for: {{ keyword }}\
-							<div v-if="loading">Loading...</div>\
+							<div v-if="loading"><BR/>Searching...</div>\
 							<div class=text-muted v-else>\
 								{{data}}\
 							</div>\
