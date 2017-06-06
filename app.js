@@ -2161,7 +2161,7 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 			template: '<div>Qur\'aan Search results for: {{ keyword }}\
 							<div v-if="loading"><BR/>Searching...</div>\
 							<div class=text-muted v-else>\
-								{{data}}\
+								{{searchResults}} <BR/><BR/> {{data}}\
 							</div>\
 					   </div>',
 			props: [ 'keyword', ],
@@ -2170,6 +2170,8 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 					error: null,
 					loading: false,
 					data: null,
+					message: null,
+					searchResults: null,
 				}
 			},
 			created: function() {
@@ -2189,12 +2191,30 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 		    		this.error = /*this.data =*/ null;
 		    		this.loading = true;
 		    		this.data = null;
-		    		var comp = this;
+		    		var comp = this, startTime = new Date(), endTime;
 	    			require(['Q', 'qSearch', 'underscore'], function(Q, qSearch, _){
 	    				qSearch.searchAsync( comp.keyword ).then(function(data){
 	    					comp.data = data;
 	    					comp.loading = false;
 	    					comp.error = null;
+							comp.searchResults = results || {};
+							comp.searchResults.searching = false;
+							endTime = new moment(); //console.log((vm.message += ((endTime = new moment()) +' results received') ) );
+							if(!(endTime - startTime))debugger;
+							comp.message = 'Search time: ' + endTime.diff(startTime, 'seconds') + ' seconds. (' + (endTime - startTime) + ' ms.) ';//moment(startTime).fromNow() + ' ' + vm.message;
+							setTimeout(function(){
+								var hilites = [];
+								hilites.push( comp.searchResults.keyword );
+								//hilites.push( qUtil.BuckToBare(vm.searchResults.keyword) );
+								hilites.push( qUtil.EnToAr( comp.searchResults.keyword ) ); //TODO: conditionally do this
+								hilites.push( qUtil.EnToAr( qUtil.BuckToBare(comp.searchResults.keyword) ) ); //TODO: conditionally do this
+
+								//clear out old keywords and set new ones.
+								$('.searchResults').unmark({ "done": function(){
+																		$('.searchResults').mark( hilites );
+															 }
+								});
+							}, 200);
 	    				});//TODO: add error handling
 	    			});
 		    	},
