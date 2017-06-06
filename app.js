@@ -2216,4 +2216,7 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 		};
 
 	}
+}, function(){//error callback for requireJS
+	console.log('ERROR');
+	console.log( arguments );
 });
