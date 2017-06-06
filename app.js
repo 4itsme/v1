@@ -1346,7 +1346,45 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 			template: '<div>quran grammar test {{ [+sura, +ayah, +word] }}\
 							<H4>Qur\'aan Word details</H4>\
 							<div v-if=\'loading\'>Loading...</div>\
-							<div class=well v-else>\
+							<div Xclass=well v-else>\
+	  	  <div v-if="wordCorpusResults">\
+	  	  	<div class=well>\
+	  	  		\
+	  	  		<div class=\'text-center arr2\'> {{ wordCorpusResults.w }} </div>\
+	  	  		<HR/>\
+	  	  		{{ [sura, ayah, word].join(\':\') }}\
+\
+	  	  		<h3> Translation </h3>\
+	  	  		{{ wordCorpusResults.w2w }}\
+	  	  		<HR/>\
+\
+				    <h3> Root word </h3>\
+	  	  		Lemma: \
+	  	  			<div class=\'text-center arr2\'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.lemmaAr }}</div>\
+\
+	  	  		Root: \
+	  	  			<div class=\'text-center arr2\'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootAr }}</div>\
+	  	  			<b><div class=Xtext-center> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootMeaning }}</div></b>\
+	  	  			<div class=\'text-muted text-center\'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootTree }}</div>\
+	  	  		<HR/>\
+\
+				    <h3> Grammar </h3>\
+				    <div v-if="wordCorpusResults.corpus" class=well v-html=" wordCorpusResults.corpus && wordCorpusResults.corpus.pretty "></div>\
+	  	  		<span class=text-muted>{{ wordCorpusResults.corpus }}</span>\
+	  	  		<HR/>\
+\
+				    <h3> Transliteration </h3>\
+	  	  		<span>{{ wordCorpusResults.w2w }}</span>\
+	  	  		<HR/>\
+\
+	  	  		<HR/>\
+\
+	  	  		<HR/>\
+	  	  		<span class=text-muted>{{ wordCorpusResults }}</span>\
+\
+	  	  	</div>\
+	  	  </div>\
+\
 								{{  data[ +word - 1 ] }}<BR/>\
 								<div class=text-muted>{{ data }}</div>\
 							</div>\
@@ -1360,6 +1398,8 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 					loading: false,
 					data: null,
 					error: null,
+					corpus: null,
+					wordCorpusResults: {},
 				};
 			},
 			created: function(){
@@ -1375,13 +1415,33 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 		    		this.error = this.data = null;
 		    		this.loading = true;
 		    		var comp = this; //save a reference
-		    		require(['Q', /*'w2wCorpus',*/ 'w2wCorpusV2'], function(Q, /*w2wCorpus,*/ w2wCorpusV2){
+		    		require(['Q', 'qCorpus', /*'w2wCorpus',*/ 'w2wCorpusV2'], function(Q, qCorpus, /*w2wCorpus,*/ w2wCorpusV2){
 		    			var verseNo = Q.verseNo.ayah( +comp.sura, +comp.ayah ),
 		    				//data = w2wCorpus.lookup( +verseNo ),
 		    				data2 = w2wCorpusV2.lookup( +comp.sura, +comp.ayah );
 		    			comp.data = data2; //{data: data, data2: data2};
 		    			comp.loading = false;
 		    			comp.error = null;
+
+		    			comp.corpus = comp.data[ +comp.word - 1];
+			  			//word.corpus = w2wCorpusV2.lookup( word.surah, word.ayah, word.word );
+			  			console.log( comp.corpus );
+					  	comp.corpus = qCorpus.parse(comp.corpus);
+					  	comp.corpus.pretty = qCorpus.pretty( comp.corpus );
+					  	if( comp.corpus.lemma ){ comp.corpus.lemmaAr = qUtil.EnToAr( comp.corpus.lemma ); }
+					  	if( comp.corpus.root ){ comp.corpus.rootAr = qUtil.EnToAr( comp.corpus.root.split('').join(' ') ); }
+
+					  	require(['qRootMeanings'], function( qRootMeanings ){
+					  		comp.corpus.rootMeaning = qRootMeanings.lookup( comp.corpus.root );
+
+					  		require(['qRootLemDict'], function( qRootLemDict ){
+					  			comp.corpus.rootTree = qRootLemDict.lookup({lem: comp.corpus.lemma, root: comp.corpus.root });
+					  			comp.wordCorpusResults = {};
+					  			comp.wordCorpusResults.corpus = comp.corpus;
+					  		});
+					  		//vm.wordCorpusResults = word;
+					  	})
+
 		    		});//TODO: add error handling code here
 				},
 			}
@@ -2191,7 +2251,7 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 		  </span></small></h6>\
 		</div>\
 		<div id="mount" v-if="showAyah">\
-			<quran-ayah-comp :sura="sura" :ayah="ayah" :showTrans="true" :showTranslit="true" />\
+			<quran-ayah-comp :sura="sura" :ayah="ayah" :showTrans="true" :showTranslit="true" v-key="sura + ayah" />\
 		</div>\
 							<div class=text-muted v-if="!loading">\
 								{{searchResults}} <BR/><BR/> {{data}}\
