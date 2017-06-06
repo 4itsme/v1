@@ -165,7 +165,7 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 	  		props: (route) => ({ suras: vm.suras }),
 	  	},
 	  	{
-	  		path: '/page/:pageno',
+	  		path: '/page/:pageno(\\d+)',
 	  		component: comps.quranPageComp, //quranPage,
 	  		props: ($route) => ({ page: +$route.params.pageno, showTrans: true, showTranslit: true, showWord2Word: true, XayahsListFromPage: /*(vm.verseNo = +($route.params.pageno) ) &&*/ vm.data.ayahsListFromPage }),
 	  	},
@@ -190,17 +190,17 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 	  		props: (route) => ({ root: route.query.root, lem: route.query.lem }),
 	  	},
 	  	{
-	  		path: '/:sura',
+	  		path: '/:sura(\\d+)', //only if all numbers. see ref: https://github.com/vuejs/vue-router/blob/dev/examples/route-matching/app.js
 	  		component: comps.quranSuraComp,
 	  		props: ($route) => ({ sura: +$route.params.sura, showTrans: true, showTranslit: true, showWord2Word: true, ayahsListFromPage: /*(vm.verseNo = +($route.params.pageno) ) &&*/ vm.data.ayahsListFromPage }),
 	  	},
 	  	{
-	  		path: '/:sura/:ayah',
+	  		path: '/:sura(\\d+)/:ayah(\\d+)',
 	  		component: comps.quranAyahComp,
 	  		props: (route) => ({ sura: route.params.sura, ayah: route.params.ayah, showTrans: true, showTranslit: true, showWord2Word: true, }),
 	  	},
 	  	{
-	  		path: '/:sura/:ayah/:word',
+	  		path: '/:sura(\\d+)/:ayah(\\d+)/:word(\\d+)',
 	  		component: comps.quranGrammar,
 	  		props: (route) => ({ sura: route.params.sura, ayah: route.params.ayah, word: route.params.word }),
 	  	},
@@ -222,6 +222,11 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 				//w2w-corpus="w2wCorpus"
 	  		}
 	  	},*/
+	  	{
+	  		path: '*', //catch all
+	  		component: comps.quranDashboard,
+	  		props: (route) => ({ suras: vm.suras }),
+	  	},
 
 	  ]
 	})
