@@ -2190,6 +2190,9 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 		  	{{message}}\
 		  </span></small></h6>\
 		</div>\
+		<div id="mount" v-if="showAyah">\
+			<quran-ayah-comp :sura="sura" :ayah="ayah" :showTrans="true" :showTranslit="true" />\
+		</div>\
 							<div class=text-muted v-if="!loading">\
 								{{searchResults}} <BR/><BR/> {{data}}\
 							</div>\
@@ -2203,6 +2206,9 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 					message: null,
 					searchResults: null,
 					qUtil: {},
+					sura: null,
+					ayah: null,
+					showAyah: null,
 				}
 			},
 			created: function() {
@@ -2252,6 +2258,31 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 		    	},
 		    	goSearchResult: function(match, result){
 		    		console.log(match, result);
+		    		var tmp = match.split('|');
+		    		this.sura = tmp && tmp.length > 1 && +tmp[0];
+		    		this.ayah = tmp && tmp.length > 1 && +tmp[1];
+		    		this.showAyah = true;
+
+		   //  		const quranAyahCompCtor = Vue.extend( quranAyahComp );
+					// const vm = new quranAyahCompCtor({
+					//   propsData: {
+					//     sura: 5,
+					//     ayah: 6,
+					//   }
+					// }).$mount('#mount');
+
+					// const Hello = {
+					//   props: ['text'],
+					//   template: '<div>{{ text }}</div>',
+					// };
+
+					// // create component constructor
+					// const HelloCtor = Vue.extend(Hello);
+					// const vm = new HelloCtor({
+					//   propsData: {
+					//     text: 'HI :)'
+					//   }
+					// }).$mount('#mount');
 		    	},
 		    }
 		});
