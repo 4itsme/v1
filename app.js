@@ -1371,10 +1371,20 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 \
 				    <h3> Root word </h3>\
 	  	  		Lemma: \
-	  	  			<div class=\'text-center arr2\'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.lemmaAr }}</div>\
+	  	  			<div class=\'text-center\'> \
+	  	  			  <router-link :to="{ path: \'/related\', query: { lem: wordCorpusResults.corpus && wordCorpusResults.corpus.lemma }}">\
+	  	  			  	<span class=arr2>{{ wordCorpusResults.corpus && wordCorpusResults.corpus.lemmaAr }}</span>\
+	  	  			  </router-link>\
+	  	  			  (click to see related words sharing same family)\
+					</div>\
 \
 	  	  		Root: \
-	  	  			<div class=\'text-center arr2\'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootAr }}</div>\
+	  	  			<div class=\'text-center\'>\
+	  	  			  <router-link :to="{ path: \'/related\', query: { root: wordCorpusResults.corpus && wordCorpusResults.corpus.root }}">\
+	  	  			  	<span class=arr2>{{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootAr }}</span>\
+	  	  			  </router-link>\
+	  	  			  (click to see related words from same root)\
+	  	  			</div>\
 	  	  			<b><div class=Xtext-center> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootMeaning }}</div></b>\
 	  	  			<div class=\'text-muted text-center\'> {{ wordCorpusResults.corpus && wordCorpusResults.corpus.rootTree }}</div>\
 	  	  		<HR/>\
