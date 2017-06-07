@@ -190,6 +190,17 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 	  		props: (route) => ({ root: route.query.root, lem: route.query.lem }),
 	  	},
 	  	{
+	  		path: '/related/:root(.{3})',  //regex chars to ecape: /^(.|\'|\^|\~|\[|\*|\$|\@|\+){3}$/.test('*h$')
+	  		component: comps.quranGrammarConcordance,
+	  		props: (route) => ({ root: route.params.root }),
+	  	},
+	  	{
+	  		path: '/related/:lem',  // /^(.|\'|\^|\~|\[|\*|\$|\@|\+){3}$/.test('*h$')
+	  		component: comps.quranGrammarConcordance,
+	  		props: (route) => ({ lem: route.params.lem }),
+	  	},
+	  	//(.|\\\'|\\\^|\\\~|\\\[|\\\*|\\\$|\\\@|\\\+)
+	  	{
 	  		path: '/:sura(\\d+)', //only if all numbers. see ref: https://github.com/vuejs/vue-router/blob/dev/examples/route-matching/app.js
 	  		component: comps.quranSuraComp,
 	  		props: ($route) => ({ sura: +$route.params.sura, showTrans: true, showTranslit: true, showWord2Word: true, ayahsListFromPage: /*(vm.verseNo = +($route.params.pageno) ) &&*/ vm.data.ayahsListFromPage }),
