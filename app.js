@@ -2251,7 +2251,7 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 		  </span></small></h6>\
 		</div>\
 		<div id="mount" v-if="showAyah">\
-			<quran-ayah-comp :sura="sura" :ayah="ayah" :showTrans="true" :showTranslit="true" v-key="sura + ayah" />\
+			<quran-ayah-comp :sura="sura" :ayah="ayah" :showTrans="true" :showTranslit="true" :key="+sura*1000 + +ayah*1000" />\
 		</div>\
 							<div class=text-muted v-if="!loading">\
 								{{searchResults}} <BR/><BR/> {{data}}\
