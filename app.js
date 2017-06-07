@@ -1317,6 +1317,9 @@ requirejs.onResourceLoad = function (context, map, depArray) {
 							<H4>Qur\'aan Word details</H4>\
 							<div v-if=\'loading\'>Loading...</div>\
 							<div class=well v-else>\
+								{{ data.matchesCount }} matches\
+								{{ data.dataMapped }}<BR/><BR/>\
+								{{ data.refsMapped }}\
 								<div class=text-muted>{{ data }}</div>\
 							</div>\
 					   </div>',
